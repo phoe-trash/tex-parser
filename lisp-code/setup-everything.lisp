@@ -18,7 +18,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (afl:deactivate-sound-audio)
 (mapc #'load-system *books*)
-#+lucid 
+#+lucid
 (load
  (concatenate 'string
               *lisp-code-directory* "/"
@@ -29,7 +29,7 @@
               *lisp-code-directory* "/"
               "read-aloud/temporary-tex-objects.lisp"))
 (load-system :browse )
-(when *announce* 
+(when *announce*
 (afl:set-final-scale-factor 'afl:speech-rate 1.2)
 (afl:set-final-scale-factor 'afl:right-volume .8))
 (activate-rule 'paragraph 'interactive )
@@ -50,5 +50,5 @@
 (setf *follow-cross-ref-wait* 0
 *get-label-wait* 0)
 #+lucid (precompile-generic-functions)
- 
+
 

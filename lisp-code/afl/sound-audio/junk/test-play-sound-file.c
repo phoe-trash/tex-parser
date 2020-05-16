@@ -74,7 +74,7 @@ Audio_hdr File_hdr;		/* audio header for file */
 
 /* Global variables */
 
-void 
+void
 sigint ()
 {
   /* flush output queues before exiting */
@@ -89,7 +89,7 @@ sigint ()
 }
 
 /*
- * Play an audio file. 
+ * Play an audio file.
  */
 play (intvolume, headphone, filename, immediate)
      int intvolume;
@@ -357,7 +357,7 @@ parse_unsigned (str, dst, flag)
   return (0);
 }
 
-/* test 
+/* test
    main()
    {
    play(1,1,"/usr/u/raman/sounds/cues/harp.au");

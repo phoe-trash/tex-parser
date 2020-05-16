@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 
@@ -25,7 +25,7 @@
 ;;; Function: LOOKUP-MATH-CLASSIFICATION                     Author: raman
 ;;; Created: Tue Feb 25 14:53:02 1992
 
-(defun lookup-math-classification (token) 
+(defun lookup-math-classification (token)
   "lookup classification in hash table."
   (gethash token *math-classification-table*)
   )
@@ -34,7 +34,7 @@
 ;;; Function: DEFINE-MATH-SYMBOL-CLASSIFICATION                      Author: raman
 ;;; Created: Tue Feb 25 14:55:33 1992
 (proclaim '(inline define-math-symbol-classification))
-(defun  define-math-symbol-classification (symbol classification) 
+(defun  define-math-symbol-classification (symbol classification)
   "Classify symbol as of type classification for math mode"
   (setf (gethash symbol *math-classification-table*)
         classification)
@@ -43,7 +43,7 @@
 ;;; Function: REMOVE-MATH-SYMBOL-CLASSIFICATION              Author: raman
 ;;; Created: Sun Nov  8 10:46:34 1992
 
-(defun remove-math-symbol-classification (symbol) 
+(defun remove-math-symbol-classification (symbol)
   "Remove current classification"
   (remhash symbol *math-classification-table*)
   )
@@ -51,7 +51,7 @@
 ;;; Function: REDEFINE-MATH-SYMBOL-CLASSIFICATION            Author: raman
 ;;; Created: Sun Nov  8 10:47:17 1992
 
-(defun redefine-math-symbol-classification (symbol classification) 
+(defun redefine-math-symbol-classification (symbol classification)
   "Redefine classification"
   (remove-math-symbol-classification symbol)
   (define-math-symbol-classification symbol classification )
@@ -296,7 +296,7 @@
 (define-math-symbol-classification "choose" 'special-binary-operator)
 
 ;;; above are special because tex treats them for all practical
-;;; purposes like binary operators with lowest  precedence. 
+;;; purposes like binary operators with lowest  precedence.
 ;;; The following four binary operators from the Latex book man3.tex
 ;;; do not appear in the tex book.
 (define-math-symbol-classification "unlhd" 'binary-operator)
@@ -406,7 +406,7 @@
 (define-math-symbol-classification "{" 'open-delimiter)
 (define-math-symbol-classification "left" 'ordinary)
 
-;;; fix how \left handled. 
+;;; fix how \left handled.
 ;;; corresponding closing delimiters:
 (define-math-symbol-classification "rbrack" 'close-delimiter)
 (define-math-symbol-classification "rbrace" 'close-delimiter)
@@ -424,14 +424,14 @@
 ;;; following need to be reclassified.
 (define-math-symbol-classification "^" 'superscript)
 (define-math-symbol-classification "_" 'subscript)
-;;; misc. 
+;;; misc.
 (define-math-symbol-classification "!" 'ordinary)
 (define-math-symbol-classification "." 'ordinary)
-(define-math-symbol-classification "," 'ordinary) 
+(define-math-symbol-classification "," 'ordinary)
 (define-math-symbol-classification "'" 'ordinary)
 (define-math-symbol-classification ":" 'binary-operator)
 (define-math-symbol-classification "''" 'ordinary)
-(define-math-symbol-classification "'' " 'ordinary) 
+(define-math-symbol-classification "'' " 'ordinary)
 (define-math-symbol-classification ";" 'ordinary)
 (define-math-symbol-classification "cdots" 'ordinary)
 (define-math-symbol-classification "ldots" 'ordinary)
@@ -487,7 +487,7 @@
 ;;; function with one or possibly two arguments.
 ;;; for the present classified sqrt as a mathematical-function-name so
 ;;; the latex kluge of supplying an optional argument to sqrt will not
-;;; be caught. 
+;;; be caught.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define-math-symbol-classification "hat" 'accent)

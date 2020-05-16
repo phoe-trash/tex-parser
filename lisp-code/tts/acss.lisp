@@ -35,5 +35,5 @@
   average-pitch pitch-range
   stress richness
   punctuations
-  ) 
+  )
 

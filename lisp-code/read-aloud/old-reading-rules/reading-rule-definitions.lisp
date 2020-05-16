@@ -13,7 +13,7 @@
 ;;; The fold marker shows the object class and the rule names
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; {subst: tree-like linear english-active english-passive 
+;;; {subst: tree-like linear english-active english-passive
 
 (define-reading-rule (:rule-name tree-like :class subst)
   (read-aloud "substitution ")
@@ -35,27 +35,27 @@
         (afl:step-by state 'afl:average-pitch 2)))
 
 (define-reading-rule (:rule-name english-active :class subst)
-    (with-reading-state (reading-state 'subst) 
+    (with-reading-state (reading-state 'subst)
                    (read-aloud (argument-1 subst))
                    (read-aloud " with ")
                    (read-aloud (argument-2 subst))
-                   (read-aloud " for  ") 
+                   (read-aloud " for  ")
                    (read-aloud (argument-3 subst))
                    )
   )
 
-(define-reading-rule (:rule-name english-passive :class subst) 
-    (with-reading-state (reading-state 'subst) 
+(define-reading-rule (:rule-name english-passive :class subst)
+    (with-reading-state (reading-state 'subst)
       (read-aloud (argument-1 subst))
       (read-aloud " with ")
       (read-aloud (argument-3 subst))
-      (read-aloud "replaced by ") 
+      (read-aloud "replaced by ")
       (read-aloud (argument-2 subst))
       )
   )
 
 ;;; }
-;;; {application: tree-like linear 
+;;; {application: tree-like linear
 
 (define-reading-rule (:rule-name tree-like :class application)
   (read-aloud " application " )
@@ -75,7 +75,7 @@
 ;;; }
 ;;; {abstraction: tree-like linear
 
-(define-reading-rule (:rule-name tree-like :class abstraction) 
+(define-reading-rule (:rule-name tree-like :class abstraction)
 (read-aloud " lambda ")
 (with-reading-state (reading-state 'children)
   (read-aloud (argument-1 abstraction ))
@@ -130,7 +130,7 @@
 )
 
 (define-reading-rule (:rule-name inverted :class derivation-ii)
-    (dectalk:synchronize-and-play *newline-cue* :background-flag t) 
+    (dectalk:synchronize-and-play *newline-cue* :background-flag t)
     (read-aloud " we have ")
     (read-aloud (argument-3 derivation-ii ))
     (dectalk:synchronize-and-play *newline-cue* :background-flag t)
@@ -195,10 +195,10 @@
 (define-reading-rule (:rule-name fraction :class fraction)
     (afl:named-block fraction
                      (afl:local-set-state
-                      (reading-state 'fraction) 
+                      (reading-state 'fraction)
                       )
                      (read-aloud "Fraction with numerator: ")
-                     (afl:named-block fraction-numerator 
+                     (afl:named-block fraction-numerator
                                       (afl:local-set-state
                                        (reading-state 'fraction-numerator))
                                       (read-aloud (fraction-numerator fraction))

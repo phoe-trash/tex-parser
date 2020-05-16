@@ -9,12 +9,12 @@
 
 (defmethod read-aloud  :around ((document document))
            "Around method"
-           
+
            (if (and  *simple*
                      (compute-applicable-methods #'reading-rule
                                                  (list document
                                                        'simple )))
-               (reading-rule document 'simple) 
+               (reading-rule document 'simple)
                (call-next-method))
            )
 
@@ -23,7 +23,7 @@
 ;;; Created: Mon Dec  7 18:38:01 1992
 
 (defmethod reading-rule ((math-object math-object) (rule-name (eql
-                                                               'simple ))) 
+                                                               'simple )))
   "Reading rule"
-  (format dectalk:*stream* "Simplest rule says nothing! ") 
+  (format dectalk:*stream* "Simplest rule says nothing! ")
   )

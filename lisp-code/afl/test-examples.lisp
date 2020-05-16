@@ -44,7 +44,7 @@ parameters set globally")
    (dectalk:speak-string "Now my pitch range
 will be globally set to 250")
    (global-set! *current-speech-state*  'pitch-range 250)
-   (dectalk:speak-string"I will speak like 
+   (dectalk:speak-string"I will speak like
  I am excited  for the rest of this demo")
    (dectalk:speak-string "About to exit third block")
    )
@@ -130,7 +130,7 @@ parameters set globally")
        (dectalk:speak-string "Now my pitch range
 will be globally set to 250")
        (global-set! *current-speech-state*  'pitch-range 250)
-       (dectalk:speak-string"I will speak like 
+       (dectalk:speak-string"I will speak like
  I am excited  for the rest of this demo")
        (dectalk:speak-string "About to exit third block")
        )
@@ -154,7 +154,7 @@ have  been automatically reset")
 ;;; testing new-local-set-state
 
 (changed-block
- (new-local-set-state 
+ (new-local-set-state
              (multi-move-to *current-speech-state*
                             '( head-size 90)
                             '( average-pitch 80)
@@ -162,7 +162,7 @@ have  been automatically reset")
  (dotimes  (i 9)
    (dectalk:speak-string "This is the next iteration, after moving
 one step along a line in the speech space")
-   (new-local-set-state 
+   (new-local-set-state
                (multi-step-by *current-speech-state*
                               '(head-size 1)
                               '(average-pitch 1)
@@ -172,17 +172,17 @@ one step along a line in the speech space")
 (changed-block
  (dectalk:speak-string "This is the first block, and at present I am
 using default settings")
- (new-local-set-state 
+ (new-local-set-state
              (move-by *current-speech-state*
                       'speech-rate 75))
  (dectalk:speak-string "Now a local set has speeded up  my speech")
  (changed-block
-  (new-local-set-state 
+  (new-local-set-state
               (move-to *current-speech-state*
                        'smoothness
                        50))
   (dectalk:speak-string "Now I have entered a second block")
-  (new-local-set-state 
+  (new-local-set-state
               (step-by *current-speech-state*
                        'head-size
                        3))
@@ -193,7 +193,7 @@ the second block")
   (changed-block
    (dectalk:speak-string "entering a third block
 where a local set will now change my average pitch")
-   (new-local-set-state 
+   (new-local-set-state
                (move-to *current-speech-state*
                         'average-pitch
                         90))
@@ -204,7 +204,7 @@ parameters set globally")
    (dectalk:speak-string "Now my pitch range
 will be globally set to 250")
    (global-set-state (move-to *global-speech-state* 'pitch-range 250))
-   (dectalk:speak-string"I will speak like 
+   (dectalk:speak-string"I will speak like
  I am excited  for the rest of this demo")
    (dectalk:speak-string "About to exit third block")
    )
@@ -219,17 +219,17 @@ have  been automatically reset")
 (changed-block
  (dectalk:speak-string "This is the first block, and at present I am
 using default settings")
- (new-local-set-state 
+ (new-local-set-state
              (move-by *current-speech-state*
                       'speech-rate 75))
  (dectalk:speak-string "Now a local set has speeded up  my speech")
  (changed-block
-  (new-local-set-state 
+  (new-local-set-state
               (move-to *current-speech-state*
                        'smoothness
                        50))
   (dectalk:speak-string "Now I have entered a second block")
-  (new-local-set-state 
+  (new-local-set-state
               (step-by *current-speech-state*
                        'head-size
                        3))
@@ -240,7 +240,7 @@ the second block")
   (changed-block
    (dectalk:speak-string "entering a third block
 where a local set will now change my average pitch")
-   (new-local-set-state 
+   (new-local-set-state
                (move-to *current-speech-state*
                         'average-pitch
                         90))
@@ -251,7 +251,7 @@ parameters set globally")
    (dectalk:speak-string "Now my pitch range
 will be globally set to 250")
    (global-set-value 'pitch-range 250)
-   (dectalk:speak-string"I will speak like 
+   (dectalk:speak-string"I will speak like
  I am excited  for the rest of this demo")
    (dectalk:speak-string "About to exit third block")
    )
@@ -264,17 +264,17 @@ have  been automatically reset")
 (changed-block
  (dectalk:speak-string "This is the first block, and at present I am
 using default settings")
- (new-local-set-state 
+ (new-local-set-state
              (move-by *current-speech-state*
                       'speech-rate 75))
  (dectalk:speak-string "Now a local set has speeded up  my speech")
  (changed-block
-  (new-local-set-state 
+  (new-local-set-state
               (move-to *current-speech-state*
                        'smoothness
                        50))
   (dectalk:speak-string "Now I have entered a second block")
-  (new-local-set-state 
+  (new-local-set-state
               (step-by *current-speech-state*
                        'head-size
                        3))
@@ -285,7 +285,7 @@ the second block")
   (changed-block
    (dectalk:speak-string "entering a third block
 where a local set will now change my average pitch")
-   (new-local-set-state 
+   (new-local-set-state
                (move-to *current-speech-state*
                         'average-pitch
                         90))
@@ -296,7 +296,7 @@ parameters set globally")
    (dectalk:speak-string "Now my pitch range
 will be globally set to 250")
    (global-set-state (move-to *global-speech-state* 'pitch-range 250))
-   (dectalk:speak-string"I will speak like 
+   (dectalk:speak-string"I will speak like
  I am excited  for the rest of this demo")
    (dectalk:speak-string "About to exit third block")
    )

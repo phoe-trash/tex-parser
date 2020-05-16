@@ -127,7 +127,7 @@
 
 (defvar *demo-paper* nil  "short demo version of a exam paper.")
 
-(setf *demo-paper* "~/lisp-code/samples/demo-a-exam-write-up.tex") 
+(setf *demo-paper* "~/lisp-code/samples/demo-a-exam-write-up.tex")
 
 ;;; }
 
@@ -145,7 +145,7 @@
 ;;; Function: TEST-PARSER                                    Author: raman
 ;;; Created: Tue May  5 13:15:01 1992
 
-(defun test-parser (filename) 
+(defun test-parser (filename)
   "test parser, parse and place in *art*"
   (length (list (setf *art*
 		      (parse-article filename))))
@@ -155,7 +155,7 @@
 ;;; Function: DEMO                                           Author: raman
 ;;; Created: Thu May  7 19:07:24 1992
 
-(defun demo () 
+(defun demo ()
   "demo for a exam."
   (setf *art* (parse-article *demo-paper*))
   (read-aloud *art*)
@@ -178,7 +178,7 @@
 ;;; Function: READ-SAMPLE                                    Author: raman
 ;;; Created: Fri Aug 28 12:43:43 1992
 
-(defun read-sample (&optional (document *current-sample*)) 
+(defun read-sample (&optional (document *current-sample*))
   "read current sample"
   (setf *sample* (parse-article document))
   (read-aloud *sample*)

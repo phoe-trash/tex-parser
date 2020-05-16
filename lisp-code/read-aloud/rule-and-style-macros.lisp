@@ -12,7 +12,7 @@
   ;;; Macro: WITHOUT-STYLE                                     Author: raman
   ;;; Created: Fri Nov  5 17:57:01 1993
 
-(defmacro without-reading-style ((style-name)  &body body) 
+(defmacro without-reading-style ((style-name)  &body body)
   "Execute body with style style-name deactivated. "
   `(let
     ((style-flag (find ',style-name (current-reading-style ))))
@@ -29,7 +29,7 @@
   ;;; Macro: WITHOUT-READING-RULE                              Author: raman
   ;;; Created: Fri Nov  5 18:04:04 1993
 
-(defmacro without-reading-rule ((object-name rule-name) &body body) 
+(defmacro without-reading-rule ((object-name rule-name) &body body)
   "Execute body with rule rule-name for object object-name
   deactivated. "
   `(let
@@ -47,7 +47,7 @@
   ;;; Macro: WITH-READING-STYLE                             Author: raman
   ;;; Created: Fri Nov  5 21:00:07 1993
 
-(defmacro with-reading-style ((style-name) &body body) 
+(defmacro with-reading-style ((style-name) &body body)
   "Execute body with style style-name active"
 `(let
     ((style-flag (find ',style-name (current-reading-style ))))
@@ -55,7 +55,7 @@
     (progn
       (unless  style-flag  (activate-style ',style-name))
       ,@body)
-        (unless  style-flag (deactivate-style ',style-name ))))    
+        (unless  style-flag (deactivate-style ',style-name ))))
   )
 
 
@@ -63,7 +63,7 @@
   ;;; Macro: WITH-READING-RULE                                 Author: raman
   ;;; Created: Fri Nov  5 21:02:34 1993
 
-(defmacro with-reading-rule ((object-name rule-name) &body body) 
+(defmacro with-reading-rule ((object-name rule-name) &body body)
   "Execute body with rule rule-name activated for object object-name.
   "
   `(let
@@ -82,7 +82,7 @@
   ;;; Macro: WITH-ADDED-READING-STYLE                          Author: raman
   ;;; Created: Fri Nov  5 21:20:26 1993
 
-(defmacro with-added-reading-style ((style-name) &body body) 
+(defmacro with-added-reading-style ((style-name) &body body)
   "Execute body with style style-name added at the end of currently
 active styles."
   `(let

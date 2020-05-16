@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (in-package :afl)
@@ -13,7 +13,7 @@
   ;;; Created: Fri Mar 26 11:18:46 1993
 
 (export '(initialize-total-space ))
-(defun initialize-total-space () 
+(defun initialize-total-space ()
   "Initialize total audio space"
   (setf *current-total-audio-state*
         (make-total-audio-state

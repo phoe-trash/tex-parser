@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 
@@ -13,7 +13,7 @@
 ;;; Adding extra accessors for slots
 ;;; accessors like article-title etc could just be title, for the
 ;;; present defining multiple accessors to avoid making minimal
-;;; changes to working code. 
+;;; changes to working code.
 ;;; Modified: Thu Dec 24 11:06:39 EST 1992
 ;;; Modifying predicates like <class>-p to use typep instead of eq
 ;;; class-name Note: this means that <class>-p subclass is true
@@ -72,8 +72,8 @@
 (defmethod print-object ((x document) s)
   (flet
       ((ignore-slots (slots)
-         (loop for slot in slots 
-               unless (find (slot-definition-name slot) 
+         (loop for slot in slots
+               unless (find (slot-definition-name slot)
                             *print-document-object-ignore-slots* )
                collect slot )))
     (let* ((class (class-of x))
@@ -131,7 +131,7 @@
                  :accessor internal-time-to-read )
    (initial-body
     :initform nil :initarg :initial-body :accessor
-    article-initial-body :accessor contents 
+    article-initial-body :accessor contents
     :accessor initial-body )
    (sectional-units :initform nil :initarg :sectional-units
                     :accessor article-sectional-units
@@ -152,7 +152,7 @@
 
 ;;; Class: SECTIONAL-UNIT                                    Author: raman
 ;;; Created: Thu Apr  2 11:45:16 1992
-;;; Section body is its contents, subsections are its children. 
+;;; Section body is its contents, subsections are its children.
 (defclass sectional-unit (document)
   ((name :initform nil :initarg :name :accessor sectional-unit-name)
    (title :initform nil :initarg :title :accessor sectional-unit-title
@@ -165,7 +165,7 @@
          :accessor  body  :accessor contents )
    (sectional-units :initform nil :initarg :sectional-units
                     :accessor sectional-unit-sectional-units
-                    :accessor sectional-units 
+                    :accessor sectional-units
                     :accessor children))
   (:documentation "A sectional unit, such as section, subsection etc."))
 
@@ -173,7 +173,7 @@
 (defun make-sectional-unit (&key(sectional-unit-name 'sectional-unit))
   (let ((self  nil))
     (when (validate-sectional-unit-name sectional-unit-name)
-      (setf self 
+      (setf self
 	    (make-instance sectional-unit-name))
       )
     self))
@@ -282,7 +282,7 @@
 
 (defun make-paragraph (&key(contents nil))
   (let ((self
-	 (if contents 
+	 (if contents
              (make-instance
               'paragraph
               :contents contents )
@@ -642,7 +642,7 @@ enumerated and itemized lists."))
                   (:documentation
                    ,(format nil "Latex environment ~a a subclass of new-environment."
                            class-name))))
-        )                               ; end if supers 
+        )                               ; end if supers
                                         ; all new environments in latex can be cross-referenced.
     (push ',class-name *objects-that-can-be-referred*)
     (values))
@@ -651,7 +651,7 @@ enumerated and itemized lists."))
   ;;; Function: CREAATE-NEW-ENVIRONMENT                        Author: raman
   ;;; Created: Wed Feb 24 09:51:38 1993
 
-(defun create-new-environment (&key env-name) 
+(defun create-new-environment (&key env-name)
   "Create an instance of a user defined  new latex environment"
   (assert env-name nil "env-name should be non nil")
   (let ((class-name (gethash  env-name *latex-new-environment-names* )))
@@ -744,7 +744,7 @@ enumerated and itemized lists."))
 
 (defclass slide (document)
   ((contents :initform nil :initarg :contents
-             :accessor slide-contents :accessor children 
+             :accessor slide-contents :accessor children
              :accessor contents ))
   (:documentation "A slide"))
 
@@ -963,7 +963,7 @@ enumerated and itemized lists."))
 ;;; Created: Fri Oct 30 11:40:25 1992
 
 (defclass math-eqnarray (table-mix-in math labelled-class numbered-class)
-  ((contents :initform nil :initarg :contents 
+  ((contents :initform nil :initarg :contents
              :accessor math-eqnarray-contents
              :accessor contents ))
   (:documentation "An equation array"))

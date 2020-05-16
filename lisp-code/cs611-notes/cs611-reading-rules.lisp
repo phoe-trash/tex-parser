@@ -6,15 +6,15 @@
 
 
 
-;;; Reading rules for objects from cs611 notes 
+;;; Reading rules for objects from cs611 notes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; {subst: tree-like linear english-active english-passive 
+;;; {subst: tree-like linear english-active english-passive
 
 (defmethod weight  ((subst subst))
-  (round (+ 1 
-            (/ (weight (argument subst 1 )) 3) 
-            (/ (weight (argument subst 2)) 3) 
+  (round (+ 1
+            (/ (weight (argument subst 1 )) 3)
+            (/ (weight (argument subst 2)) 3)
             (/ (weight (argument subst 3 )) 3) ))
   )
 
@@ -46,32 +46,32 @@
   " english-active reading rule for object subst"
 (let*  ((object-weight (weight subst))
         (pause-amount   (if (> object-weight 1)
-                             (* object-weight *pause-around-child*) 
+                             (* object-weight *pause-around-child*)
                              0)))
-  (afl:with-surrounding-pause  (* pause-amount *pause-around-child*) 
+  (afl:with-surrounding-pause  (* pause-amount *pause-around-child*)
   (read-aloud (argument subst 1 ))
   (read-aloud " with ")
   (read-aloud (argument subst 2))
-  (read-aloud " for  ") 
+  (read-aloud " for  ")
   (read-aloud (argument subst 3 ))))
-  )  
+  )
 (def-reading-rule (subst english-passive)
   " english-passive reading rule for object subst"
   (let*  ((object-weight (weight subst))
           (pause-amount   (if (> object-weight 1)
-                             (* object-weight *pause-around-child*) 
+                             (* object-weight *pause-around-child*)
                              0)))
-  (afl:with-surrounding-pause  (* pause-amount *pause-around-child*) 
+  (afl:with-surrounding-pause  (* pause-amount *pause-around-child*)
   (read-aloud (argument subst 1))
   (read-aloud " with ")
   (read-aloud (argument subst 3))
-  (read-aloud "replaced by ") 
+  (read-aloud "replaced by ")
   (read-aloud (argument subst 2 ))))
   )
   (activate-rule  'subst 'tree-like)
 
 ;;; }
-;;; {application: tree-like linear english 
+;;; {application: tree-like linear english
 
 (def-reading-rule (application tree-like)
   " tree-like reading rule for object application"
@@ -123,12 +123,12 @@
     "English reading rule for application. "
   (let ((pause-amount (compute-pause application )))
     (afl:new-block
-     (afl:with-surrounding-pause pause-amount 
+     (afl:with-surrounding-pause pause-amount
        (afl:send-text "Application of ")
        (read-aloud (argument 1 application ))
        (afl:send-text "to, ")
        (read-aloud (argument 2 application ))))))
-  
+
 (activate-rule 'abstraction 'tree-like)
 
 ;;; }
@@ -160,7 +160,7 @@
 )
 (def-reading-rule (derivation-ii inverted)
   " inverted reading rule for object derivation-ii"
-    (afl:synchronize-and-play *newline-cue* :background-flag t) 
+    (afl:synchronize-and-play *newline-cue* :background-flag t)
     (read-aloud " we have ")
     (read-aloud (argument derivation-ii 3 ))
     (afl:synchronize-and-play *newline-cue* :background-flag t)

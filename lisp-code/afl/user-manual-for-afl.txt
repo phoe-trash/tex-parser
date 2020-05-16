@@ -11,24 +11,24 @@
 ;;;    Concatenate symbols or strings to form an interned symbol
 ;;;
 ;;; *LIST-OF-DIMENSIONS* "()"                                        [VARIABLE]
-;;;    list of dimension names that make up the speech space. 
+;;;    list of dimension names that make up the speech space.
 ;;;
 ;;; ADD-DIMENSION (name)                                             [FUNCTION]
-;;;    Adds dimension to speech space. 
+;;;    Adds dimension to speech space.
 ;;;
 ;;; *GLOBAL-VALUES* (make-hash-table :test (function equal))         [VARIABLE]
 ;;;    global parameter settings
 ;;;
 ;;; DEFINE-GLOBAL-VALUE (dimension value)                            [FUNCTION]
 ;;;    assign global value value to dimension dimension  if none already
-;;;    defined 
+;;;    defined
 ;;;
 ;;; GET-GLOBAL-VALUE (dimension)                                     [FUNCTION]
 ;;;    return global value for dimension dimension.
 ;;;
 ;;; SET-GLOBAL-VALUE (dimension value)                               [FUNCTION]
 ;;;    set new global value to set for the first time use
-;;;    define-global-value 
+;;;    define-global-value
 ;;;
 ;;; *TABLE-OF-UNITS* (make-hash-table :test (function equal))        [VARIABLE]
 ;;;    table containing units for each dimension
@@ -104,7 +104,7 @@
 ;;;                             (setf
 ;;;                             (dimension-step-size dimension)
 ;;;                             new-step-size)))))
-;;;    Table of slot names and accessor functions for dimension structure.  
+;;;    Table of slot names and accessor functions for dimension structure.
 ;;;
 ;;; DIMENSION-ACCESSOR (slot dimension)                              [FUNCTION]
 ;;;    access slot slot of dimension dimension
@@ -132,10 +132,10 @@
 ;;;
 ;;; CURRENT-VALUE (dimension &optional (point *current-state*))      [FUNCTION]
 ;;;    Return current value assigned to dimension in this point. default
-;;;    point is *current-state* 
+;;;    point is *current-state*
 ;;;
 ;;; CURRENT-STEP-SIZE (dimension &optional (point *current-state*))  [FUNCTION]
-;;;    Return step size assigned to this dimension 
+;;;    Return step size assigned to this dimension
 ;;;
 ;;; RE-INITIALIZE-SPEECH-SPACE (&optional (voice (quote paul)))      [FUNCTION]
 ;;;    reinitialize speech space with voice.
@@ -145,14 +145,14 @@
 ;;;
 ;;; INITIALIZE-SPEECH-SPACE (&optional (voice *default-voice*))      [FUNCTION]
 ;;;    initialize speech space by setting up current state and global
-;;;    values. 
+;;;    values.
 ;;;
 ;;; SETUP-GLOBALS (voice)                                            [FUNCTION]
 ;;;    setup global parameters appropriate to voice named voice.
 ;;;
 ;;; DEFINE-GLOBALS (dimension)                                       [FUNCTION]
 ;;;    defines global values along dimension dimension as specified by the
-;;;    argument which is an object of type dimension. 
+;;;    argument which is an object of type dimension.
 ;;;
 ;;; REARRANGE-DIMENSIONS-FOR-DECTALK "()"                            [FUNCTION]
 ;;;    Rearrange dimensions in list-of-dimensions for dectalk so that voice
@@ -166,7 +166,7 @@
 ;;;    move by number-of-steps along dimension from point.
 ;;;
 ;;; MOVE-TO (point dimension value &key (slot (quote value)))        [FUNCTION]
-;;;    Move to value along dimension 
+;;;    Move to value along dimension
 ;;;
 ;;; SCALE-BY (point dimension scale-factor                           [FUNCTION]
 ;;;           &key (slot (quote value)))
@@ -178,11 +178,11 @@
 ;;;
 ;;; MULTI-MOVE-TO (point &rest settings)                             [FUNCTION]
 ;;;    Move along multiple dimensions, settings specified as dimension value
-;;;    pairs 
+;;;    pairs
 ;;;
 ;;; MULTI-SCALE-BY (point &rest settings)                            [FUNCTION]
 ;;;    scale along multiple dimensions, specify settings as dimension value
-;;;    pairs 
+;;;    pairs
 ;;;
 ;;; MULTI-STEP-BY (point &rest settings)                             [FUNCTION]
 ;;;    step along multiple dimensions
@@ -192,7 +192,7 @@
 ;;;    valid moves for generalized operator
 ;;;
 ;;; GENERALIZED-AFL-OPERATOR (point &rest settings)                  [FUNCTION]
-;;;    Operate on point  and return new point. 
+;;;    Operate on point  and return new point.
 ;;;
 ;;; VALID-OPERATOR? (operator)                                       [FUNCTION]
 ;;;    validate afl operator
@@ -201,7 +201,7 @@
 ;;;    records global state of afl
 ;;;
 ;;; *CURRENT-STATE* "()"                                             [VARIABLE]
-;;;    Records current state of the audio formatter 
+;;;    Records current state of the audio formatter
 ;;;
 ;;; *MODIFIED-DIMENSIONS* "()"                                       [VARIABLE]
 ;;;    Dynamic variable holding list of modified dimensions.
@@ -213,7 +213,7 @@
 ;;;    special variable to hold exit for blocks
 ;;;
 ;;; NAMED-BLOCK (name &body body)                                       [MACRO]
-;;;    Blocks with names. 
+;;;    Blocks with names.
 ;;;
 ;;; EXIT-BLOCK "()"                                                  [FUNCTION]
 ;;;    exit current block
@@ -229,7 +229,7 @@
 ;;; SET-STATE (state                                                 [FUNCTION]
 ;;;            &key (changed-dimensions *list-of-dimensions*))
 ;;;    sets state of audio  formatter to state   after applying final
-;;;    scaling 
+;;;    scaling
 ;;;
 ;;; WITH-LAZY-SET-STATE (&body body)                                    [MACRO]
 ;;;    Locally sets *lazy-set-state* to t and executes body and then
@@ -243,7 +243,7 @@
 ;;;
 ;;; GLOBAL-SET! (state dimension value)                              [FUNCTION]
 ;;;    globally set value of dimension. Obselete, replaced by
-;;;    global-set-state 
+;;;    global-set-state
 ;;;
 ;;; GLOBAL-SET-STATE (afl-state)                                     [FUNCTION]
 ;;;    set global state of afl
@@ -259,7 +259,7 @@
 ;;;
 ;;; GENERATE-SYNTHESIZER-COMMAND (dimension value)                   [FUNCTION]
 ;;;    Generates synthesizer command that sets dimension dimension to value
-;;;    value 
+;;;    value
 ;;;
 ;;; *VOICE-CODES-TABLE* "()"                                         [VARIABLE]
 ;;;    table of voice codes for dectalk
@@ -281,7 +281,7 @@
 ;;;
 ;;; DEFINE-FINAL-SCALE-FACTOR (dimension scale-factor)               [FUNCTION]
 ;;;    Define global scale factor to be applied to dimension Does nothing
-;;;    if scale factor already defined 
+;;;    if scale factor already defined
 ;;;
 ;;; GET-FINAL-SCALE-FACTOR (dimension)                               [FUNCTION]
 ;;;    Retrieve global scale factor for dimension dimension default is unity

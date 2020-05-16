@@ -3,10 +3,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (in-package :user)
-;;; 
+;;;
 ;;; Fri Apr 30 10:00:14 EDT 1993
 ;;; Define new environments here:
-;;; 
+;;;
 
 (define-new-environment  :env-name "theorem"  :class-name theorem)
 (define-new-environment :env-name "minipage" :class-name mini-page)
@@ -14,7 +14,7 @@
 (define-new-environment  :env-name "lemma"  :class-name lemma)
 
 
-(define-new-environment  :env-name "corollary"  :class-name corollary) 
+(define-new-environment  :env-name "corollary"  :class-name corollary)
 
 (define-new-environment  :env-name "definition"  :class-name
                          definition)

@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (in-package :user)
@@ -34,7 +34,7 @@
   "Fix read line to work under ilisp:"
   (when *buggy-ilisp-read-line* (clear-input)
         ) ; discarded
-  (prog1 
+  (prog1
       (apply #'read-line args)
     (clear-input))
   )
@@ -56,7 +56,7 @@
   ;;; Function: GET-LABEL-FROM-USER                            Author: raman
   ;;; Created: Sat May  1 12:56:31 1993
 
-(defun get-label-from-user () 
+(defun get-label-from-user ()
   "Get label for this object from user.
 Wait for *get-label-wait* seconds before returning. "
   (unless (zerop *get-label-wait*)

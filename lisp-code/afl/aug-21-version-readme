@@ -10,7 +10,7 @@ Not making a backup of that version since change minimal.
 Now introducing multiple-value-bind in local-set! and making move
 operators return multiple values this is a major change.
 implemented smart local-set etc. but this broke local-set with
-interruptions. 
+interruptions.
 
 
 works after declaring modified-dimensions a defvar as this binds it to

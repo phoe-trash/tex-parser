@@ -16,7 +16,7 @@
 
 (defvar *stream* nil "This is the io stream to the DecTalk synthesizer.")
 
-#-lucid          
+#-lucid
 (defun make-stream (device)
   "Create and return a stream suitable for talking to DecTalk"
   (open device :direction :io ) )
@@ -40,7 +40,7 @@
   ;(shell (format nil  "stty -echo < ~a" *serial-device* ))
   ;(shell (format nil  "stty ixon ixoff  < ~a" *serial-device* ))
   )
- 
+
 
 (defun finish (&optional abort?)
   (when *stream*

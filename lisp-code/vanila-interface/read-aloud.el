@@ -21,7 +21,7 @@
   "\\end{document}"
   "postamble for reading ")
 
-(defvar reader-relative-pathnames-flag t 
+(defvar reader-relative-pathnames-flag t
   "if t then reader uses relative pathnames for include files,
 otherwise expect absolute pathnames")
 
@@ -47,7 +47,7 @@ otherwise expect absolute pathnames")
         ((command-string
           (concat
 "(progn"
-           dir-command 
+           dir-command
            "(read-aloud-file "
            (format "\"%s\") " file-containing-region )
            ")\n"
@@ -55,16 +55,16 @@ otherwise expect absolute pathnames")
           )
          )
       (process-send-string
-       (get-buffer-process inferior-lisp-buffer) 
+       (get-buffer-process inferior-lisp-buffer)
        command-string)
                                         ; Move point to the end of the lisp  buffer
-      (switch-to-buffer   inferior-lisp-buffer) 
+      (switch-to-buffer   inferior-lisp-buffer)
       (goto-char (point-max )))
     )
   )
 
 (defun aster-dump-region(start end )
-  "read region. parsed document left in lucid *temp*" 
+  "read region. parsed document left in lucid *temp*"
   (interactive "r")
   (let*
       ((dir-name(when buffer-file-name
@@ -80,7 +80,7 @@ otherwise expect absolute pathnames")
           (concat
            "(unless (equal \"USER\"  (package-name *package*))
 (in-package 'user))\n"
-           dir-command 
+           dir-command
            "(progn"
            "(setf *temp*  (parse-article "
            (format "\"%s\" " file-containing-region )
@@ -99,7 +99,7 @@ otherwise expect absolute pathnames")
 (get-buffer-process inferior-lisp-buffer)
 command-string)
                                         ; Move point to the end of the lucid buffer
-      (switch-to-buffer   inferior-lisp-buffer) 
+      (switch-to-buffer   inferior-lisp-buffer)
       (goto-char (point-max )))
     )
   )
@@ -117,8 +117,8 @@ command-string)
 
 (defun open-temp-file-for-reading()
   "open temp file, and delete contents if necessary"
-  (let 
-      ((filename 
+  (let
+      ((filename
         (concat
          read-aloud-directory
          temp-file )))
@@ -134,7 +134,7 @@ command-string)
        )
     (save-excursion
       (set-buffer buffer)
-(erase-buffer) 
+(erase-buffer)
 (insert document-preamble)
       (insert string)
        (insert document-postamble)
@@ -172,7 +172,7 @@ command-string)
       ))
   )
 
-(defun read-aloud-region-as-math(start end) 
+(defun read-aloud-region-as-math(start end)
   (interactive "r")
   "Read contents of region as math: "
   (read-math-string
@@ -229,7 +229,7 @@ With prefix arg, deactivate rule instead. "
   (let ((start nil )
         (end  (point )))
     (save-excursion
-      (when 
+      (when
           (search-backward "1:"  nil nil )
         (forward-char 2)
         (setq start (point))

@@ -8,7 +8,7 @@
 ;;; The QUERY package provides 5 functions:
 ;;;    Y-OR-N-P, YES-OR-NO-P, Y-OR-N-P-WAIT, YES-OR-NO-P-WAIT, and QUERY
 ;;; The latter is similar in concept to the Symbolics FQUERY, but there are
-;;; several major differences, including the ability to timeout with a 
+;;; several major differences, including the ability to timeout with a
 ;;; default value. The Y-OR-N-P-WAIT and YES-OR-NO-P-WAIT illustrate this
 ;;; ability. All five functions are built upon the same substrate.
 ;;;
@@ -16,7 +16,7 @@
 ;;; To Do:
 ;;;    Add wildcard choices (e.g., for "otherwise" clause )?
 ;;;    What to do if called within gnu-emacs as opposed to xterm? Needs some
-;;;    general CBREAK-mode style fix. 
+;;;    general CBREAK-mode style fix.
 ;;;
 ;;; *** Change Log:
 ;;; 23-MAR-93 mk    Created.
@@ -55,13 +55,13 @@
 ;;; Lots of Lisps, especially those that run on top of UNIX, do not get
 ;;; their input one character at a time, but a whole line at a time because
 ;;; of the buffering done by the UNIX system. This causes y-or-n-p-wait
-;;; to not always work as expected. 
+;;; to not always work as expected.
 ;;;
 ;;; I wish lisp did all its own buffering (turning off UNIX input line
 ;;; buffering by putting the UNIX into CBREAK mode ). Of course, this means
-;;; that we lose input editing, but why can't the lisp implement this? 
+;;; that we lose input editing, but why can't the lisp implement this?
 ;;;
-;;; Note that CMU CL's time functions cons too much, causing GC to thrash 
+;;; Note that CMU CL's time functions cons too much, causing GC to thrash
 ;;; itself to death. Thus the -WAIT functions really aren't practical
 ;;; in CMU CL because of their busy-waiting.
 ;;;
@@ -94,8 +94,8 @@
   "QUERY is used for asking questions of the user. OPTIONS is a property-list
    containing the following keywords:
       :TYPE              :char or :line (how *query-io* is read )
-      :CHOICES           A list containing entries of the form 
-                         (<value> . <key>* )or ((<value> <print> ). <key>* ), 
+      :CHOICES           A list containing entries of the form
+                         (<value> . <key>* )or ((<value> <print> ). <key>* ),
                          where <value> is the value to be returned, <key> is
                          a character or string, as the case may be, that is
                          used to select the <value>, and <print> is printed
@@ -112,8 +112,8 @@
       :SIGNAL-CONDITION  If T, will signal a condition of type QUERY-ERROR
                          before proceeding. If non-NIL but not T, uses the
                          value as the name of the condition. "
-  (apply #'query-internal 
-	 :format-string format-string 
+  (apply #'query-internal
+	 :format-string format-string
 	 :format-arguments format-arguments
 	 options ))
 
@@ -133,7 +133,7 @@
   "YES-OR-NO-P prints the message, if supplied, rings the bell, and
    reads a line from *QUERY-IO* (ignoring whitespace )until the user
    types YES or NO, returning T and NIL, respectively. Repeats the
-   request if the user typed anything else. Also, if HELP, H or ? is 
+   request if the user typed anything else. Also, if HELP, H or ? is
    enterred, prints a brief help message. If you want a question mark
    at the end of the message, you must put it there yourself;
    YES-OR-NO-P will not add it."
@@ -180,7 +180,7 @@
 			    timeout-default
 			    (stream *query-io* )
 			    (signal-condition nil ))
-  ;; Default :FRESH-LINE appropriately if the user didn't specify it as 
+  ;; Default :FRESH-LINE appropriately if the user didn't specify it as
   ;; a keyword.
   (unless fresh-line-p
     ;; If QUERY is called with no format arguments, don't do a FRESH-LINE.
@@ -225,7 +225,7 @@
 	  (finish-output stream ))))
     ;; choose
     (let* ((input (case type
-		    (:char 
+		    (:char
 		     (if timeout
 			 (or (read-char-wait timeout stream )
 			     (when timeout-default
@@ -299,13 +299,13 @@ No
 NIL
 USER(315 ): USER(315 ): (query:y-or-n-p-wait #\y 3 "Do you want it?" )
 Do you want it? (y, n, h )h
-Type "y" for yes or "n" for no. 
+Type "y" for yes or "n" for no.
 Do you want it? (y, n, h )y
 Yes
 T
 USER(316 ): USER(316 ): (query:y-or-n-p-wait #\y 3 "Do you want it?" )
 Do you want it? (y, n, h )h
-Type "y" for yes or "n" for no. 
+Type "y" for yes or "n" for no.
 Do you want it? (y, n, h )n
 No
 NIL

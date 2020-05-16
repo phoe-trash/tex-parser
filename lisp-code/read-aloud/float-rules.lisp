@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (in-package :user)
@@ -23,7 +23,7 @@
   ;;; Function: FOOTNOTE-COUNTER                               Author: raman
   ;;; Created: Mon Oct 25 16:51:49 1993
 
-(defun footnote-counter () 
+(defun footnote-counter ()
   "Return current value of footnote counter. "
   *footnote-counter*)
 
@@ -32,7 +32,7 @@
   ;;; Function: INCREMENT-FOOTNOTE-COUNTER                     Author: raman
   ;;; Created: Mon Oct 25 16:52:34 1993
 
-(defun increment-footnote-counter () 
+(defun increment-footnote-counter ()
   "Increment footnote counter"
   (incf *footnote-counter*))
 
@@ -40,13 +40,13 @@
   ;;; Function: DECREMENT-FOOTNOTE-COUNTER                     Author: raman
   ;;; Created: Mon Oct 25 16:54:55 1993
 
-(defun decrement-footnote-counter () 
+(defun decrement-footnote-counter ()
   "Decrement footnote counter. "
   (decf *footnote-counter*)
   )
   ;;; Created: Mon Oct 25 16:50:33 1993
 
-(defun reset-footnote-counter () 
+(defun reset-footnote-counter ()
   "Rest footnote counter. "
   (setf *footnote-counter 1 )
   )
@@ -93,6 +93,6 @@
   (read-aloud "fraction" )
   (delay-until  'math
                 #'(lambda()
-                    (without-float (fraction) 
+                    (without-float (fraction)
                     (read-aloud fraction ))))
                 )

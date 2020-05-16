@@ -23,7 +23,7 @@
   ;;; Macro: DEF-SPECIAL-PATTERN                               Author: raman
   ;;; Created: Sun Dec 27 11:19:35 1992
 
-(defmacro def-special-pattern (object-name &rest rules) 
+(defmacro def-special-pattern (object-name &rest rules)
   "Define special patterns for this object"
   `(defmethod   special-pattern  ((instance  ,object-name ))
     "special patterns defined"

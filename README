@@ -8,14 +8,14 @@ The work describing AsTeR was presented to the faculty at Cornell
 for my PhD on
 Monday, Jan 17, 1994 (Martin Luther King Day)
 
-** Contents 
+** Contents
 this directory contains a cleaned version of AsTeR
-Clean == 
+Clean ==
 
-  1) throw away unnecessary code. 
-  2) Work under clisp and lucid. 
+  1) throw away unnecessary code.
+  2) Work under clisp and lucid.
 
-** Terms 
+** Terms
 
 This code is is as-is --- i.e. it comes with no support.
 
@@ -25,7 +25,7 @@ This code is is as-is --- i.e. it comes with no support.
 
 ***Pre-Requisites:
 
-  1. CLisp --- I am using 
+  1. CLisp --- I am using
      clisp Version: 1:2.44.1-4.1ubuntu2
 
   2.  emacs --- I am using Emacs 23, though older Emacsuns will
@@ -63,4 +63,4 @@ This code is is as-is --- i.e. it comes with no support.
   10. If you want to use this code with other TTS  engines,  you
       will need to write the necessary code.
 
-  
+

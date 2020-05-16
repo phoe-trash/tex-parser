@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (in-package :user)
@@ -60,7 +60,7 @@
 
 (defmethod weight ((math-array math-array))
   "Weight of an array."
-  (let ((contents (contents math-array ))) 
+  (let ((contents (contents math-array )))
     (loop for row in  contents
           sum
           (loop for element in row sum (weight element ))))
@@ -70,7 +70,7 @@
 ;;; Created: Thu Dec  3 19:28:55 1992
 ;;; Modified: Sat Dec 12 13:17:20 EST 1992
 ;;; Removing unnecessary conditional clauses and replacing them by
-;;; separate methods that specialize on their argument. 
+;;; separate methods that specialize on their argument.
 ;;; <(old method has been backed up. )>
 
 (defmethod weight ((math-object math-object))
@@ -80,7 +80,7 @@
      (+ (weight (contents math-object ))
         (weight-of-attributes math-object )))
     (t (+ 1
-          (weight-of-attributes  math-object) 
+          (weight-of-attributes  math-object)
           (weight-of-children math-object )))
     )
   )
@@ -114,7 +114,7 @@
 
 (defmethod weight-of-attributes ((math-object math-object))
   "Sum weights of all the attributes. "
-  (or 
+  (or
    (loop for attribute in (attributes math-object)
          sum (weight (attribute-value attribute )))
    0)
@@ -126,7 +126,7 @@
 
 (defmethod weight-of-children ((math-object math-object))
   "Sum weight of children"
-  (or 
+  (or
    (loop for child in (children math-object)
          sum (weight child))
    0)
@@ -185,7 +185,7 @@
 (defmethod balanced-tree-p ((math-object math-object))
   "Check if tree rooted here is balanced. "
   (let  ((children (children math-object )))
-    (when children 
+    (when children
       (loop for current in (rest children )
             always (=
                     (weight current)

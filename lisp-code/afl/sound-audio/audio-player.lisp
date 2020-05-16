@@ -3,33 +3,33 @@
 ;;; $Id: audio-player.lisp,v 1.1.1.1 2001/08/10 23:20:19 raman Exp $
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (in-package :afl)
 (proclaim '(optimize (compilation-speed 0) (safety 1) (speed 3)))
 ;;; clisp porting note:
-;;; clisp does not have processes. 
+;;; clisp does not have processes.
 ;;; Modified: Tue Mar 23 16:00:24 EST 1993
-;;; { export 
+;;; { export
 
 ;;; exporting
 (export   '(
             switch-on switch-off toggle-switch
             select-sound audio-move-to
             make-audio-filename
-            play-once synchronize-and-play play-repeatedly 
+            play-once synchronize-and-play play-repeatedly
             initialize-audio-space
             activate-sound-audio deactivate-sound-audio
             *current-audio-state* *global-audio-state*
             *sound-dir-name*
-            *sound-priority* 
+            *sound-priority*
             ))
 (loop for dim in *audio-dimensions*  do
       (export dim ))
 
 ;;; }
-;;; { comments: 
+;;; { comments:
 
 ;;; Mon Feb 15 20:23:23 EST 1993
 ;;; Switching to using play-sound-file. <(Old version backed up. )>
@@ -71,7 +71,7 @@
 
   ;;; Variable: *SOUND-PRIORITY*                               Author: raman
   ;;; Created: Thu Jan  7 13:59:09 1993
-;;; external variable: 
+;;; external variable:
 (defvar *sound-priority* 101  "Priority for scheduling sounds")
 ;;; *sound-priority* is assigned a high number. Lucid assigns a
 ;;; default scheduling priority of 100 to processes, and the manual
@@ -84,7 +84,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;; }
-;;; { run-program-play-file --lisp specific-- 
+;;; { run-program-play-file --lisp specific--
 
 (defvar *play-program* "play"
   "Play executable ")
@@ -93,7 +93,7 @@
                                         ;;; using run-program:
 
 (proclaim '(inline run-program-play-file))
-#+(and lucid sparc) 
+#+(and lucid sparc)
 (defun run-program-play-file (&key (volume 1) (port  :h)
                                    (immediate nil) (wait nil)
                                    (filename *default-sound-filename*))
@@ -101,7 +101,7 @@
   (declare (optimize(compilation-speed 0) (speed 3 ) (safety 1 )))
   (cond
     ((and immediate (audio-busy-p )) nil)
-    (t (run-program   "play" 
+    (t (run-program   "play"
                       :arguments (remove nil  (list "-v" (format nil "~a" volume)
                                                     (case port
                                                       (:h "-h" )
@@ -115,25 +115,25 @@
 #+lucid
 ;;; this function needs cleaning,
 ;;; it depends too closely on the command line interface used by *play-program*
-(defun run-program-play-file (&key (volume 1) 
+(defun run-program-play-file (&key (volume 1)
                                    (immediate nil) (wait nil)
                                    (filename *default-sound-filename*))
   "use run-program to play file"
   (declare (optimize(compilation-speed 0) (speed 3 ) (safety 1 )))
-     (run-program    *play-program* 
+     (run-program    *play-program*
                       :arguments
                       (remove nil  (list "-v" (format nil "~a" volume)
                                                     (if immediate "-i"   nil )
                                                     filename))
                       :wait  wait))
 #+clisp
-;;; clisp does not know about :wait 
-(defun run-program-play-file (&key (volume 1) 
+;;; clisp does not know about :wait
+(defun run-program-play-file (&key (volume 1)
                                    (immediate nil) (wait nil)
                                    (filename *default-sound-filename*))
   "use run-program to play file"
   (declare (optimize(compilation-speed 0) (speed 3 ) (safety 1 )))
-  (run-program    *play-program* 
+  (run-program    *play-program*
                   :arguments
                   (remove nil  (list "-v" (format nil "~a" volume)
                                      filename ))
@@ -145,7 +145,7 @@
 
   ;;; Variable: *SOUND-DIR-NAME*                               Author: raman
   ;;; Created: Fri Jan  8 13:21:15 1993
-;;; external variable: 
+;;; external variable:
 (defvar *sound-dir-name*
   (concatenate 'string user::*lisp-code-directory* "/"
                "sounds" )
@@ -204,12 +204,12 @@
 
 ;;; }
 
-;;; { class audio-player --lisp specific-- 
+;;; { class audio-player --lisp specific--
 
 (use-package :clos)
   ;;; Class: AUDIO-PLAYER                                      Author: raman
   ;;; Created: Thu Jan  7 14:01:55 1993
-#+lucid 
+#+lucid
 (defclass audio-player ()
   ((id :initform (incf *audio-player-id* )
        :initarg :id :accessor audio-player-id)
@@ -225,7 +225,7 @@
   (:documentation "An audio player"))
 
 #+clisp
-;;; clisp does not have processes 
+;;; clisp does not have processes
 (defclass audio-player ()
   ((id :initform (incf *audio-player-id* )
        :initarg :id :accessor audio-player-id)
@@ -306,7 +306,7 @@
            ))
     )
 #+lucid
-;;; audio-busy-p not defined for lucid on all platforms 
+;;; audio-busy-p not defined for lucid on all platforms
 (defmethod initialize-instance
   :after  ((audio-player audio-player) &rest initargs )
   "After method: Sets up process for audio player"
@@ -335,7 +335,7 @@
 
   ;;; Method: ACTIVATE-PLAYER                                  Author: raman
   ;;; Created: Thu Jan  7 14:34:13 1993
-#+lucid 
+#+lucid
 (defmethod activate-player ((audio-player audio-player))
   "Activate this player"
   (declare (optimize (compilation-speed 0) (speed 1) (safety 2)))
@@ -346,12 +346,12 @@
 (defmethod activate-player ((audio-player audio-player))
   "Activate this player"
   (declare (optimize (compilation-speed 0) (speed 1) (safety 2)))
-  nil 
+  nil
   )
 
   ;;; Method: DEACTIVATE-AUDIO-PLAYER                          Author: raman
   ;;; Created: Thu Jan  7 14:35:08 1993
-#+lucid 
+#+lucid
 (defmethod deactivate-player ((audio-player audio-player))
   "Deactivate this player"
   (declare (optimize (compilation-speed 0) (speed 1) (safety 2)))
@@ -368,7 +368,7 @@
 
   ;;; Method: REMOVE-PLAYER                                    Author: raman
   ;;; Created: Thu Jan  7 14:36:06 1993
-#+lucid 
+#+lucid
 (defmethod remove-player ((audio-player audio-player))
   "Kill this player"
   (declare (optimize (compilation-speed 0) (speed 1) (safety 2)))
@@ -383,7 +383,7 @@
   )
 
 (proclaim '(inline activate-sound-audio ))
-#+lucid 
+#+lucid
 (defun activate-sound-audio ()
   "Activate sound audio hardware if necessary. "
   (when (eql (audio-player-state *audio-player* ) :inactive)
@@ -397,10 +397,10 @@
   )
 
 (proclaim '(inline deactivate-sound-audio))
-#+lucid 
+#+lucid
 (defun deactivate-sound-audio ()
   "Deactivate sound audio"
-  (when *audio-player* 
+  (when *audio-player*
   (deactivate-player *audio-player*))
   )
 
@@ -408,9 +408,9 @@
 ;;; dummy
 (defun deactivate-sound-audio ()
   "Deactivate sound audio"
-  nil 
+  nil
   )
-#+lucid 
+#+lucid
 (defmethod kill-player ((audio-player audio-player))
   "Kill this player"
   (declare (optimize (compilation-speed 0) (speed 1) (safety 2)))
@@ -426,7 +426,7 @@
 
   ;;; Method: AUDIO-PLAYER-STATE                               Author: raman
   ;;; Created: Thu Jan  7 14:38:14 1993
-#+lucid 
+#+lucid
 (defmethod audio-player-state ((audio-player audio-player))
   "State of audio player "
   (declare (optimize (compilation-speed 0) (speed 1) (safety 2)))
@@ -467,14 +467,14 @@
 ;;; Modified: Thu Jan  7 16:38:31 EST 1993
 ;;; Using run-program isntead of shell
 (proclaim '(inline synchronize-and-play))
-(defun synchronize-and-play (soundfile &key(background-flag  nil)) 
+(defun synchronize-and-play (soundfile &key(background-flag  nil))
   "wait for dectalk to stop talking and then play soundfile."
   (declare  (optimize (compilation-speed 0) (safety 1) (speed 3)))
   (unless (or (switch *audio-player*)
               dectalk:*dribbling-to-file*)
     (await-silence )
     (when *play-program*
-      (user::run-program *play-program* 
+      (user::run-program *play-program*
                          :arguments (list
                                      soundfile)
                          )
@@ -486,14 +486,14 @@
 
 (defun play-repeatedly (soundfile count
 &key (synchronize-flag t)
-                                   (background-flag nil)) 
+                                   (background-flag nil))
   "Play soundfile count times"
   (let ((soundfiles (loop for i from 1 to count
                           collect soundfile )))
     (when synchronize-flag
     (await-silence))
     (user::run-program "play"
-                       :arguments   
+                       :arguments
 `(,@soundfiles)
                            ;:wait   nil
                            )
@@ -505,11 +505,11 @@
   (declare  (optimize (compilation-speed 0) (safety 1) (speed 3)))
   (let
       ((play-args
-        `("-v"  "1" "-h" "-i" 
+        `("-v"  "1" "-h" "-i"
           ,@soundfiles)))
     (await-silence )
     (user::run-program "play"
-                       :arguments   play-args 
+                       :arguments   play-args
                        ;:wait  nil
                        ))
   )
@@ -522,7 +522,7 @@
   (declare (optimize (compilation-speed 0) (speed 1) (safety 2)))
   (with-slots
       ((audio-player-function function )
-       (audio-player-sound sound )) audio-player 
+       (audio-player-sound sound )) audio-player
        (apply audio-player-function  audio-player-sound)
        )
   (values)  )
@@ -538,7 +538,7 @@
   )
 
 ;;; }
-;;; { setting up points in sound space 
+;;; { setting up points in sound space
 
   ;;; Structure: POINT-IN-AUDIO-SPACE                          Author: raman
   ;;; Created: Thu Feb 11 19:31:22 1993
@@ -573,14 +573,14 @@
   ;;; Function: CREATE-POINT-IN-AUDIO-SPACE                    Author: raman
   ;;; Created: Thu Feb 11 20:17:48 1993
 (proclaim '(inline create-point-in-audio-space))
-(defun create-point-in-audio-space () 
+(defun create-point-in-audio-space ()
   "Create a point in audio space and initialize it"
   (make-point-in-audio-space)
   )
   ;;; Function: INITIALIZE-AUDIO-SPACE                         Author: raman
   ;;; Created: Thu Feb 11 20:25:14 1993
 
-(defun initialize-audio-space () 
+(defun initialize-audio-space ()
   "Initialize audio space"
   (setf *current-audio-state* (create-point-in-audio-space))
   (setf *global-audio-state* *current-audio-state* )
@@ -655,7 +655,7 @@
   ;;; Function: AUDIO-POINT-TO-SOUND                           Author: raman
   ;;; Created: Tue Feb 16 10:11:26 1993
 (proclaim '(inline audio-point-to-sound))
-(defun audio-point-to-sound (point) 
+(defun audio-point-to-sound (point)
   "Return a list appropriate for play-sound-file from point"
   (assert (point-in-audio-space-p point) nil
           "~a is not a point in audio space" point)
@@ -675,7 +675,7 @@
        (sound(audio-point-to-sound point ))
        (switch (audio-player-switch *audio-player* )))
     (unwind-protect
-         (progn 
+         (progn
            (and switch
                 (switch-off *audio-player* ))
            (apply audio-player-function  sound))
@@ -683,13 +683,13 @@
   (values)  )
 
 ;;; }
-;;; { generic afl code for sound audio. 
+;;; { generic afl code for sound audio.
 
-;;; contains afl operators and associated helper functions 
+;;; contains afl operators and associated helper functions
   ;;; Function: DIFFERENT-AUDIO-POINTS-P                           Author: raman
   ;;; Created: Tue Mar 23 14:56:53 1993
 
-(defun different-audio-points-p (old-point new-point) 
+(defun different-audio-points-p (old-point new-point)
   "Compare points, return t if different"
   (flet
       ((different-values (dim-1 dim-2)
@@ -733,7 +733,7 @@
   ;;; Function: SET-AUDIO-STATE                                Author: raman
   ;;; Created: Fri Feb 12 09:45:18 1993
 
-(defun set-audio-state (point) 
+(defun set-audio-state (point)
   "Set state of audio player as given by point"
   (assert (point-in-audio-space-p point) nil
           "~a is not a point in audio space. " point)
@@ -782,7 +782,7 @@
   "Move to a new value along dimension. "
   (assert (find dimension *audio-dimensions*) nil
           "~a is not a valid sound space dimension. "
-          dimension) 
+          dimension)
   (let
       ((new-point (copy-point-in-audio-space point  )))
     (setf (audio-point-accessor new-point dimension) value)

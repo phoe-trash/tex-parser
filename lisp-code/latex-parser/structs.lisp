@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 
@@ -41,7 +41,7 @@
 ;;; Structure: MATH-DELIMITER                                Author: raman
 ;;; Created: Tue Feb  4 18:34:12 1992
 
-;;; hold a math delimiter 
+;;; hold a math delimiter
 
 (defstruct (math-delimiter (:type  list))
   (open)

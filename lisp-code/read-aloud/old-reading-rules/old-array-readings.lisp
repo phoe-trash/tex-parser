@@ -18,16 +18,16 @@
 
 (def-reading-rule (math-array simple)
     "Simple reading rule for arrays, uses directional audio"
-  (with-pronunciation-mode (:mode :math) 
+  (with-pronunciation-mode (:mode :math)
     (let
         ((contents  (if *transpose-table*
                         (transpose-table (contents
                                           math-array))
                         (contents math-array ))))
-      (loop for row in   contents 
+      (loop for row in   contents
             do
             (afl:new-block
-                             (let* 
+                             (let*
                                  ((range (afl:dimension-range
                                           'afl:right-volume ))
                                   (column-step (if  (>  (length row) 1)
@@ -36,7 +36,7 @@
                                                               1 ))
                                                     1))
                                   )
-                               
+
                                (define-reading-state 'row
                                    #'(lambda (state)
                                        (afl:multi-move-to state
@@ -52,10 +52,10 @@
                                 (reading-state  'row))
                                (afl:with-surrounding-pause *math-surround*
                                  (loop for column in row
-                                       and i = 1 then (+ i 1) 
+                                       and i = 1 then (+ i 1)
                                        do
                                        (afl:force-speech)
-                                       (afl:with-surrounding-pause 1 
+                                       (afl:with-surrounding-pause 1
                                          (read-aloud  column))
 ;                                       (dectalk:await-silence)
                                        (when (< i (length row ))
@@ -78,16 +78,16 @@
 
 (def-reading-rule (tabular simple)
     "Simple reading rule for arrays, uses directional audio"
-  (with-pronunciation-mode (:mode :text) 
+  (with-pronunciation-mode (:mode :text)
     (let
         ((contents  (if *transpose-table*
                         (transpose-table (contents
                                           tabular))
                         (contents tabular ))))
-      (loop for row in   contents 
+      (loop for row in   contents
             do
             (afl:new-block
-                             (let* 
+                             (let*
                                  ((range (afl:dimension-range
                                           'afl:right-volume ))
                                   (column-step (if  (>  (length row) 1)
@@ -96,7 +96,7 @@
                                                               1 ))
                                                     1))
                                   )
-                               
+
                                (define-reading-state 'row
                                    #'(lambda (state)
                                        (afl:multi-move-to state
@@ -111,10 +111,10 @@
                                (afl:local-set-state
                                 (reading-state  'row))
                                (loop for column in row
-                                     and i = 1 then (+ i 1) 
+                                     and i = 1 then (+ i 1)
                                      do
-                                     (afl:pause 1) 
-                                     (afl:with-surrounding-pause 1 
+                                     (afl:pause 1)
+                                     (afl:with-surrounding-pause 1
                                        (read-aloud  column))
                                      (when (< i (length row ))
                                        (afl:local-set-state
@@ -127,14 +127,14 @@
 
 
 (def-reading-rule (tabular descriptive)
-    (with-pronunciation-mode (:mode :text) 
-      (let* 
+    (with-pronunciation-mode (:mode :text)
+      (let*
           ((contents   (contents tabular ))
            (headers (first contents )))
-        (loop for row in    (rest contents) 
+        (loop for row in    (rest contents)
               do
               (afl:new-block
-                               (let* 
+                               (let*
                                    ((range (afl:dimension-range
                                             'afl:right-volume ))
                                     (column-step (if  (>  (length row) 1)
@@ -159,14 +159,14 @@
                                  (loop for column in row
                                        and
                                        head in headers
-                                       and i = 1 then (+ i 1) 
+                                       and i = 1 then (+ i 1)
                                        do
                                        (afl:force-speech)
                                        (read-aloud head)
-                                       (read-aloud "at" ) 
-                                       (afl:with-surrounding-pause 1 
+                                       (read-aloud "at" )
+                                       (afl:with-surrounding-pause 1
                                          (read-aloud  column))
-                                       (when (< i (length row )) 
+                                       (when (< i (length row ))
                                          (afl:local-set-state
                                           (reading-state 'next-column )))
                                        (afl:force-speech))

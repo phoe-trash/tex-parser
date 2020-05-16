@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 
@@ -55,7 +55,7 @@
 ;;; Function: PRINT-BUFFER                                   Author: raman
 ;;; Created: Sat Feb  8 20:30:58 1992
 
-(defun print-buffer (buffer  stream depth) 
+(defun print-buffer (buffer  stream depth)
   "Print a buffer"
   (declare (ignore depth))
   (format stream "Buffer:
@@ -98,7 +98,7 @@ local-environment: ~a
 ;;; Made inline.
 (proclaim '(inline pop-current-entry))
 
-(defun pop-current-entry (buff) 
+(defun pop-current-entry (buff)
   "pops current entry off buffer modifyin gpointer"
   (pop (buffer-pointer buff))
   )
@@ -118,7 +118,7 @@ local-environment: ~a
 ;;; Function: LOOKAT-NEXT-N-ENTRIES                          Author: raman
 ;;; Created: Thu Oct 31 13:31:25 1991
 
-(defun lookat-next-n-entries (buff &optional (n 1)) 
+(defun lookat-next-n-entries (buff &optional (n 1))
   "Looks at the next n entries in the buffer buff "
   (let
       ((old-position (buffer-pointer buff))
@@ -145,7 +145,7 @@ local-environment: ~a
 ;;; made inline.
 (proclaim '(inline advance-pointer))
 
-(defun  advance-pointer (buff) 
+(defun  advance-pointer (buff)
   "return buffer after advancing pointer. "
   (pop-current-entry buff)
   buff
@@ -157,7 +157,7 @@ local-environment: ~a
 ;;; using loop instead more readable probably more efficient
 ;;; <(backed up version using do)>
 (proclaim '(inline pop-while-true ))
-(defun pop-while-true (text-buffer predicate) 
+(defun pop-while-true (text-buffer predicate)
   "Pops off entries reseting pointer while predicate is satisfied."
   (loop while
         (and (funcall predicate (lookat-current-entry text-buffer ))
@@ -168,7 +168,7 @@ local-environment: ~a
 ;;; Function: POP-WHEN-TRUE                                  Author: raman
 ;;; Created: Fri Nov  1 11:04:12 1991
 
-(defun pop-when-true  (text-buffer predicate) 
+(defun pop-when-true  (text-buffer predicate)
   "Pops off first entry in buffer reseting pointer if this satisfies predicate."
   (cond
     ((funcall predicate
@@ -183,7 +183,7 @@ local-environment: ~a
 ;;; made inline.
 (proclaim '(inline end-of-buffer?))
 
-(defun end-of-buffer? (buff) 
+(defun end-of-buffer? (buff)
   "Checks if pointer is at the end of buff"
   (endp (buffer-pointer buff))
   )
@@ -197,7 +197,7 @@ local-environment: ~a
 ;;; Function: RESET-POINTER                                  Author: raman
 ;;; Created: Thu Nov  7 19:14:30 1991
 
-(defun reset-pointer (buff &optional (pos nil)) 
+(defun reset-pointer (buff &optional (pos nil))
   "REsets buffer pointer to point to the beginning of buff or pos if supplied."
   (cond
     ((null pos) (setf (buffer-pointer buff) (buffer-contents buff )))

@@ -7,7 +7,7 @@
 ;;;
 ;;; DEFINE-SYNTHESIZER-CODE (dimension value)                        [FUNCTION]
 ;;;    Define   VALUE as the synthesizer-code for setting dimension
-;;;    DIMENSION 
+;;;    DIMENSION
 ;;;
 ;;; DEFINE-STEP-SIZE (dimension value)                               [FUNCTION]
 ;;;    Define VALUE as the step-size  for dimension DIMENSION
@@ -36,26 +36,26 @@
 ;;;
 ;;; MOVE-BY (point dimension offset &key (slot (quote value)))       [FUNCTION]
 ;;;    Return point reached by moving from point along dimension by offset.
-;;;    Default is to vary the value assigned to dimension. 
+;;;    Default is to vary the value assigned to dimension.
 ;;;    If called with :slot 'step-size, modifies the step size instead.
 ;;;
 ;;; STEP-BY (point dimension number-of-steps                         [FUNCTION]
 ;;;          &key (slot (quote value)))
 ;;;    Return point reached by moving from point by number-of-steps along
 ;;;    dimension dimension. Default is to vary value assigned along
-;;;    dimension.  
+;;;    dimension.
 ;;;    If called with :slot 'step-size, modifies the step size instead.
 ;;;
 ;;; MOVE-TO (point dimension value &key (slot (quote value)))        [FUNCTION]
 ;;;    Return point reached by setting value along dimension dimension to
-;;;    value. Default is to change the value assigned along this dimension. 
-;;;    If called with :slot 'step-size, modifies the step size instead. 
+;;;    value. Default is to change the value assigned along this dimension.
+;;;    If called with :slot 'step-size, modifies the step size instead.
 ;;;
 ;;; SCALE-BY (point dimension scale-factor                           [FUNCTION]
 ;;;           &key (slot (quote value)))
 ;;;    Return point reached by scaling value along  dimension by scale
 ;;;    factor If called with :slot 'step-size, modifies the step size
-;;;    instead. 
+;;;    instead.
 ;;;
 ;;; MULTI-MOVE-BY (point &rest settings)                             [FUNCTION]
 ;;;    Move from point along several dimensions, specify settings as
@@ -63,29 +63,29 @@
 ;;;
 ;;; MULTI-MOVE-TO (point &rest settings)                             [FUNCTION]
 ;;;    Move along multiple dimensions, settings specified as dimension value
-;;;    pairs 
+;;;    pairs
 ;;;
 ;;; MULTI-SCALE-BY (point &rest settings)                            [FUNCTION]
 ;;;    scale along multiple dimensions, specify settings as dimension value
-;;;    pairs 
+;;;    pairs
 ;;;
 ;;; MULTI-STEP-BY (point &rest settings)                             [FUNCTION]
 ;;;    step along multiple dimensions
 ;;;
 ;;; GENERALIZED-AFL-OPERATOR (point &rest settings)                  [FUNCTION]
-;;;    Operate on point  and return new point. 
+;;;    Operate on point  and return new point.
 ;;;
 ;;; *GLOBAL-STATE* "()"                                              [VARIABLE]
 ;;;    records global state of afl
 ;;;
 ;;; *CURRENT-STATE* "()"                                             [VARIABLE]
-;;;    Records current state of the audio formatter 
+;;;    Records current state of the audio formatter
 ;;;
 ;;; NEW-BLOCK (&body body)                                              [MACRO]
 ;;;    sets up a new block in afl
 ;;;
 ;;; NAMED-BLOCK (name &body body)                                       [MACRO]
-;;;    Blocks with names. 
+;;;    Blocks with names.
 ;;;
 ;;; EXIT-BLOCK "()"                                                  [FUNCTION]
 ;;;    exit current block
@@ -107,7 +107,7 @@
 ;;;
 ;;; DEFINE-FINAL-SCALE-FACTOR (dimension scale-factor)               [FUNCTION]
 ;;;    Define global scale factor to be applied to dimension Does nothing
-;;;    if scale factor already defined 
+;;;    if scale factor already defined
 ;;;
 ;;; SET-FINAL-SCALE-FACTOR (dimension scale-factor)                  [FUNCTION]
 ;;;    Set scale factor for dimension

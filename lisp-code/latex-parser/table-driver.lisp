@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 
@@ -27,7 +27,7 @@
 ;;; made inline.
 (proclaim '(inline what-is))
 
-(defun what-is? (token) 
+(defun what-is? (token)
   "returns token marker for lists which is the first element, or word if string."
   (cond
     ((listp token) (first token))
@@ -42,7 +42,7 @@
 ;;; Created: Tue Feb 25 13:13:22 1992
 
 
-(defun math-what-is? (token) 
+(defun math-what-is? (token)
   "classify token according to math mode"
   (cond
     ((listp token) (first token))
@@ -59,7 +59,7 @@
 ;;; Function: NUMBER-STRING?                            Author: raman
 ;;; Created: Thu Feb 27 10:52:18 1992
 
-(defun NUMBER-STRING? (string) 
+(defun NUMBER-STRING? (string)
   "checks if string is a quoted number"
   (and
    (stringp string)
@@ -73,10 +73,10 @@
 ;;; Modified: Fri Dec 25 08:35:26 EST 1992
 ;;;  Switching to hash tables. <(list version backed up)>
 
-(defun get-parser (token &key  (math-flag nil)) 
+(defun get-parser (token &key  (math-flag nil))
   "Get the right parsing function from the global variable "
   (let
-      ((parser 
+      ((parser
 	(gethash (if math-flag; things classified differently in math mode.
                      (math-what-is? token)
                      (what-is? token))
@@ -99,7 +99,7 @@
 ;;; Created: Thu Jan 30 09:35:39 1992
 ;;; Modified: Fri Dec 25 09:08:08 EST 1992
 ;;; <(Switching to hash tables, old version backed up. )>
-(defun get-tex-macro (macro-name) 
+(defun get-tex-macro (macro-name)
   "gets the entry for macro macro-name from the table"
   (or
    (gethash  macro-name *tex-macro-table*)
@@ -113,7 +113,7 @@
 ;;; Macro: TOGGLE                                         Author: raman
 ;;; Created: Tue Feb  4 09:39:38 1992
 
-(defmacro  toggle (global-var) 
+(defmacro  toggle (global-var)
   "toggle the setting of boolean variables."
   `(setf  ,global-var
     (not ,global-var))

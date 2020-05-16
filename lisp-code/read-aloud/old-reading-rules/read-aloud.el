@@ -22,7 +22,7 @@
 
 (defvar *file-containing-region* (concat *read-aloud-directory* *temp-file*))
 (defun read-aloud-region(start end )
-  "read region. parsed document left in lucid *temp*" 
+  "read region. parsed document left in lucid *temp*"
   (interactive "r")
   (prepare-region-for-reading start end)
   (message  "Reading region: ")
@@ -54,8 +54,8 @@
 
 (defun open-temp-file-for-reading()
   "open temp file, and delete contents if necessary"
-  (let 
-  ((filename 
+  (let
+  ((filename
    (concat
     *read-aloud-directory*
     *temp-file* )))
@@ -110,7 +110,7 @@
     ))
   )
 
-(defun read-aloud-region-as-math(start end) 
+(defun read-aloud-region-as-math(start end)
   (interactive "r")
   "Read contents of region as math: "
   (read-math-string

@@ -18,7 +18,7 @@
 ;;; expression:  which contains the transformed expression,
 ;;; Transformed expression is just the original expression, with the
 ;;; substitute slot of the appropriate math objects set to the
-;;; variable to be substituted. 
+;;; variable to be substituted.
 ;;; Substitutions: A list of substitution objects.
 ;;; Each substitution object represents a pair:
 ;;; Variable :: denotes.
@@ -50,7 +50,7 @@
 ;;; If the weight of an object m is w, and the weight of the entire
 ;;; expression is wr  then we try to substitute for m if and only  if
 ;;; $ w > wr\times *proportional-complexity-threshold*$
-;;; If *proportional-complexity-threshold* is 1, then we never substitute. 
+;;; If *proportional-complexity-threshold* is 1, then we never substitute.
 ;;; Setting this to 0 will cause big trouble:-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -151,7 +151,7 @@ continues if y is not  pressed.")
                                  (afl:send-text "where, ")
                                  (read-aloud
                                   (substitutions substituted-expression)))
-                                ((numberp ;timeout 
+                                ((numberp ;timeout
                                   *wait-before-reading-substitutions*))
                                 (*wait-before-reading-substitutions*
                                  (afl:send-text "where, ")
@@ -236,7 +236,7 @@ continues if y is not  pressed.")
   ;;; Created: Tue May 25 12:31:24 1993
 
 (defun collect-substitutions (math-object &optional (threshold 1)
-                                          &key (original-weight 0)) 
+                                          &key (original-weight 0))
   "Collect substitutions applied to this object. Returns a list of
 substitutions. Side effects object: the substitution slot in the
 object or its children are set whenever a substitution is made. "
@@ -256,13 +256,13 @@ object or its children are set whenever a substitution is made. "
        (let ((variable (get-substitution-variable math-object )))
          (setf (substitution math-object ) variable)
          (push (make-instance 'substitution
-                              :variable  variable 
+                              :variable  variable
                               :denotes math-object) substitutions )))
       ((not (listp (children math-object )))
        (collect-substitutions (children math-object) threshold))
       (t                                ; substitute  child or  attribute
        (push(delete nil
-                    (loop for attribute   in (attributes math-object) 
+                    (loop for attribute   in (attributes math-object)
                           when (> (weight attribute)
                                   (* *attr-weight-factor*  threshold))
                           collect
@@ -271,8 +271,8 @@ object or its children are set whenever a substitution is made. "
                            (* *attr-weight-factor*
                               threshold ))))
             substitutions)
-       (push (delete nil 
-                     (loop for child in (children math-object) 
+       (push (delete nil
+                     (loop for child in (children math-object)
                            when (> (weight child) threshold) collect
                            (collect-substitutions
                             child
@@ -288,7 +288,7 @@ object or its children are set whenever a substitution is made. "
   ;;; Function: GET-SUBSTITUTION-VARIABLE                      Author: raman
   ;;; Created: Tue May 25 17:19:09 1993
 
-(defun get-substitution-variable (object) 
+(defun get-substitution-variable (object)
   "Return a variable to substitute for this object"
   (let ((name (if (attribute-p object)
                   (this-attribute-is-called object)
@@ -323,7 +323,7 @@ object or its children are set whenever a substitution is made. "
   ;;; Function: COMPLEXITY-THRESHOLD              Author: raman
   ;;; Created: Tue May 25 12:36:34 1993
 
-(defun complexity-threshold  (object) 
+(defun complexity-threshold  (object)
   "Compute the threshold value for children of this object"
   (let ((proportional-complexity (+ 1 (truncate
                                        (* (weight object )
@@ -335,7 +335,7 @@ object or its children are set whenever a substitution is made. "
 ;;; }
 ;;; { reading state
 
-(define-reading-state   'read-substitution-voice 
+(define-reading-state   'read-substitution-voice
     #'(lambda(state)
         (declare (ignore state ))
         (afl:get-point-in-speech-space 'afl:kid))
@@ -367,7 +367,7 @@ object or its children are set whenever a substitution is made. "
   ;;; Function: GET-SUBSTITUTION-ID                            Author: raman
   ;;; Created: Wed May 26 19:41:01 1993
 
-(defun get-substitution-id (name) 
+(defun get-substitution-id (name)
   "Get unique identifier of this name"
   (let ((entry (gethash name *subst-id-table* )))
     (cond
@@ -383,7 +383,7 @@ object or its children are set whenever a substitution is made. "
   ;;; Function: RESET-SUBSTITUTION-ID                          Author: raman
   ;;; Created: Wed May 26 19:47:00 1993
 
-(defun reset-substitution-id  () 
+(defun reset-substitution-id  ()
   "Reset substitution id table"
   (setf *subst-id-table* (make-hash-table :test #'equal ))
   )

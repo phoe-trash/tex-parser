@@ -5,7 +5,7 @@
 ;;; Use C-b as a prefix key.
 ;;; send command to lisp and move point to the end of the buffer in
 ;;; each command.
-(defvar reader-browse-keymap nil 
+(defvar reader-browse-keymap nil
 "Keymap used by the browser for AsTeR. ")
 
                                         (setq reader-browse-keymap (copy-keymap global-map ))
@@ -32,7 +32,7 @@
 (define-key reader-browse-keymap "j" 'reader-move-to-children )
 (define-key reader-browse-keymap "\C-a" 'reader-move-to-abstract)
 (define-key reader-browse-keymap "h"
-  'reader-move-back) 
+  'reader-move-back)
 (define-key reader-browse-keymap "l" 'reader-move-forward)
 (define-key reader-browse-keymap '[left] 'reader-move-back)
 (define-key reader-browse-keymap '[right] 'reader-move-forward)
@@ -58,8 +58,8 @@
     (goto-char (point-max ))))
 
 (defun reader-move-back (arg)
-  "Move the selection   to the previous sibling. 
-Numeric prefix arg specifies how much to move, 
+  "Move the selection   to the previous sibling.
+Numeric prefix arg specifies how much to move,
 default is to move by 1. "
   (interactive "p")
   (process-send-string  (get-buffer-process inferior-lisp-buffer)
@@ -68,9 +68,9 @@ default is to move by 1. "
   (move-to-end-of-lisp-buffer))
 
 (defun reader-move-forward (arg)
-"Move the selection   to the next  sibling. 
-Numeric prefix arg specifies how much to move, 
-default is to move by 1. "  
+"Move the selection   to the next  sibling.
+Numeric prefix arg specifies how much to move,
+default is to move by 1. "
   (interactive "p")
   (process-send-string  (get-buffer-process inferior-lisp-buffer)
                         (format "(move-forward %s )\n"
@@ -78,8 +78,8 @@ default is to move by 1. "
   (move-to-end-of-lisp-buffer))
 
 (defun reader-move-up (arg)
-  "Move the selection   to the parent. 
-Numeric prefix arg specifies how much to move, 
+  "Move the selection   to the parent.
+Numeric prefix arg specifies how much to move,
 default is to move by 1. "
   (interactive "p")
   (process-send-string  (get-buffer-process inferior-lisp-buffer)
@@ -155,7 +155,7 @@ With prefix arg look back. "
   )
 
 (defun reader-read-next (arg)
-  "Move selection to the next sibling, and read it. 
+  "Move selection to the next sibling, and read it.
 Prefix numeric arg specifies how much to move, default is 1."
   (interactive "p")
   (process-send-string  (get-buffer-process inferior-lisp-buffer)
@@ -165,7 +165,7 @@ Prefix numeric arg specifies how much to move, default is 1."
   )
 
 (defun reader-read-previous (arg)
-  "Move selection to the previous sibling, and read it. 
+  "Move selection to the previous sibling, and read it.
 Prefix numeric arg specifies how much to move, default is 1."
   (interactive "p")
   (process-send-string  (get-buffer-process inferior-lisp-buffer)
@@ -175,7 +175,7 @@ Prefix numeric arg specifies how much to move, default is 1."
   )
 
 (defun reader-read-parent (arg)
-  "Move selection to the parent , and read it. 
+  "Move selection to the parent , and read it.
 Prefix numeric arg specifies how much to move, default is 1."
   (interactive "p")
   (process-send-string  (get-buffer-process inferior-lisp-buffer)
@@ -185,7 +185,7 @@ Prefix numeric arg specifies how much to move, default is 1."
   )
 
 (defun reader-read-above ()
-  "If in a matrix or other tabular structure, move the current selection to the element above it, 
+  "If in a matrix or other tabular structure, move the current selection to the element above it,
 and read it. "
   (interactive)
   (process-send-string  (get-buffer-process inferior-lisp-buffer)
@@ -194,7 +194,7 @@ and read it. "
   )
 
 (defun reader-read-below ()
-  "If in a matrix or other tabular structure, 
+  "If in a matrix or other tabular structure,
  move the current selection to the element below it, and read it."
   (interactive)
   (process-send-string  (get-buffer-process inferior-lisp-buffer)
@@ -222,7 +222,7 @@ With prefix arg, move the current selection as well."
   )
 
 (defun reader-mark-read-pointer()
-  "Mark current selection" 
+  "Mark current selection"
   (interactive)
   (process-send-string
   (get-buffer-process inferior-lisp-buffer)
@@ -289,14 +289,14 @@ Useful when traversing complex math expressions. "
   (move-to-end-of-lisp-buffer)
   )
 
-(defun reader-to-top(arg) 
+(defun reader-to-top(arg)
   "Move the selection  to root of document
-with prefix arg move to top of math. " 
+with prefix arg move to top of math. "
   (interactive "P")
   (process-send-string (get-buffer-process inferior-lisp-buffer)
                        (if arg
                            (format "(move-to-top-of-math )\n")
-                           (format "(progn 
+                           (format "(progn
 (afl:refresh)
 (type-of (setf *read-pointer* *document*)) \n
 (summarize *read-pointer*) \n
@@ -345,7 +345,7 @@ with prefix arg move to top of math. "
     ))
 
 (defun reader-stop-reading()
-  "Stop reading. 
+  "Stop reading.
 The current selection is left on the last object that was spoken."
   (interactive)
   (set-buffer inferior-lisp-buffer)

@@ -19,7 +19,7 @@
             :depends-on ("browse-macros"))
    (:module "browser-action"
             :pathname ""
-            :components 
+            :components
             ((:file "summarize")
              (:file "move-around")
              (:file "bookmark"))

@@ -5,26 +5,26 @@
 (in-package :user)
 
 
-;;; Object definitions for tcs chicago 
+;;; Object definitions for tcs chicago
 
 ;;; Modified: Tue Jul  5 13:58:56 EDT 1994
 ;;; Adding definitions for objects defined by tcs chicago journal:
-;;; 
-;;; { end of sentence marker: 
+;;;
+;;; { end of sentence marker:
 
-(define-text-object :macro-name "@" 
+(define-text-object :macro-name "@"
   :number-args 1
-  :processing-function at-expand 
-  :precedence  nil 
+  :processing-function at-expand
+  :precedence  nil
   :object-name end-of-sentence
   :supers (document)
   :children-are-called nil
   )
 
-(define-text-object :macro-name "sentence" 
+(define-text-object :macro-name "sentence"
   :number-args  0
-  :processing-function sentence-expand 
-  :precedence  nil 
+  :processing-function sentence-expand
+  :precedence  nil
   :object-name end-of-sentence-mark
   :supers (end-of-sentence)
   :children-are-called nil
@@ -35,11 +35,11 @@
 
 
 (defmethod end-of-sentence? ((end-of-sentence end-of-sentence ))
-  "Always ends a sentence. " 
+  "Always ends a sentence. "
   t )
 
 
-(defmethod read-aloud  (( end-of-sentence end-of-sentence )) 
+(defmethod read-aloud  (( end-of-sentence end-of-sentence ))
   "Read aloud method for object end-of-sentence "
   (declare (optimize (compilation-speed 0) (safety  0) (speed 3)))
   (let ((contents (argument 1 end-of-sentence )))
@@ -57,7 +57,7 @@
 ;;; { absolute sectional units:
 
 (defclass asectional-unit(sectional-unit)
-  ((absolute-number  :initform nil 
+  ((absolute-number  :initform nil
        :initarg :absolute-number
        :accessor absolute-number )))
 
@@ -93,7 +93,7 @@
     (when
 	(eq sectional-unit-name (lookat-current-entry asectional-unit-buffer))
       (advance-pointer asectional-unit-buffer)
-      (let ((new-asectional-unit  (make-instance sectional-unit-name 
+      (let ((new-asectional-unit  (make-instance sectional-unit-name
                                                  :name (cond
                                                         ((eq sectional-unit-name 'achapter )
                                                          "chapter")
@@ -111,8 +111,8 @@
             (setf (sectional-unit-title new-asectional-unit)
 	      (get-unit-title!  asectional-unit-buffer)))
 	(setf (sectional-unit-body new-asectional-unit)
-              (make-paragraph-if-necessary 
-               (process-text  asectional-unit-buffer 
+              (make-paragraph-if-necessary
+               (process-text  asectional-unit-buffer
                               #'(lambda(x) (or (is-a
                                                 (child-of-asectional-unit
                                                  sectional-unit-name)
@@ -123,7 +123,7 @@
           (setf (sectional-unit-sectional-units  new-asectional-unit)
                 (get-sectional-units! asectional-unit-buffer
                                       :sectional-unit-name
-                                      (child-of-asectional-unit 
+                                      (child-of-asectional-unit
                                        sectional-unit-name)
                                       )))
         (pop-enclosing-referend)
@@ -145,9 +145,9 @@
   ;;; Created: Wed Jan 11 15:56:18 1995
 
 
-(defun validate-asectional-unit-name (unit-name) 
+(defun validate-asectional-unit-name (unit-name)
   "check if unit-name is a valid asectional unit"
-  (or 
+  (or
    (find unit-name *valid-asectional-unit-names* )
    (error "validate-asectional-unit-name: ~a is not a valid  asectional unit name"
           unit-name))
@@ -156,7 +156,7 @@
   ;;; Function: EXISTS-CHILD-OF-ASECTIONAL-UNIT                Author: raman
   ;;; Created: Wed Jan 11 15:19:58 1995
 
-(defun exists-child-of-asectional-unit? (asectional-unit-name) 
+(defun exists-child-of-asectional-unit? (asectional-unit-name)
   "Sees if child posible "
   (< (1+ (position
           asectional-unit-name
@@ -169,7 +169,7 @@
   ;;; Function: CHILD-OF-ASECTIONAL-UNIT                       Author: raman
   ;;; Created: Wed Jan 11 15:21:28 1995
 
-(defun child-of-asectional-unit (asectional-unit-name) 
+(defun child-of-asectional-unit (asectional-unit-name)
   "return name of the child of this unit"
   (when (exists-child-of-asectional-unit? asectional-unit-name)
     (elt *valid-asectional-unit-names*
@@ -181,7 +181,7 @@
   ;;; Function: GET-ABSOLUTE-SECTION-NUMBER                    Author: raman
   ;;; Created: Wed Jan 11 15:25:53 1995
 
-(defun get-absolute-section-number! (text-buffer) 
+(defun get-absolute-section-number! (text-buffer)
   "Return first item in buffer and advance pointer if it is a block."
   (process-text-block
    (make-buffer :contents
@@ -191,7 +191,7 @@
 
 
 ;;; install the processing function:
-(define-parsing-function 'achapter 
+(define-parsing-function 'achapter
           '(lambda(x &key (do-not-test nil ))
              (create-asectional-unit  (pop-current-entry x )
                                     :sectional-unit-name 'achapter)))
@@ -211,7 +211,7 @@
              (create-asectional-unit  (pop-current-entry x )
                                     :sectional-unit-name 'asubsubsection )))
 
-(define-parsing-function 'apar 
+(define-parsing-function 'apar
           '(lambda(x &key (do-not-test nil ))
              (create-asectional-unit  (pop-current-entry x )
                                     :sectional-unit-name 'apar )))
@@ -225,7 +225,7 @@
       (read-aloud (absolute-number asectional-unit ))))
   (with-reading-state (reading-state 'title-voice)
     (read-aloud (sectional-unit-title asectional-unit )))
-  (when (sectional-unit-body asectional-unit) 
+  (when (sectional-unit-body asectional-unit)
     (afl:new-block
      (read-aloud  (sectional-unit-body asectional-unit)))
     (afl:await-silence))

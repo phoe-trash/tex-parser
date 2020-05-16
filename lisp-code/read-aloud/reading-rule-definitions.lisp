@@ -7,13 +7,13 @@
 
 ;;; Modified: Mon Dec 21 09:39:21 EST 1992
 ;;; Reading rules that belong to different books being moved to their
-;;; appropriate systems. 
+;;; appropriate systems.
 ;;; Tue Dec  8 14:02:37 EST 1992
 ;;; Old version of this file is the directory  old-reading-rules.
 ;;; This file is now being modified and the reading rules are being
 ;;; converted to defmethod reading-rule.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; 
+;;;
 
 ;;; Wed Nov 11 15:13:25 EST 1992
 
@@ -47,7 +47,7 @@
 (defvar *mark-interactively-char* #\m
   "Char to be read when marking interactively. ")
 
-(def-reading-rule (paragraph allow-interactive-marks) 
+(def-reading-rule (paragraph allow-interactive-marks)
     "Skip out at end of sentence if requested.
 In addition, allow the user to mark a position while reading. "
   (declare (optimize (compilation-speed 0) (safety  0) (speed 3)))
@@ -72,7 +72,7 @@ In addition, allow the user to mark a position while reading. "
 (defvar *random-speech-interval*(1-  (length
                                   (afl:list-of-speech-dimensions)))
   "Number of speech dimensions. ")
-(def-reading-rule (paragraph random-change) 
+(def-reading-rule (paragraph random-change)
     "Introduce a random voice quality change after each sentence. "
   (declare (optimize (compilation-speed 0) (safety  0) (speed 3)))
   (flet (
@@ -99,7 +99,7 @@ In addition, allow the user to mark a position while reading. "
                                           (random *random-step-limit*  )))
                                         )))))
   )
-(def-reading-rule (paragraph random-stereo) 
+(def-reading-rule (paragraph random-stereo)
     "Introduce a random stereo  change after each sentence. "
   (declare (optimize (compilation-speed 0) (safety  0) (speed 3)))
   (afl:new-block (afl:local-set-state :text)
@@ -141,7 +141,7 @@ In addition, allow the user to mark a position while reading. "
   )
 
 (def-reading-rule (paragraph non-interactive)
-    " Non interactive: will not stop after each sentence. " 
+    " Non interactive: will not stop after each sentence. "
   (declare (optimize (compilation-speed 0) (safety  0) (speed 3)))
   (afl:new-block (afl:local-set-state :text)
                  (with-slots  ((contents contents )) paragraph
@@ -221,7 +221,7 @@ In addition, allow the user to mark a position while reading. "
     " fraction reading rule for object fraction"
   (afl:new-block
    (afl:local-set-state
-    (reading-state 'fraction) 
+    (reading-state 'fraction)
     )
    (read-aloud "Fraction with numerator: ")
    (afl:new-block
@@ -257,7 +257,7 @@ In addition, allow the user to mark a position while reading. "
     " quiet reading rule for object itemized-list"
   nil)
 
-(def-reading-rule (itemized-list default) 
+(def-reading-rule (itemized-list default)
     (call-next-method))
 ;;; }
 

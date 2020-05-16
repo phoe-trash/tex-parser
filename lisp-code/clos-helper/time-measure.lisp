@@ -16,7 +16,7 @@
   (remove nil
           (multiple-value-list (decode-universal-time 0))) "Base time")
 
-(defun time-interval (u-time-1 u-time-2) 
+(defun time-interval (u-time-1 u-time-2)
   "Compute the time interval between u-time-1 and u-time-2. Arguments are
 assumed to be in universal time as defined by lisp."
   (let
@@ -28,6 +28,6 @@ assumed to be in universal time as defined by lisp."
               (decode-universal-time gap ))))
     (setf result
           (nreverse (mapcar #'- time-gap  *base-time* )))
-    
+
     )
   )

@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (proclaim '(optimize (compilation-speed 0) (safety 1) (speed 3)))
@@ -15,7 +15,7 @@
 ;;; which make all the different create-[sub]section functions obselete.
 ;;; Modified: Thu Apr  2 15:40:22 EST 1992
 ;;; Modifying to use classes for document components instead of
-;;; structures. 
+;;; structures.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; New version:  Sun Jan 26 09:37:20 EST 1992
 ;;; Made to work with a more intelligent lexer.
@@ -44,11 +44,11 @@
 ;;; Function: READ-DOCUMENT                                   Author: raman
 ;;; Created: Fri Oct 11 11:20:10 1991
 
-(defun read-document (file-name) 
+(defun read-document (file-name)
   "Reads a lispified document and creates an  article."
   (with-open-file
       (in-stream file-name :direction :input)
-    (create-article     
+    (create-article
      (read in-stream nil)))
   )
 
@@ -66,12 +66,12 @@ recognize")
 (defvar *link-children* t "If yes call link-children-to-parent")
 ;;; Modified: Sun Apr 26 17:58:38 EDT 1992
 ;;; declaring *new-article* to be special so that title author date etc.
-;;; can be handled cleanly. 
+;;; can be handled cleanly.
 ;;; Modified: Thu Apr  2 15:41:46 EST 1992
 ;;; Modified to use class article
 ;;; Modified: Fri Oct  9 13:33:12 EDT 1992
 ;;; Made call to get-sectional-units! smarter so that partial documents
-;;; ie: those that have just a subsection can be correctly recognized. 
+;;; ie: those that have just a subsection can be correctly recognized.
 ;;; Function: CREATE-ARTICLE                                Author: raman
 ;;; Created: Fri Oct 11 10:02:00 1991
 
@@ -112,13 +112,13 @@ recognize")
 
 ;;; Variable: *VALID-SECTIONAL-UNIT-NAMES*                   Author: raman
 ;;; Created: Thu Apr  9 15:50:50 1992
-;;; external variable: 
+;;; external variable:
 (defvar *valid-sectional-unit-names* nil "list of valid sectioning units")
 
 (setf *valid-sectional-unit-names*
       (list
        'part
-       'chapter 
+       'chapter
        'section
        'subsection
        'subsubsection
@@ -128,7 +128,7 @@ recognize")
 ;;; Function: NAME-OF-SECTIONAL-UNIT-IN-FRONT                Author: raman
 ;;; Created: Fri Oct  9 13:08:11 1992
 
-(defun name-of-sectional-unit-in-front (text-buffer) 
+(defun name-of-sectional-unit-in-front (text-buffer)
   "Return name of sectional unit in front of buffer"
   (and
    (listp (lookat-current-entry text-buffer))
@@ -152,15 +152,15 @@ recognize")
 ;;; Modified: Fri Oct  9 13:15:15 EDT 1992
 ;;; Stop at first sectional unit found, which need not necessarily be
 ;;; a section. This sets up things so that partial documents can be
-;;; recognized. 
+;;; recognized.
 ;;; Function: process-INITIAL-BODY!                             Author: raman
 ;;; Created: Tue Jan 28 12:16:33 1992
 
-(defun process-initial-body! (text-buffer) 
+(defun process-initial-body! (text-buffer)
   "Process initial  body of the article,  ie upto first section."
   (declare (special *new-article* ))
   (setf (article-initial-body *new-article*)
-	(delete nil (process-text  text-buffer 
+	(delete nil (process-text  text-buffer
                                    #'(lambda(x)
                                        (or
                                         (name-of-sectional-unit-in-front x)
@@ -186,7 +186,7 @@ recognize")
 ;;; Function: CHILD-OF-SECTIONAL-UNIT                        Author: raman
 ;;; Created: Thu Apr  9 17:32:48 1992
 
-(defun child-of-sectional-unit (sectional-unit-name) 
+(defun child-of-sectional-unit (sectional-unit-name)
   "return name of the child of this unit"
   (when (exists-child-of-sectional-unit? sectional-unit-name)
     (elt *valid-sectional-unit-names*
@@ -199,7 +199,7 @@ recognize")
 ;;; Function: EXISTS-CHILD-OF-SECTIONAL-UNIT?                Author: raman
 ;;; Created: Thu Apr  9 20:06:38 1992
 
-(defun exists-child-of-sectional-unit? (sectional-unit-name) 
+(defun exists-child-of-sectional-unit? (sectional-unit-name)
   "Sees if child posible "
   (< (1+ (position
           sectional-unit-name
@@ -211,9 +211,9 @@ recognize")
 ;;; Function: VALIDATE-SECTIONAL-UNIT-NAME Author: raman
 ;;; Created: Thu Apr  9 15:48:21 1992
 
-(defun validate-sectional-unit-name (unit-name) 
+(defun validate-sectional-unit-name (unit-name)
   "check if unit-name is a valid sectional unit"
-  (or 
+  (or
    (find unit-name *valid-sectional-unit-names* )
    (error "validate-sectional-unit-name: ~a is not a valid  sectional unit name"
           unit-name))
@@ -226,14 +226,14 @@ recognize")
   ;;; Created: Mon Dec 28 14:05:31 1992
 
 (defvar *cross-references*
-  nil 
+  nil
   "Holds cross reference labels ")
 
 
   ;;; Function: INITIALIZE-CROSS-REFERENCES                    Author: raman
   ;;; Created: Mon Dec 28 19:18:31 1992
 
-(defun initialize-cross-references () 
+(defun initialize-cross-references ()
   "Initialize cross reference table"
   (setf *cross-references* (make-hash-table :test #'equal ))
   )
@@ -255,7 +255,7 @@ recognize")
                        (new-environment-name object)
                        (class-name (class-of object )))))
                (format nil "~a ~a"
-                       label-name 
+                       label-name
                        (next-counter-value label-name )))
              ))
       (setf (parent label)  (current-referend))
@@ -265,7 +265,7 @@ recognize")
       (setf (gethash label-tag *cross-references* )  label )
       (values)
       )
-    ))  
+    ))
 
 
   ;;; Variable: *COUNTER-TABLE*                                Author: raman
@@ -277,7 +277,7 @@ recognize")
   ;;; Function: INITIALIZE-COUNTERS                            Author: raman
   ;;; Created: Fri Apr 30 11:15:35 1993
 
-(defun initialize-counters () 
+(defun initialize-counters ()
   "Initialize table of counters"
   (setf *counter-table* (make-hash-table :test #'equal))
   )
@@ -288,7 +288,7 @@ recognize")
 ;;; labelled is encountered, next-counter-value should just return the
 ;;; counter, not increment.
 
-(defun next-counter-value (counter-name) 
+(defun next-counter-value (counter-name)
   "Get next value of this counter "
   (let ((value (gethash counter-name *counter-table* )))
     (cond
@@ -318,7 +318,7 @@ recognize")
 ;;; this.
 
 (proclaim '(inline labelled-p))
-(defun labelled-p (object) 
+(defun labelled-p (object)
   "Has this object been labelled?"
   (cond
     ((eq 'undefined (label object )) nil)
@@ -344,7 +344,7 @@ recognize")
 
   ;;; Variable: *OBJECTS-THAT-CAN-BE-REFERRED*                 Author: raman
   ;;; Created: Tue Dec 29 09:16:04 1992
-;;; external variable: 
+;;; external variable:
 (defvar *objects-that-can-be-referred*
   '(new-environment  math-eqnarray
     math-equation part chapter section subsection subsubsection enumerate item )
@@ -354,7 +354,7 @@ recognize")
   ;;; Function: CAN-THIS-BE-CROSS-REFERENCED?                       Author: raman
   ;;; Created: Tue Dec 29 09:24:50 1992
 
-(defun can-this-be-cross-referenced? (object-name) 
+(defun can-this-be-cross-referenced? (object-name)
   "Can this be cross referenced?"
   (find object-name *objects-that-can-be-referred* )
   )
@@ -369,7 +369,7 @@ recognize")
   ;;; Function: ADD-ENCLOSING-REFEREND                         Author: raman
   ;;; Created: Tue Dec 29 09:18:27 1992
 
-(defun add-enclosing-referend (object) 
+(defun add-enclosing-referend (object)
   "Add this to enclosing referends"
   (push object *enclosing-referends*)
   )
@@ -377,7 +377,7 @@ recognize")
   ;;; Function: POP-ENCLOSING-REFEREND                         Author: raman
   ;;; Created: Tue Dec 29 09:19:24 1992
 
-(defun pop-enclosing-referend () 
+(defun pop-enclosing-referend ()
   "Pop enclosing referend"
   (pop *enclosing-referends*)
   )
@@ -386,7 +386,7 @@ recognize")
   ;;; Function: CURRENT-REFEREND                               Author: raman
   ;;; Created: Tue Dec 29 09:20:05 1992
 
-(defun current-referend () 
+(defun current-referend ()
   "Return current referend"
   (first *enclosing-referends*)
   )
@@ -396,7 +396,7 @@ recognize")
   ;;; Method: CROSS-REFERENCE-KEY                              Author: raman
   ;;; Created: Tue Dec 29 11:16:42 1992
 
-(defun  cross-reference-key (cross-ref) 
+(defun  cross-reference-key (cross-ref)
   "Pick out the cross reference key as a string"
   (let
       ((key (first (children  cross-ref ))))
@@ -407,7 +407,7 @@ recognize")
                  (contents key  )))
       ((and (listp key)
             (text-block-p (first key  )))
-       (funcall #'concatenate-words 
+       (funcall #'concatenate-words
                 (contents (first key  ))))
       )
     )
@@ -418,7 +418,7 @@ recognize")
   ;;; Function: CONCATENATE-WORDS                              Author: raman
   ;;; Created: Wed Dec 30 12:42:40 1992
 
-(defun concatenate-words (list-of-words) 
+(defun concatenate-words (list-of-words)
   "Concatenate words and return a string"
   (cond
     ((every #'word-p list-of-words )
@@ -442,7 +442,7 @@ recognize")
   ;;; Function: MAKE-PARAGRAPH-IF-NECESSARY                    Author: raman
   ;;; Created: Fri Oct 22 13:07:39 1993
 
-(defun make-paragraph-if-necessary (input-list) 
+(defun make-paragraph-if-necessary (input-list)
   "Make this input into a paragraph if necessary."
   (cond
     ((and (listp input-list)
@@ -476,8 +476,8 @@ recognize")
 	(setf (sectional-unit-title new-sectional-unit)
 	      (get-unit-title!  sectional-unit-buffer))
 	(setf (sectional-unit-body new-sectional-unit)
-               (make-paragraph-if-necessary 
-                     (process-text  sectional-unit-buffer 
+               (make-paragraph-if-necessary
+                     (process-text  sectional-unit-buffer
                                     #'(lambda(x) (or (is-a
                                                       (child-of-sectional-unit
                                                        sectional-unit-name)
@@ -506,7 +506,7 @@ recognize")
   "Gets a list of sectional-units.
 Default is section.
 Leaves the pointer of text buffer pointing at  next unit"
-  (mapcar #'(lambda(sectional-unit-text) 
+  (mapcar #'(lambda(sectional-unit-text)
 	      (first (process-text (make-buffer :contents
                                           (list sectional-unit-text))
                             #'(lambda(x) (end-of-buffer? x))
@@ -522,32 +522,32 @@ Leaves the pointer of text buffer pointing at  next unit"
              (create-sectional-unit  (pop-current-entry x )
                                     :sectional-unit-name 'part)))
 
-        (define-parsing-function 'chapter 
+        (define-parsing-function 'chapter
           #'(lambda(x &key (do-not-test nil ))
              (create-sectional-unit  (pop-current-entry x )
                                     :sectional-unit-name 'chapter)))
 
-(define-parsing-function 'section 
+(define-parsing-function 'section
           #'(lambda(x &key (do-not-test nil ))
              (create-sectional-unit  (pop-current-entry x )
                                     :sectional-unit-name 'section)))
-(define-parsing-function 'subsection 
+(define-parsing-function 'subsection
           #'(lambda(x &key (do-not-test nil ))
              (create-sectional-unit  (pop-current-entry x )
                                     :sectional-unit-name 'subsection )))
 
 
-(define-parsing-function 'subsubsection 
+(define-parsing-function 'subsubsection
           #'(lambda(x &key (do-not-test nil ))
              (create-sectional-unit  (pop-current-entry x )
                                     :sectional-unit-name 'subsubsection)))
 
 ;;; numbering sections:
-;;; section numbers stored as strings 
+;;; section numbers stored as strings
 ;;; Function: GENERATE-SECTION-NUMBER                        Author: raman
 ;;; Created: Tue Sep  1 13:04:05 1992
 
-(defun generate-section-number (parent child) 
+(defun generate-section-number (parent child)
   "Generate section number of the form parent.child"
   (if (null parent)
       (format nil  "~a" child)
@@ -559,8 +559,8 @@ Leaves the pointer of text buffer pointing at  next unit"
 ;;; Function: NUMBER-LIST-SECTIONAL-UNITS                    Author: raman
 ;;; Created: Tue Sep  1 13:11:02 1992
 
-(defun number-list-sectional-units (list-of-sectional-units 
-                                    &key (parent nil)) 
+(defun number-list-sectional-units (list-of-sectional-units
+                                    &key (parent nil))
   "Numbers sectional units passed as a list"
   (let ((number 1))
     (dolist
@@ -573,7 +573,7 @@ Leaves the pointer of text buffer pointing at  next unit"
          (sectional-unit-sectional-units sectional-unit)
          :parent  (sectional-unit-number sectional-unit))
         )
-      
+
       (incf number)
       )
     list-of-sectional-units
@@ -587,7 +587,7 @@ Leaves the pointer of text buffer pointing at  next unit"
 ;;; Created: Fri Nov  1 15:37:36 1991
 ;;; No change made here from jan-24-version.
 
-(defun get-unit-title! (text-buffer) 
+(defun get-unit-title! (text-buffer)
   "Return first item in buffer and advance pointer if it is a block."
   (process-text-block
    (make-buffer :contents
@@ -603,12 +603,12 @@ Leaves the pointer of text buffer pointing at  next unit"
 ;;; Eventually modify to work by looking at a table
 ;;; which contains functions that process macros.
 
-(defun get-label! (text-buffer) 
+(defun get-label! (text-buffer)
   "Return argument to \label if found and advance pointer "
   (let ((token (lookat-current-entry text-buffer )))
     (cond
       ((and
-        (or 
+        (or
          (is-a 'cs token)
          (is-a 'math-cs token))
         (or

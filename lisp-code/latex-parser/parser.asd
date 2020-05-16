@@ -12,7 +12,7 @@
    (:file "document-component-classes")
    (:file "operator-class-names-mapping")
    (:file "math-classes"
-    :depends-on 
+    :depends-on
     ("document-component-classes"
      "operator-class-names-mapping"))
    (:file "macros-define-objects"
@@ -20,17 +20,17 @@
     ("document-component-classes"
      "math-classes" ))
    (:file "parents-and-siblings"
-    :depends-on 
+    :depends-on
     ("document-component-classes"
      "math-classes"))
    (:file "table-driver"
-    :depends-on 
+    :depends-on
     ("special-variables"
      "math-classification"))
    (:file "special-variables")
    (:file "math-classification")
    (:file "01-sections"
-    :depends-on 
+    :depends-on
     (
      "structs"
      "document-component-classes"
@@ -41,7 +41,7 @@
      "table-driver"
      "02-text-processing"))
    (:file "02-text-processing"
-    :depends-on 
+    :depends-on
     (
      "05-math-processing"
      "structs"
@@ -53,7 +53,7 @@
      "table-driver"))
    (
     :file "03-tex-macro-expand"
-    :depends-on 
+    :depends-on
     (
      "structs"
      "document-component-classes"
@@ -65,7 +65,7 @@
      ))
    (
     :file "05-math-processing"
-    :depends-on 
+    :depends-on
     (
      "structs"
      "document-component-classes"
@@ -77,7 +77,7 @@
      ))
    (
     :file "interface"
-    :depends-on 
+    :depends-on
     (
      "structs"
      "document-component-classes"
@@ -93,17 +93,17 @@
      ))
    (
     :file "precedence-of-operators"
-    :depends-on 
+    :depends-on
     (
      "math-classification" ))
    (
     :file "precedence-definitions"
-    :depends-on 
+    :depends-on
     (
      "precedence-of-operators"))
    (
     :file "quasi-prefix"
-    :depends-on 
+    :depends-on
     (
      "05-math-processing"
      "math-classes"
@@ -112,6 +112,6 @@
     :file "macro-name-children-and-attributes")
    (
     :file "children-and-attributes-are-called"
-    :depends-on 
+    :depends-on
     (
-     "macro-name-children-and-attributes"))))               
+     "macro-name-children-and-attributes"))))

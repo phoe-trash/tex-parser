@@ -11,11 +11,11 @@
 ;;; the cdr is a string that is concatenated with "def" to get the
 ;;; defining form.
 
-(defvar *template-alist* '(("function" . "un") 
-			   ("macro" . "macro") 
-			   ("structure" . "struct") 
-			   ("variable" . "var") 
-			   ("constant" . "constant") 
+(defvar *template-alist* '(("function" . "un")
+			   ("macro" . "macro")
+			   ("structure" . "struct")
+			   ("variable" . "var")
+			   ("constant" . "constant")
 			   ("parameter" . "parameter")
 			   ("class" . "class")
 			   ("generic" . "generic")
@@ -32,7 +32,7 @@
 
 (defvar *clisp-separator-width* 74)
 (defvar *clisp-separator-character* ?;)
-(defvar *clisp-separator-string* 
+(defvar *clisp-separator-string*
   (format ";;;%s\n" (make-string *clisp-separator-width*
 				   *clisp-separator-character*)))
 
@@ -70,27 +70,27 @@
 ;;; of semicolons) is inserted before the template.
 
 (defun clisp-make-template (&optional separate)
-  "Creates a template interactively for the appropriate defun, defvar, 
+  "Creates a template interactively for the appropriate defun, defvar,
 defconstant, defparamater, defstruct, defclass, or defmethod."
   (interactive "P")
   (let ((type (clisp-template-get-type)) postfix header)
     (setq postfix (cdr type))
     (setq type (car type))
     (let ((name (clisp-prompt-user (concat (capitalize type) " name? ")
-			     "" 
+			     ""
 			     (upcase (concat "UNNAMED-" (upcase type))))))
       (or (bolp)
 	  (progn (end-of-line 1)
 		 (insert "\n")))
       (insert "\n")
       (setq header
-	    (concat 
+	    (concat
 	     (cond ((or separate *clisp-default-separate*)
 		    *clisp-separator-string*)
 		   (t ""))
-	     (format *clisp-header-string* 
-		     (capitalize type) 
-		     (upcase name) 
+	     (format *clisp-header-string*
+		     (capitalize type)
+		     (upcase name)
 		     (make-string (max (- *clisp-separator-width*
 					  (+ 19 (length type)(length name))) 1)
 				       ?\ )
@@ -118,7 +118,7 @@ defconstant, defparamater, defstruct, defclass, or defmethod."
 
 (defun clisp-make-function-template (name header)
   (let ((args (clisp-prompt-user "Arguments? "))
-	(doc (clisp-prompt-user "Documentation? " "" 
+	(doc (clisp-prompt-user "Documentation? " ""
 				*clisp-default-doc-string*)))
     (insert header)
     (insert (format " (%s) \n\"%s\"\n)" args doc))
@@ -127,7 +127,7 @@ defconstant, defparamater, defstruct, defclass, or defmethod."
 
 (defun clisp-make-macro-template (name header)
   (let ((args (clisp-prompt-user "Arguments? "))
-	(doc (clisp-prompt-user "Documentation? " "" 
+	(doc (clisp-prompt-user "Documentation? " ""
 				*clisp-default-doc-string*)))
     (insert header)
     (insert (format " (%s) \n\"%s\"\n)" args doc))
@@ -136,14 +136,14 @@ defconstant, defparamater, defstruct, defclass, or defmethod."
 
 (defun clisp-make-variable-template (name header)
   (let ((value (clisp-prompt-user "Value? " "" "nil"))
-	(doc (clisp-prompt-user "Documentation? " "" 
+	(doc (clisp-prompt-user "Documentation? " ""
 				*clisp-default-doc-string*)))
     (insert header)
     (insert (format " %s \"%s\")" value doc))))
 
 (defun clisp-make-structure-template (name header)
   (let ((slots (clisp-prompt-user "Slots? "))
-	(doc (clisp-prompt-user "Documentation? " "" 
+	(doc (clisp-prompt-user "Documentation? " ""
 				*clisp-default-doc-string*)))
     (insert header)
     (or (string= doc *clisp-default-doc-string*)
@@ -166,7 +166,7 @@ defconstant, defparamater, defstruct, defclass, or defmethod."
 (defun clisp-make-class-template (name header)
   (let ((supers (clisp-prompt-user "Supers? "))
 	(slots (clisp-prompt-user "Slots? "))
-	(doc (clisp-prompt-user "Documentation? " "" 
+	(doc (clisp-prompt-user "Documentation? " ""
 				*clisp-default-doc-string*)))
     (insert header)
     (insert (format " (%s)\n ()\n" supers))
@@ -177,26 +177,26 @@ defconstant, defparamater, defstruct, defclass, or defmethod."
     (clisp-reindent-form)
     (end-of-line)
     (insert "\n")
-    (insert 
-     (format 
+    (insert
+     (format
       "(defun make-%s ()\n (let ((self (make-instance '%s)))\n self))\n\n"
       name name))
     (clisp-reindent-form)
     (insert (format
              "(proclaim '(inline %s-p))\n\n" name))
     (clisp-reindent-form)
-    (insert 
-     (format 
+    (insert
+     (format
       "(defun %s-p (self)\n(eq (class-name (class-of self)) '%s))\n"
       name name))
-    (insert 
-     (format 
+    (insert
+     (format
       "\n(defun %s-subtype-p (self)\n(typep  self '%s))\n"
       name name))
     (clisp-reindent-form)))
 
 (defun clisp-add-slot (var-name var-val)
-  (insert (format "(%s :initform %s :initarg :%s :accessor %s-%s)\n " 
+  (insert (format "(%s :initform %s :initarg :%s :accessor %s-%s)\n "
 		  var-name var-val var-name name var-name)))
 
 (defun clisp-add-slots (slot-specifications)
@@ -225,7 +225,7 @@ defconstant, defparamater, defstruct, defclass, or defmethod."
 
 (defun clisp-make-method-template (name header)
   (let ((classes (clisp-prompt-user "Class(es)? "))
-	(doc (clisp-prompt-user "Documentation? " "" 
+	(doc (clisp-prompt-user "Documentation? " ""
 				*clisp-default-doc-string*)))
     (insert header)
     (insert " (")

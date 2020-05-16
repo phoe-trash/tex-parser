@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 
@@ -18,7 +18,7 @@
 
 ;;; Variable: *LEX-DIR*                                      Author: raman
 ;;; Created: Fri Feb 21 09:14:15 1992
-;;; external variable: 
+;;; external variable:
 (defvar *lex-dir* nil "Directory where the lexer resides")
 ;;; Now set it up:
 (setf *lex-dir* (merge-pathnames "lexer/" *lisp-code-directory* ))
@@ -26,7 +26,7 @@
 
 ;;; Variable: *LEX-PROGRAM*                                  Author: raman
 ;;; Created: Fri Feb 21 09:15:19 1992
-;;; external variable: 
+;;; external variable:
 (defvar *lex-program* nil "The program which does the lexical analysis")
 ;;; Now set it up:
 
@@ -38,7 +38,7 @@
 ;;; Function: PARSE-ARTICLE                                 Author: raman
 ;;; Created: Fri Feb 21 09:10:37 1992
 
-(defun parse-article (filename) 
+(defun parse-article (filename)
   "Parses a Latex article "
   (print "Performing lexical analysis")
   (with-open-stream
@@ -50,8 +50,8 @@
                   ))
     (create-article (read in-stream nil))))
 ;;; lucid needs a :wait argument
-#+lucid 
-(defun parse-article (filename) 
+#+lucid
+(defun parse-article (filename)
   "Parses a Latex article "
   (print "Performing lexical analysis")
   (with-open-stream
@@ -62,7 +62,7 @@
                    *lex-program*)
                   :input filename
                   :output  :stream
-                  :wait nil 
+                  :wait nil
                   ))
     (create-article
      (read in-stream nil))

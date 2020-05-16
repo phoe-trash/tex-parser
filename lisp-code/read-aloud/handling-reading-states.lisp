@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (in-package :user)
@@ -21,23 +21,23 @@
   "Association between reading states and afl states")
 
 
-;;; If not defined returned identity 
+;;; If not defined returned identity
 ;;; Function: DEFINE-READING-STATE                           Author: raman
 ;;; Created: Thu Sep  3 14:29:55 1992
 
-(defun define-reading-state (state-name  afl-setter) 
+(defun define-reading-state (state-name  afl-setter)
   "define afl-setter as the setter for this reading state"
   (setf (gethash state-name  *reading-state-table* )
         afl-setter)
   )
 
-;;; default is identity 
+;;; default is identity
 ;;; Function: GET-READING-STATE                              Author: raman
 ;;; Created: Thu Sep  3 14:31:07 1992
 
-(defun get-reading-state (state) 
+(defun get-reading-state (state)
   "Retrieve state setter for this state"
-  (or 
+  (or
    (gethash state *reading-state-table*)
    #'identity)
   )
@@ -45,7 +45,7 @@
   ;;; Function: REMOVE-READING-STATE                           Author: raman
   ;;; Created: Tue Dec 15 10:31:20 1992
 
-(defun remove-reading-state (state-name) 
+(defun remove-reading-state (state-name)
   "Remove this state from the table of known reading states. "
   (remhash state-name *reading-state-table*)
   )
@@ -53,7 +53,7 @@
 ;;; Macro: READING-STATE                                     Author: raman
 ;;; Created: Sat Oct 10 11:11:25 1992
 
-(defmacro reading-state (state-name) 
+(defmacro reading-state (state-name)
   "Return a point in speech space reached by applying the rendering rule
 for state state-name"
   `(funcall
@@ -65,10 +65,10 @@ for state state-name"
 ;;; Macro: WITH-READING-STATE                                Author: raman
 ;;; Created: Fri Nov  6 09:46:45 1992
 
-(defmacro with-reading-state (state &body body) 
+(defmacro with-reading-state (state &body body)
   "Execute body in a block after setting state"
   `(afl:new-block
-    (afl:local-set-state 
+    (afl:local-set-state
      ,state)
     ,@body)
   )
@@ -84,8 +84,8 @@ for state state-name"
   `(let
     ((local-state-names (mapcar #'first   ',defs )))
     (unwind-protect
-         (progn 
-           (loop for def in ',defs 
+         (progn
+           (loop for def in ',defs
                  do
                  (apply #'define-reading-state def))
            ,@body)
@@ -97,7 +97,7 @@ for state state-name"
 ;;; Function: SWAP-READING-STATES                            Author: raman
 ;;; Created: Sat Dec  5 12:22:46 1992
 
-(defun swap-reading-states (one two) 
+(defun swap-reading-states (one two)
   "Swap reading states. "
   (let ((state-1 (gethash one *reading-state-table*))
         (state-2 (gethash two *reading-state-table* )))

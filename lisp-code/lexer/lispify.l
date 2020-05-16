@@ -46,7 +46,7 @@
  /* Divided file into sections to make updates easier */
  /* Modified:   Thu Feb 13 11:56:32 EST 1992*/
  /* make math mode completely independent of text mode */
-  /* Hence block in text mode is now math-block */ 
+  /* Hence block in text mode is now math-block */
   /* Jan 24: Making lispify a smart tokeniser */
  /* Modified:   Tue Feb  4 12:57:24 EST 1992*/
  /*  adding start condition for math mode */
@@ -90,7 +90,7 @@
  /*environment. */
 /* If this not present, it is difficult to track down a nasty */
  /* mismatched list error that results in the parsing when a new list */
- /* environment occurs */ 
+ /* environment occurs */
  /* Modified:     Sat Oct 10 19:47:20 EDT 1992*/
 /*Added some validation of latex input */
  /* Modified: Sat Oct 31 19:11:35 EST 1992*/
@@ -138,7 +138,7 @@ int display_math_flag = 0;
 int table_flag = 0;
 int array_flag = 0;
 int saved_math_state = 0;
-int brace_count = 0; 
+int brace_count = 0;
 int list_environment_flag = 0;
 
  /* }}} */
@@ -146,12 +146,12 @@ int list_environment_flag = 0;
 
  /* Function declarations */
 char *  latex_env_name();
-char * escape_quotes(); 
+char * escape_quotes();
 int clean_up_quotes();
 char * get_macro_name();
 char * get_tex_filename();
 char * get_tex_filename_without_braces();
-int list_env_p(); 
+int list_env_p();
 
  /* }}} */
 %}
@@ -171,11 +171,11 @@ CONTROL-L [\014]
 ALPHABET  [a-zA-Z]
 ACCENT_ACUTE "\\'"
 ACCENT_GRAV  "\\`"
-ACCENT_UMLAUT  "\\\"" 
+ACCENT_UMLAUT  "\\\""
 ACCENT_CIRCUMFLEX "\\^"
 ACCENT ({ACCENT_CIRCUMFLEX}|{ACCENT_GRAV}|{ACCENT_ACUTE}|{ACCENT_UMLAUT})
 FILENAME_CHAR [a-zA-Z]
-LETTER ([a-zA-Z-])|({ACCENT}) 
+LETTER ([a-zA-Z-])|({ACCENT})
 DIGIT [0-9]
 NUMBER {DIGIT}+
 MATH_NUMBER  {DIGIT}*(".")?{NUMBER}
@@ -186,12 +186,12 @@ WHITESPACE [ \t\n]
 H_SPACE [ \t]
 NEWLINE [\n]
 BLANK_LINE (({H_SPACE})*{NEWLINE})
-PARAGRAPH_SEPARATOR {NEWLINE}({BLANK_LINE})+ 
+PARAGRAPH_SEPARATOR {NEWLINE}({BLANK_LINE})+
 PUNCT [-=_^/.,:;!?"()@\[\]|<>*+'`]
 BACKSLASH \\
 LATEX_SPECIAL_CHAR [#$%&~_^{}\\]
 MATH_OP [+*/'<>=-]
-POS_TAB_ARG "["[hbtp]+"]" 
+POS_TAB_ARG "["[hbtp]+"]"
 OPT_TAB_ARG "{"[lrc|]*"}"
 BEGIN_ENV_OPEN {BACKSLASH}"begin"({H_SPACE})*"{"
 BEGIN_ENV_CLOSE "}"({WHITESPACE})*
@@ -200,7 +200,7 @@ END_DISPLAY_MATH "$$"
 
  /* }}} */
 %S MATH MACRO  PICTURE
-%x INCLUDE 
+%x INCLUDE
 %%
 
  /* }}} */
@@ -219,9 +219,9 @@ END_DISPLAY_MATH "$$"
 <INCLUDE>[ \t]*    ;  /* eat the whitespace */
 <INCLUDE>"{"[^}\t\n ]*"}" {/* get file name */
  char * filename;
-FILE *infile; 
+FILE *infile;
 filename = (char *) malloc(MAXLEN);
-get_tex_filename(filename, yytext); 
+get_tex_filename(filename, yytext);
 if (!filename) {
   fprintf(stderr, "Error: could not get name of include file from %s \n",
           yytext);
@@ -232,7 +232,7 @@ if (!filename) {
     fprintf( stderr, "Includes nested too deeply" );
     exit( 1 );
   }
-  
+
   infile = fopen( filename, "r" );
   if ( ! infile ){
     fprintf(stderr,
@@ -240,27 +240,27 @@ if (!filename) {
     if (QUIT_ON_INCLUDE_FAIL){
       exit(1);
     }
-    else{ 
+    else{
 BEGIN(0);
 }
   }
 else{
-  /* open successful */ 
+  /* open successful */
   include_stack[include_stack_ptr++] =
     YY_CURRENT_BUFFER;
-yyin = infile; 
+yyin = infile;
   yy_switch_to_buffer(
                       yy_create_buffer( yyin, YY_BUF_SIZE ) );
-fprintf(stderr, "Reading input from include file %s \n", filename); 
+fprintf(stderr, "Reading input from include file %s \n", filename);
   BEGIN(INITIAL);}
 }
 
 <INCLUDE>{FILENAME_CHAR}+  {/* get file name */
  char * filename;
-FILE *infile; 
+FILE *infile;
 filename = (char *) malloc(MAXLEN);
  fprintf(stderr, "fired \n");
-get_tex_filename_without_braces(filename, yytext); 
+get_tex_filename_without_braces(filename, yytext);
 if (!filename) {
   fprintf(stderr, "Error: could not get name of include file from %s \n",
           yytext);
@@ -271,7 +271,7 @@ if (!filename) {
     fprintf( stderr, "Includes nested too deeply" );
     exit( 1 );
   }
-  
+
   infile = fopen( filename, "r" );
   if ( ! infile ){
     fprintf(stderr,
@@ -279,18 +279,18 @@ if (!filename) {
     if (QUIT_ON_INCLUDE_FAIL){
       exit(1);
     }
-    else{ 
+    else{
 BEGIN(0);
 }
   }
 else{
-  /* open successful */ 
+  /* open successful */
   include_stack[include_stack_ptr++] =
     YY_CURRENT_BUFFER;
-yyin = infile; 
+yyin = infile;
   yy_switch_to_buffer(
                       yy_create_buffer( yyin, YY_BUF_SIZE ) );
-fprintf(stderr, "Reading input from include file %s \n", filename); 
+fprintf(stderr, "Reading input from include file %s \n", filename);
   BEGIN(INITIAL);}
 }
 
@@ -318,13 +318,13 @@ fprintf(stderr, "Reading input from include file %s \n", filename);
 "Oct." |
 "Nov." |
 "Dec." {
-PRINT_AS_STRING(yytext); 
+PRINT_AS_STRING(yytext);
 }
 
  /* }}} */
  /* {{{ ie and eg */
 
-  
+
 "i.e." {
   printf(" (cs \"ie\")");
 }
@@ -335,9 +335,9 @@ PRINT_AS_STRING(yytext);
  /* }}} */
  /* {{{ Misc abbreviations  */
 
-"Corp." | 
+"Corp." |
 "etc." {
-PRINT_AS_STRING(yytext); 
+PRINT_AS_STRING(yytext);
 }
 
  /* }}} */
@@ -371,8 +371,8 @@ PRINT_AS_STRING( yytext);
 "Thu." |
 "Fri." |
 "Sat." {
-PRINT_AS_STRING(yytext); 
-}  
+PRINT_AS_STRING(yytext);
+}
 
  /* }}} */
 
@@ -424,7 +424,7 @@ PRINT_AS_STRING(yytext);
 "\\," ;
 "\\!" ;
 "\\:" ;
-"\\;"  ; 
+"\\;"  ;
 "\\hline" ;
 "\\ " ;
 "\\/" ;
@@ -455,7 +455,7 @@ PRINT_AS_STRING(yytext);
 
 "\\cr" |
 "\\headrow" |
-"\\newrow" | 
+"\\newrow" |
 {BACKSLASH}{BACKSLASH}  {
   if (  table_flag) {
     /* end current array element */
@@ -550,12 +550,12 @@ BEGIN 0;
 
 <MATH>"{" {
   brace_count++;  /* count braces */
-  printf("(subformula  "); 
+  printf("(subformula  ");
 };
 
 "{" {
   brace_count++;  /* count braces*/
-  printf("(block "); 
+  printf("(block ");
 };
 
 "}" {
@@ -565,19 +565,19 @@ BEGIN 0;
   /* reset state to math if necessary */
   if (saved_math_state) {
     switch (saved_math_state) {
-    case INLINE_MATH: 
+    case INLINE_MATH:
         inline_math_flag = 1;
       saved_math_state = 0;
       BEGIN MATH;
       break;
-      case DISPLAY_MATH: 
+      case DISPLAY_MATH:
         display_math_flag = 1;
         BEGIN MATH;
         saved_math_state = 0;
         break;
       default:
         fprintf(stderr, "Unknown saved_math_state %d \n", saved_math_state);
-        exit(1); 
+        exit(1);
       }
   }
 }
@@ -595,7 +595,7 @@ BEGIN 0;
   /* when brace_count reaches 0 we have seen the matching close brace */
   /* and can close the hbox */
   /* both hbox and mbox marked as mbox and will be processed as if */
-  /* they were user defined macros ie: using define-text-object */ 
+  /* they were user defined macros ie: using define-text-object */
     clean_up_quotes();
   /* First set up state */
   if (display_math_flag) {
@@ -607,11 +607,11 @@ BEGIN 0;
   else if (inline_math_flag) {
     saved_math_state = INLINE_MATH;
     inline_math_flag = 0;
-    display_math_flag = 0; /*kluge*/ 
+    display_math_flag = 0; /*kluge*/
     BEGIN 0;
   }
-  printf("(cs \"mbox\"  )" ); 
-  printf("(block "); 
+  printf("(cs \"mbox\"  )" );
+  printf("(block ");
 }
 
   /* }}} */
@@ -641,7 +641,7 @@ BEGIN 0;
 {BACKSLASH}"paragraph" |
 {PARAGRAPH_SEPARATOR}  {
  /* dont put parbreaks inside math */
-    
+
  if (!IS_MATH()) {
   clean_up_quotes();
   /* paragraph delimiter is a newline followed by an arbitrary number
@@ -661,11 +661,11 @@ BEGIN 0;
 "\\[" {
   clean_up_quotes();
   display_math_flag= 1;
-  printf("(display-math "); 
+  printf("(display-math ");
   BEGIN MATH;
   }
 
-"\\]" { 
+"\\]" {
   display_math_flag = 0;
   END_LIST();
   BEGIN 0;
@@ -676,12 +676,12 @@ BEGIN 0;
     fprintf(stderr, "display math started inside inline math?\
 Probably an inline math was closed and immediately opened.\
 Check the latex file \n");
-    exit(1); 
+    exit(1);
   }
   if(!display_math_flag) {
      clean_up_quotes();
     display_math_flag= 1;
-    printf("(display-math "); 
+    printf("(display-math ");
     BEGIN MATH;
   }
   else {
@@ -694,26 +694,26 @@ Check the latex file \n");
 "\\(" {
   /*   clean_up_quotes();*/
   inline_math_flag= 1;
-  printf("(inline-math "); 
-  BEGIN MATH; 
+  printf("(inline-math ");
+  BEGIN MATH;
   };
 
 "\\)" {
   inline_math_flag = 0;
   END_LIST();
-  BEGIN 0; 
+  BEGIN 0;
 }
 "$" {
   if(!inline_math_flag) {
     /*     clean_up_quotes(); */
      inline_math_flag= 1;
-    printf("(inline-math "); 
-    BEGIN MATH; 
+    printf("(inline-math ");
+    BEGIN MATH;
   }
   else {
     inline_math_flag = 0;
     END_LIST();
-    BEGIN 0; 
+    BEGIN 0;
   }
 };
 
@@ -741,13 +741,13 @@ PRINT_AS_STRING(yytext);
   /* Latex comment runs to end of line */
   /* Modified: Tue May  4 13:34:10 EDT 1993*/
  /* not doing anything with comments, so throw them away */
-  /* 
-  printf("(comment "); 
+  /*
+  printf("(comment ");
   printf("\" %s \"",  escape_quotes(yytext));
   END_LIST();
   */
   ;
-  /* throw away comment */ 
+  /* throw away comment */
 };
 
  /* }}} */
@@ -756,7 +756,7 @@ PRINT_AS_STRING(yytext);
  /* {{{  begin document */
 
 {BEGIN_ENV_OPEN}"document"{BEGIN_ENV_CLOSE} {
-  printf("(document "); 
+  printf("(document ");
 }
 
  /* }}} */
@@ -764,15 +764,15 @@ PRINT_AS_STRING(yytext);
 
 {BEGIN_ENV_OPEN}"abstract"{BEGIN_ENV_CLOSE} {
   clean_up_quotes();
-  printf("(abstract "); 
+  printf("(abstract ");
 }
 
  /* }}} */
  /* {{{ begin center */
 
 {BEGIN_ENV_OPEN}"center"{BEGIN_ENV_CLOSE} {
-  clean_up_quotes(); 
-  printf("(center "); 
+  clean_up_quotes();
+  printf("(center ");
 }
 
  /* }}} */
@@ -804,7 +804,7 @@ PRINT_AS_STRING(yytext);
 
 {BEGIN_ENV_OPEN}"description"{BEGIN_ENV_CLOSE} {
   clean_up_quotes();
-  list_environment_flag++; 
+  list_environment_flag++;
   printf("(description  ");
   /* Generate dummy item */
   /* this is to allow \item to be handled cleanly */
@@ -816,7 +816,7 @@ PRINT_AS_STRING(yytext);
 
 {BEGIN_ENV_OPEN}"deflist"{BEGIN_ENV_CLOSE} {
   clean_up_quotes();
-  list_environment_flag++; 
+  list_environment_flag++;
   printf("(description  ");
   /* Generate dummy item */
   /* this is to allow \item to be handled cleanly */
@@ -842,7 +842,7 @@ PRINT_AS_STRING(yytext);
  /* <(thrown away:4)>  */
 {BEGIN_ENV_OPEN}"itemize"{BEGIN_ENV_CLOSE} {
   clean_up_quotes();
-  list_environment_flag++; 
+  list_environment_flag++;
   printf("(itemize  ");
   /* Generate dummy item */
   /* this is to allow \item to be handled cleanly */
@@ -859,7 +859,7 @@ PRINT_AS_STRING(yytext);
   END_LIST();
   if (!list_environment_flag) {
     fprintf(stderr, "An item was found outside known list environment \n");
-    exit(1); 
+    exit(1);
   }
   /* Note this is a quick fix,
      and will leave a null list as the first item of each enumerated list  */
@@ -873,13 +873,13 @@ PRINT_AS_STRING(yytext);
   clean_up_quotes();
   printf("(equation  ");
   BEGIN MATH;
-  display_math_flag = 1; 
+  display_math_flag = 1;
 }
 
  /* }}} */
  /* {{{  begin eqnarray */
 
-{BEGIN_ENV_OPEN}"eqnarray*"{BEGIN_ENV_CLOSE} | 
+{BEGIN_ENV_OPEN}"eqnarray*"{BEGIN_ENV_CLOSE} |
 {BEGIN_ENV_OPEN}"eqnarray"{BEGIN_ENV_CLOSE} {
   /* starting an eqnarray */
   array_flag++;
@@ -895,12 +895,12 @@ PRINT_AS_STRING(yytext);
  /* }}} */
  /* {{{  begin eqalign */
 
- /* handling like eqnarray for the present */ 
-{BEGIN_ENV_OPEN}"eqalign*"{BEGIN_ENV_CLOSE} | 
+ /* handling like eqnarray for the present */
+{BEGIN_ENV_OPEN}"eqalign*"{BEGIN_ENV_CLOSE} |
 {BEGIN_ENV_OPEN}"eqalign"{BEGIN_ENV_CLOSE} {
   /* starting an eqalign */
   /* Latex eqaligns are in math mode, so remember this */
-display_math_flag =1; 
+display_math_flag =1;
   BEGIN MATH;
   array_flag++;
   printf("(eqalign  ");
@@ -909,7 +909,7 @@ display_math_flag =1;
   /* Start the first eqalign element */
   printf (" (  ");
 }
-  
+
 
  /* }}} */
  /* {{{ begin tabular  */
@@ -930,7 +930,7 @@ display_math_flag =1;
 
   /*  cases handled like table environment */
   /* allow for text inside math mode by saving state. If this works, use */
-  /* similar approach for mbox hbox etc. */ 
+  /* similar approach for mbox hbox etc. */
 
 {BEGIN_ENV_OPEN}"cases}"({OPT_TAB_ARG})?({WHITESPACE})*  {
   clean_up_quotes();
@@ -945,7 +945,7 @@ display_math_flag =1;
     inline_math_flag = 0;
     BEGIN 0;
   }
-  
+
   /* starting a table  */
   table_flag++;
   printf("(cases  ");
@@ -986,7 +986,7 @@ display_math_flag =1;
 {BEGIN_ENV_OPEN}"displaymath"{BEGIN_ENV_CLOSE} {
   clean_up_quotes();
   display_math_flag= 1;
-  printf("(display-math "); 
+  printf("(display-math ");
   BEGIN MATH;
 }
 
@@ -994,7 +994,7 @@ display_math_flag =1;
  /* {{{  begin unrecognized environment */
 
 {BEGIN_ENV_OPEN}{ALPHABET_STRING}"}"   |
-{BEGIN_ENV_OPEN}{ALPHABET_STRING}"}"({POS_TAB_ARG})?({OPT_TAB_ARG})? | 
+{BEGIN_ENV_OPEN}{ALPHABET_STRING}"}"({POS_TAB_ARG})?({OPT_TAB_ARG})? |
 {BEGIN_ENV_OPEN}([^}])*"}"  {
      char name[MAXLEN];
   /* Modified: Tue Jan  4 08:05:56 EST 1994*/
@@ -1009,15 +1009,15 @@ display_math_flag =1;
 
    strcpy(name, latex_env_name(yytext));
    if (list_env_p(name)){
-   printf("( new-environment \"%s\" ", name); 
+   printf("( new-environment \"%s\" ", name);
      /* expect items in this env */
-     list_environment_flag++; 
+     list_environment_flag++;
   /* Generate dummy item */
   /* this is to allow \item to be handled cleanly */
   printf("(item  ");
    }
    else {
-   printf("( new-environment \"%s\" ", name); 
+   printf("( new-environment \"%s\" ", name);
  }
 }
 
@@ -1027,9 +1027,9 @@ display_math_flag =1;
  /* {{{  sectioning constructs */
 ({WHITESPACE})*{BACKSLASH}"grieschapter" |
 ({WHITESPACE})*{BACKSLASH}"chapter*" |
-({WHITESPACE})*{BACKSLASH}"chapterx" | 
+({WHITESPACE})*{BACKSLASH}"chapterx" |
 ({WHITESPACE})*{BACKSLASH}"chapter" {
-  if (chapter_flag ) { 
+  if (chapter_flag ) {
     if(section_flag){
       /* Already in a section so end it */
       if(subsection_flag){
@@ -1129,7 +1129,7 @@ display_math_flag =1;
  /* {{{  absolute sectioning constructs */
 
 ({WHITESPACE})*{BACKSLASH}"achapter" {
-  if (chapter_flag ) { 
+  if (chapter_flag ) {
     if(section_flag){
       /* Already in a section so end it */
       if(subsection_flag){
@@ -1174,7 +1174,7 @@ display_math_flag =1;
           /* end the aparagraph */
           END_LIST();
           aparagraph_flag = 0;
-        } 
+        }
 	/* end the subsubsection */
 	END_LIST();
 	subsubsection_flag = 0;
@@ -1308,7 +1308,7 @@ aparagraph_flag=0;}
   /* end equation */
   END_LIST();
   BEGIN 0;
-  display_math_flag =0; 
+  display_math_flag =0;
 };
 
  /* }}} */
@@ -1325,7 +1325,7 @@ aparagraph_flag=0;}
   /* and finally the eqnarray */
   END_LIST();
   /* Leave math mode */
-display_math_flag = 0; 
+display_math_flag = 0;
   BEGIN 0;
 };
 
@@ -1343,7 +1343,7 @@ display_math_flag = 0;
   /* and finally the eqalign */
   END_LIST();
   /* Leave math mode */
-display_math_flag = 0; 
+display_math_flag = 0;
   BEGIN 0;
 };
 
@@ -1378,7 +1378,7 @@ display_math_flag = 0;
  /* }}} */
      /* {{{  end cases */
 
- /* Cases handled like tabular */ 
+ /* Cases handled like tabular */
 
 ({WHITESPACE})*{BACKSLASH}"end{cases}"({H_SPACE})* {
   /* close off everything for table */
@@ -1392,19 +1392,19 @@ display_math_flag = 0;
   /* reset state to math if necessary */
   if (saved_math_state) {
     switch (saved_math_state) {
-    case INLINE_MATH: 
+    case INLINE_MATH:
         inline_math_flag = 1;
       saved_math_state = 0;
       BEGIN MATH;
       break;
-      case DISPLAY_MATH: 
+      case DISPLAY_MATH:
         display_math_flag = 1;
       BEGIN MATH;
       saved_math_state = 0;
       break;
     default:
       fprintf(stderr, "Unknown saved_math_state %d \n", saved_math_state);
-        exit(1); 
+        exit(1);
     }
   }
 }
@@ -1415,7 +1415,7 @@ display_math_flag = 0;
  /* <(thrown away)>  */
 ({WHITESPACE})*{BACKSLASH}"end{enumerate}"({H_SPACE})* {
   clean_up_quotes();
-  list_environment_flag--; 
+  list_environment_flag--;
   /* end enumerated list */
   /* First end last item */
   END_LIST();
@@ -1443,7 +1443,7 @@ display_math_flag = 0;
 
 ({WHITESPACE})*{BACKSLASH}"end{itemize}"({H_SPACE})* {
   clean_up_quotes();
-  list_environment_flag--; 
+  list_environment_flag--;
   /* end itemized list */
   /* First end last item */
   END_LIST();
@@ -1493,7 +1493,7 @@ display_math_flag = 0;
   END_LIST();
   BEGIN 0;
 }
-  
+
 
  /* }}} */
  /* {{{  end unrecognized environment */
@@ -1502,19 +1502,19 @@ display_math_flag = 0;
 {BACKSLASH}"end{"([^}])*("*")?"}"  {
   /* unknown environment ending */
  /* Modified:   Mon May 10 16:27:35 EDT 1993*/
-/* handle new environments that can be lists */ 
+/* handle new environments that can be lists */
        char name[MAXLEN];
   clean_up_quotes();
    strcpy(name, latex_env_name(yytext));
    if (list_env_p(name)){
-     /* this is a list environment */ 
-  list_environment_flag--; 
+     /* this is a list environment */
+  list_environment_flag--;
   /* First end last item */
   END_LIST();
   /* and now end the  environment  list itself */
   END_LIST();
    }
-       else{ 
+       else{
   printf(")");
 }
 }
@@ -1526,10 +1526,10 @@ display_math_flag = 0;
 
 {BACKSLASH}([^a-zA-Z]) {
   /* handle single characters with a backslash in front eg \. etc. */
-  printf(" \"%s\" ",  escape_quotes(yytext + 1)); 
+  printf(" \"%s\" ",  escape_quotes(yytext + 1));
 }
 
-<MATH>{BACKSLASH}({ALPHABET})*   {  
+<MATH>{BACKSLASH}({ALPHABET})*   {
   printf("(math-cs  ");
   /* convert macro names to strings
      since lisp is case insensitive */
@@ -1538,7 +1538,7 @@ display_math_flag = 0;
   END_LIST();
 };
 
-{BACKSLASH}({ALPHABET})*   { 
+{BACKSLASH}({ALPHABET})*   {
   printf("(cs  ");
   /* convert macro names to strings
      since lisp is case insensitive */
@@ -1557,7 +1557,7 @@ display_math_flag = 0;
 }
 {TIME_NUMBER} {
   /* Dectalk speaks time numbers correctly */
-PRINT_AS_STRING(yytext); 
+PRINT_AS_STRING(yytext);
 }
 {TEXT_NUMBER} {
   /* in math mode and text mode recognize numbers and do not break them up */
@@ -1641,10 +1641,10 @@ printf("\"%s\"", escape_quotes(yytext));
  /* {{{ Trap things that are not caught and echo to stderr */
 
  /* form feed and control m */
- /* control m shows up from outline mode in emacs */ 
+ /* control m shows up from outline mode in emacs */
 {CONTROL-M} ;
 {CONTROL-L} ;
-"#" printf("\"#\" "); 
+"#" printf("\"#\" ");
 .  fprintf(stderr, "\n this escaped %s \n", yytext);
 
  /* }}} */
@@ -1658,7 +1658,7 @@ char *  latex_env_name(s)
 {
   /* return string containing the contents of      {     foo     }      */
   static char result[MAXLEN];
-  
+
   char * head;
   int i =0;
   head = strchr(s,'{');
@@ -1676,17 +1676,17 @@ result[i] ='\0';
 /* {{{ escape_quotes */
 
 char * escape_quotes(s)
-     char *s; 
+     char *s;
 {
 static   char t[2*MAXLEN];
   int i ,j;
 
   for(i=0, j=0; i <= strlen(s); i++, j++){
-if ( s[i] == '"') 
+if ( s[i] == '"')
       t[j++]='\\';
 t[j] = s[i];
 }
-return(t); 
+return(t);
 }
 
 /* }}} */
@@ -1729,16 +1729,16 @@ result[i] ='\0';
 /* {{{ get_tex_filename */
 
 char *  get_tex_filename(result,s)
-     char * result; 
+     char * result;
      char * s;
 {
   /* return string containing the contents of      {     foo     } */
   /*use env variable READ-TEX-DIR */
-  char * filename; 
-char * dirname; 
+  char * filename;
+char * dirname;
   int  len;
 dirname = getenv("READ-TEX-DIR");
-  filename = (char *)malloc(MAXLEN); 
+  filename = (char *)malloc(MAXLEN);
   len = strlen(s);
   strncpy (filename, s+1, len-2);
   if (dirname != NULL){
@@ -1757,16 +1757,16 @@ if (strstr(result, ".") == NULL) strcat(result, ".tex");
  /* {{{ get_tex_filename_without_braces */
 
 char *  get_tex_filename_without_braces(result,s)
-     char * result; 
+     char * result;
      char * s;
 {
   /* return string containing the contents of      foo      */
   /*use env variable READ-TEX-DIR */
-  char * filename; 
-char * dirname; 
+  char * filename;
+char * dirname;
   int  len;
 dirname = getenv("READ-TEX-DIR");
-  filename = (char *)malloc(MAXLEN); 
+  filename = (char *)malloc(MAXLEN);
   len = strlen(s);
   strcpy (filename, s);
   if (dirname != NULL){
@@ -1779,36 +1779,36 @@ dirname = getenv("READ-TEX-DIR");
 if (strstr(result, ".") == NULL) strcat(result, ".tex");
   return(result);
 }
-  
+
 
  /* }}} */
 /* {{{ list_env_p */
 
-#define MAX_BUFF 80 
+#define MAX_BUFF 80
 
 static char *  list_env_names[MAX_BUFF] = {
 "list",
 "exercises",
 "Exercises",
-"closeitemize", 
+"closeitemize",
 "alphlist",
 "Alphlist",
 "chapterex"
-}; 
+};
 
 int  list_env_p(env_name)
-char * env_name; 
+char * env_name;
 {
 char *ptr ;
-int i=0; 
-ptr =  list_env_names[i]; 
+int i=0;
+ptr =  list_env_names[i];
 while  ( (ptr != NULL) )
 {
   if (strcmp(ptr, env_name)== 0)
-    return(1); /*found it */ 
-  ptr = list_env_names[++i];  /*continue looking*/ 
+    return(1); /*found it */
+  ptr = list_env_names[++i];  /*continue looking*/
 }
-return(0);  /* not found*/ 
+return(0);  /* not found*/
 }
 
 /* }}} */
@@ -1820,4 +1820,4 @@ return(0);  /* not found*/
 /* folded-file: t */
 /* end: */
 
- /* }}} */ 
+ /* }}} */

@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (in-package :user)
@@ -71,7 +71,7 @@
   "Summarize math object. "
   (save-pointer-excursion
    (say-what-this-is-called math-object)
-   (afl:send-space) 
+   (afl:send-space)
    (if(and  (leaf-p math-object )
             (= 1 (weight math-object)))
       (read-current)
@@ -92,7 +92,7 @@
   (afl:send-text (contents word ))
   )
 (defmethod summarize  ((slide slide ))
-  (save-pointer-excursion 
+  (save-pointer-excursion
    (read-aloud
     (first (contents slide))))
   )
@@ -100,7 +100,7 @@
   "Summarize math subformula"
   (save-pointer-excursion
    (say-what-this-is-called math-subformula)
-   (afl:send-space) 
+   (afl:send-space)
    (cond
      ((leaf-p math-subformula )
       (read-current))
@@ -118,7 +118,7 @@
   "Summarize arrow operator "
   (save-pointer-excursion
    (say-what-this-is-called arrow-operator)
-   (afl:with-pronunciation-mode (:mode :math) 
+   (afl:with-pronunciation-mode (:mode :math)
      (read-aloud (contents arrow-operator )))
    (afl:force-speech)
    )
@@ -128,7 +128,7 @@
   "Summarize relational operator "
   (save-pointer-excursion
    (say-what-this-is-called relational-operator)
-   (afl:with-pronunciation-mode (:mode :math) 
+   (afl:with-pronunciation-mode (:mode :math)
      (read-aloud (contents relational-operator )))
    (afl:force-speech)
    )
@@ -138,7 +138,7 @@
   "Summarize binary operator "
   (save-pointer-excursion
    (say-what-this-is-called binary-operator)
-   (afl:with-pronunciation-mode (:mode :math) 
+   (afl:with-pronunciation-mode (:mode :math)
      (read-aloud (contents binary-operator)))
    (afl:force-speech)
    )
@@ -149,7 +149,7 @@
   (save-pointer-excursion
    (say-what-this-is-called juxtaposition )
    (if (special-pattern juxtaposition )
-       (read-aloud (special-pattern juxtaposition )) 
+       (read-aloud (special-pattern juxtaposition ))
        (afl:send-text "juxtaposition. "))
    (when (substitution juxtaposition)
      (read-aloud (substitution juxtaposition )))
@@ -157,7 +157,7 @@
   )
 
 (defmethod summarize ((fraction fraction))
-  (say-what-this-is-called fraction ) 
+  (say-what-this-is-called fraction )
   (read-succinctly fraction)
   (afl:force-speech ))
 
@@ -166,7 +166,7 @@
   "Summarize functions. "
   (save-pointer-excursion
    (say-what-this-is-called mathematical-function-name )
-   (afl:send-space) 
+   (afl:send-space)
    (if   (leaf-p (children mathematical-function-name ))
          (read-current)
          (read-succinctly     mathematical-function-name  ))

@@ -18,7 +18,7 @@
 
 (define-reading-state 'title-voice
     #'(lambda(state)
-        (afl:step-by  state 
+        (afl:step-by  state
                       'afl:head-size
                       1))
   )
@@ -37,7 +37,7 @@
 
 (define-reading-state 'quotation-voice
     #'(lambda(state)
-        (afl:step-by state 
+        (afl:step-by state
                      'afl:head-size
                      2))
   )
@@ -56,9 +56,9 @@
 ;;; of dimensions for subscripting and superscripting should be
 ;;; interchanged.  While playing with the code, these may be swapped
 ;;; with swap-reading-states so what this file says and what lisp is
-;;; actually doing may be different. (at least until I stabilize on 
+;;; actually doing may be different. (at least until I stabilize on
 ;;; one or the other)
-(define-reading-state 'subscript 
+(define-reading-state 'subscript
     #'(lambda(state)
         (afl:generalized-afl-operator state
                                       '(afl:step-by afl:average-pitch -1.5)
@@ -150,12 +150,12 @@
 
 (define-reading-state  'fraction-numerator
     #'(lambda(state)
-        (afl:step-by state 
+        (afl:step-by state
                      'afl:stress-rise 4)))
 
 (define-reading-state 'fraction-denominator
     #'(lambda(state)
-        (afl:step-by state 
+        (afl:step-by state
                      'afl:stress-rise
                      -4)))
 
@@ -171,7 +171,7 @@
 
 ;;; for dtrace audio display:
 
-(define-reading-state 'variable-name 
+(define-reading-state 'variable-name
     #'(lambda(state)
         (afl:step-by  state
                       'afl:smoothness
@@ -193,7 +193,7 @@
 
 (define-reading-state 'footnote
     #'(lambda(state)
-        (afl:generalized-afl-operator state 
+        (afl:generalized-afl-operator state
                                       '(afl:move-to afl:left-volume  0)
                                       '(afl:move-to  afl:right-volume 100)
                                       '(afl:scale-by afl:speech-rate 1.5)
@@ -219,5 +219,5 @@
                      'afl:smoothness 2))
   )
 
- 
- 
+
+

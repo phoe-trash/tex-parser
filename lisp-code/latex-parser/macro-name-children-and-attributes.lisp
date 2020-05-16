@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 
@@ -31,7 +31,7 @@
   ;;; Macro: CALL-ITS-CHILDREN                                 Author: raman
   ;;; Created: Thu Apr  8 09:05:26 1993
 
-(defmacro call-its-children (object name-spec) 
+(defmacro call-its-children (object name-spec)
   "Children of object are called as specified by name-spec.
 Note: call here used as in a spade is called a spade."
   `(progn
@@ -76,7 +76,7 @@ Note: call here used as in a spade is called a spade."
 
 
 
-(defmacro call-its-attributes (object name-spec) 
+(defmacro call-its-attributes (object name-spec)
   "Attributes of object are called as specified by name-spec.
 Note: call here used as in a spade is called a spade."
   `(defmethod attributes-are-called ((self ,object))

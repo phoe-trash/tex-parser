@@ -1,7 +1,7 @@
 ;;;   -*- Syntax: Common-Lisp; Package: USER; Base: 10; Mode: LISP -*-    ;;;
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (in-package :dectalk)
@@ -19,13 +19,13 @@
 ;;; Macro: WITH-FILE-INSTEAD-OF-DECTALK                      Author: raman
 ;;; Created: Sun Oct  4 13:59:38 1992
 
-        
+
 
 ;;; Variable: *DRIBBLING-TO-FILE*                            Author: raman
 ;;; Created: Wed Oct  7 11:10:30 1992
 
 (defvar *dribbling-to-file* nil "If t, no synchronization commands are used on the dectalk")
-(defmacro with-file-as-well-as-dectalk ((&key (filename "temp")) &body body) 
+(defmacro with-file-as-well-as-dectalk ((&key (filename "temp")) &body body)
   "Read into file instead of speaking. "
   `(let (
          (saved-stream *stream*)
@@ -40,7 +40,7 @@
                 ,filename )
                :direction :output
                :if-does-not-exist :create
-               :if-exists :rename 
+               :if-exists :rename
                ))
            (let
                ((output-stream (make-broadcast-stream
@@ -83,7 +83,7 @@
       )
     )
   )
-(defmacro with-file-instead-of-dectalk ((&key (filename "temp")) &body body) 
+(defmacro with-file-instead-of-dectalk ((&key (filename "temp")) &body body)
   "Read into file instead of speaking. "
   `(let (
          (saved-stream *stream*)
@@ -98,7 +98,7 @@
                 ,filename )
                :direction :output
                :if-does-not-exist :create
-               :if-exists :rename 
+               :if-exists :rename
                ))
            (let
                ((output-stream  file-stream)

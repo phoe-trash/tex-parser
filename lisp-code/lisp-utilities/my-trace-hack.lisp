@@ -17,7 +17,7 @@
 ;;; Macro: MY-AUDIO-TRACE                                    Author: raman
 ;;; Created: Mon Nov  2 09:40:56 1992
 
-(defmacro my-audio-trace (&body body) 
+(defmacro my-audio-trace (&body body)
   "evaluate body, audio format result and return result"
   `(progn
     (let
@@ -25,6 +25,6 @@
       (setf result
             (progn ,@body))
       (read-aloud result)
-      result) 
+      result)
     ))
 

@@ -1,9 +1,9 @@
 ;;;   -*- Syntax: Common-Lisp; Package: USER; Base: 10; Mode: LISP -*-    ;;;
 ;;;                                                                       ;;;
-;;; $Id: define-point-in-audio-space.lisp,v 1.1.1.1 2001/08/10 23:20:19 raman Exp $ 
+;;; $Id: define-point-in-audio-space.lisp,v 1.1.1.1 2001/08/10 23:20:19 raman Exp $
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (in-package :afl)

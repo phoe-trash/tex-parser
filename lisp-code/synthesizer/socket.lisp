@@ -22,7 +22,7 @@
 (defun setup ()
   "Create and initialize connection to the TTS server"
   (setq *stream* (make-stream *serial-device*)))
- 
+
 
 (defun finish (&optional abort?)
   (when *stream*

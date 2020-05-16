@@ -2,7 +2,7 @@
  ;;;                                                                       ;;;
  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (in-package :user)
@@ -20,8 +20,8 @@
  ;;; representation.
  ;;; Develop the right intermediate representation based on these
  ;;; rules.
- ;;; First consider reading math expressions with no user defined 
- ;;; objects. 
+ ;;; First consider reading math expressions with no user defined
+ ;;; objects.
 
  ;;; A math object is a leaf if it has no children.
 
@@ -88,7 +88,7 @@
      (afl:send-space)
      (unless (rest children )
        (read-math-object-and-attributes math-object))
-     (loop for child in (rest children) 
+     (loop for child in (rest children)
            do
            (when comma-flag (afl:comma-intonation))
            (read-math-object-and-attributes math-object)
@@ -104,13 +104,13 @@
 
  ;;; Modified: Sun Dec  6 09:47:52 EST 1992
  ;;; read aloud rule for math object puts pause if necessary, the rest
- ;;; of the helping functions need not do this any more. 
+ ;;; of the helping functions need not do this any more.
  ;;; Function: READ-MATH-CHILD                                Author: raman
  ;;; Created: Tue Nov 24 19:11:00 1992
 ;;; Modified: Mon Dec 28 10:07:05 EST 1992
 ;;; objects now have a parent link, so read-math-child needs only be
 ;;; passed the child. In fact read-math-child  is almost obselete.
-;;; Also removed *be-smart-about-division* before backing up. 
+;;; Also removed *be-smart-about-division* before backing up.
 ;;; <(backed up old version. )>
 
 (defmethod read-math-child ((ordinary t ))
@@ -166,12 +166,12 @@
  ;;; Function: READ-MATH-OBJECT-AND-ATTRIBUTES                Author: raman
  ;;; Created: Tue Nov 24 14:36:26 1992
 (proclaim '(inline read-math-object-and-attributes))
-(defun read-math-object-and-attributes (math-object) 
+(defun read-math-object-and-attributes (math-object)
   "Read the object and its attributes"
   (read-aloud (contents math-object ))
   (afl:send-space)
   (when (attributes math-object)
-    (mapc #'read-aloud 
+    (mapc #'read-aloud
           (sorted-attributes  (attributes math-object ))))
   )
 
@@ -186,7 +186,7 @@
  ;;; Function: READ-AS-INFIX?                                 Author: raman
  ;;; Created: Tue Nov 24 13:07:01 1992
 
-(defun read-as-infix? (math-object) 
+(defun read-as-infix? (math-object)
   "Is this read as infix?"
   (some  #'(lambda(type) (typep math-object type)) *objects-read-as-infix*)
   )
@@ -204,13 +204,13 @@
     )
   "These are read as prefix")
 ;;; Modified: Mon Dec 28 11:10:31 EST 1992
-;;; converting to method. 
+;;; converting to method.
  ;;; Method: READ-AS-PREFIX?                                Author: raman
  ;;; Created: Tue Nov 24 13:15:01 1992
 
 (defmethod  read-as-prefix? ((math-object  math-object ))
   "Is this read as prefix?"
-  (or 
+  (or
    (some  #'(lambda(type) (typep math-object type)) *objects-read-as-prefix* )
                                         ;disjunct2
    (and   (binary-operator-p math-object)
@@ -233,8 +233,8 @@
 (defmethod compute-pause ((math-object math-object))
   "Compute amount of pause to put around this object"
   (declare (fixnum *pause-around-child* ))
-  (let* 
-      ((object-weight(the fixnum 
+  (let*
+      ((object-weight(the fixnum
                           (weight math-object )))
        (pause-duration (the fixnum
                             (if (> object-weight 1)

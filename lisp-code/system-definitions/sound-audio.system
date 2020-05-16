@@ -1,5 +1,5 @@
 ;;;   -*- Syntax: Common-Lisp; Package: USER; Base: 10; Mode: LISP -*-    ;;;
-;;;                                                                       $Id: sound-audio.system,v 1.1.1.1 2001/08/10 23:20:19 raman Exp $ 
+;;;                                                                       $Id: sound-audio.system,v 1.1.1.1 2001/08/10 23:20:19 raman Exp $
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -14,7 +14,7 @@
   :source-pathname  (concatenate 'string
                                  *lisp-code-directory* "/"
                                  "afl/sound-audio" )
-  :package afl 
+  :package afl
   :finally-do (progn (pushnew  :sound-audio *features* )
                      (funcall (find-symbol "INITIALIZE-AUDIO-SPACE" "AFL"))
                      (announce "loaded sound audio"))

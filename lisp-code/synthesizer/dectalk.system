@@ -18,15 +18,15 @@
 
 ;;; Variable: *ANNOUNCE*                                     Author: raman
 ;;; Created: Sat Dec  5 12:30:50 1992
-;;; set to nil if dectalk not connected 
+;;; set to nil if dectalk not connected
 (defvar *announce* nil     "If t announce actions on dectalk")
 
 ;;; Function: ANNOUNCE                                       Author: raman
 ;;; Created: Tue Sep  1 19:40:28 1992
 
-(defun announce (announcement) 
+(defun announce (announcement)
   "If dectalk ready announce it on dectalk "
-  (when (and *announce* 
+  (when (and *announce*
          (find-package 'dectalk)
              (find :dectalk  *features*))
     (dectalk::speak-string announcement)
@@ -40,7 +40,7 @@
   (concatenate 'string  *lisp-code-directory* "/" "synthesizer")
   "directory where multivoice code kept.")
 
-(defun multivoice-test () 
+(defun multivoice-test ()
   "test if everything for multivoice loaded and running."
   (when   (find-package 'dectalk)
     (dectalk::setup)
@@ -64,14 +64,14 @@
 			:depends-on ( read-out-into-file))
                  (:file "read-out-into-file")
 		 )
-:finally-do 
-(defun announce (announcement) 
+:finally-do
+(defun announce (announcement)
 (dectalk::send-string announcement))
     )
 
-(defun announce (announcement) 
-  (when (find-package :dectalk) 
-    (funcall 
- (find-symbol "SPEAK-STRING" :dectalk) 
+(defun announce (announcement)
+  (when (find-package :dectalk)
+    (funcall
+ (find-symbol "SPEAK-STRING" :dectalk)
              announcement )))
 

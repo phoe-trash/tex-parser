@@ -31,7 +31,7 @@ summarize a paragraph.
                            (not (word-p (first contents ))))
                       (afl:send-text "contains: ")
                       (summarize (first contents )))
-                     (*paragraph-summary-length* 
+                     (*paragraph-summary-length*
                       (loop for word in contents
                             and count = 1 then (+ 1 count)
                             until
@@ -43,11 +43,11 @@ summarize a paragraph.
                                   (end-of-sentence? word))
                              (and (eql 'clause *paragraph-summary-length*)
                                   (punctuation? word))
-                             (endp contents))  do 
+                             (endp contents))  do
                             (read-aloud  word )))
                      (t (afl:send-text " paragraph ")
                         (afl:force-speech)
-                        (afl:synchronize-and-play 
+                        (afl:synchronize-and-play
                     *paragraph-cue* :background-flag t)
                         ))))
   (afl:force-speech)

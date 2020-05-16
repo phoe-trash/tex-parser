@@ -17,71 +17,71 @@
 ;;; need them.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; 
-(define-text-object     :macro-name "log" 
+;;;
+(define-text-object     :macro-name "log"
   :number-args 0
-  :processing-function log-expand 
+  :processing-function log-expand
   :precedence  mathematical-function
   :object-name log
   :supers (mathematical-function-name)
   )
 
-;;; Object has 0 slots 
-(defmethod read-aloud  (( log log )) 
+;;; Object has 0 slots
+(defmethod read-aloud  (( log log ))
   "Read aloud method for object log "
   (call-next-method)
   )
 
 
-(define-text-object :macro-name "sin" 
+(define-text-object :macro-name "sin"
   :number-args 0
-  :processing-function sin-expand 
-  :precedence  mathematical-function 
+  :processing-function sin-expand
+  :precedence  mathematical-function
   :object-name sin
   :supers (mathematical-function-name)
   )
 
-;;; Object has 0 slots 
-(defmethod read-aloud  (( sin sin )) 
+;;; Object has 0 slots
+(defmethod read-aloud  (( sin sin ))
   "Read aloud method for object sin "
   (call-next-method)
   )
 
 
 
-(define-text-object :macro-name "over" 
+(define-text-object :macro-name "over"
   :number-args 0
-  :processing-function over-expand 
-  :precedence   tex-infix-operator 
+  :processing-function over-expand
+  :precedence   tex-infix-operator
   :object-name over
   :supers (fraction binary-operator)
   )
 
-(define-text-object :macro-name "alltex" 
+(define-text-object :macro-name "alltex"
   :number-args 0
-  :processing-function alltex-expand 
-  :precedence  nil 
+  :processing-function alltex-expand
+  :precedence  nil
   :object-name alltex
   :supers (document)
   )
 
-;;; Object has 0 slots 
-(defmethod read-aloud  (( alltex alltex )) 
+;;; Object has 0 slots
+(defmethod read-aloud  (( alltex alltex ))
   "Read aloud method for object alltex "
-  (read-aloud   "[l'aa_<50>t`ehkh]" ) 
+  (read-aloud   "[l'aa_<50>t`ehkh]" )
   )
 
-(define-text-object :macro-name "stackrel" 
+(define-text-object :macro-name "stackrel"
   :number-args 2
-  :processing-function stackrel-expand 
-  :precedence  arrow-operator  
+  :processing-function stackrel-expand
+  :precedence  arrow-operator
   :object-name stackrel
   :supers (math-object)
   )
 (defmethod leaf-p ((stackrel stackrel )) t)
 ;;; Use  (argument object)  1 ...( argument
-                        ;;; object 2)  in                         read-aloud 
-(defmethod read-aloud  (( stackrel stackrel )) 
+                        ;;; object 2)  in                         read-aloud
+(defmethod read-aloud  (( stackrel stackrel ))
   "Read aloud method for object stackrel "
   (afl:with-surrounding-pause (compute-pause stackrel)
     (read-aloud (argument 2 stackrel ))
@@ -94,17 +94,17 @@
 ;;; { standard tex objects like set counter.
 ;;; should go in a separate file later
 
-(define-text-object :macro-name "chapterx" 
+(define-text-object :macro-name "chapterx"
   :number-args 1
-  :processing-function chapterx-expand 
-  :precedence  nil 
+  :processing-function chapterx-expand
+  :precedence  nil
   :object-name chapterx
   :supers (document)
   )
 
 ;;; Use  (argument object)  1 ...( argument
-                        ;;; object 1)  in                         read-aloud 
-(defmethod read-aloud  (( chapterx chapterx )) 
+                        ;;; object 1)  in                         read-aloud
+(defmethod read-aloud  (( chapterx chapterx ))
   "Read aloud method for object chapterx "
   (with-reading-state (reading-state 'annotation-voice )
     (read-aloud "Chapter: "))
@@ -113,17 +113,17 @@
   )
 
 
-(define-text-object :macro-name "setcounter" 
+(define-text-object :macro-name "setcounter"
   :number-args 2
-  :processing-function setcounter-expand 
-  :precedence  nil 
+  :processing-function setcounter-expand
+  :precedence  nil
   :object-name setcounter
   :supers (document)
   )
 
 ;;; Use  (argument object)  1 ...( argument
-                        ;;; object 2)  in                         read-aloud 
-(defmethod read-aloud  (( setcounter setcounter )) 
+                        ;;; object 2)  in                         read-aloud
+(defmethod read-aloud  (( setcounter setcounter ))
   "Read aloud method for object setcounter "
   nil
   )
@@ -137,17 +137,17 @@
 
 ;;; french is not a math object, but ...
 
-(define-text-object :macro-name "french" 
+(define-text-object :macro-name "french"
   :number-args 1
-  :processing-function french-expand 
-  :precedence  nil 
+  :processing-function french-expand
+  :precedence  nil
   :object-name french
   :supers (document)
   )
 
 ;;; Use  (argument object)  1 ...( argument
-                        ;;; object 1)  in                         read-aloud 
-(defmethod read-aloud  (( french french )) 
+                        ;;; object 1)  in                         read-aloud
+(defmethod read-aloud  (( french french ))
   "Read aloud method for object french "
   (afl:new-block
    (afl:local-set-state :french)
@@ -156,18 +156,18 @@
   )
 
 
-(define-text-object :macro-name "inference" 
+(define-text-object :macro-name "inference"
   :number-args 2
-  :processing-function inference-expand 
-  :precedence  arrow-operator 
+  :processing-function inference-expand
+  :precedence  arrow-operator
   :object-name inference
   :supers ( binary-operator)
   :children-are-called (list "premise" "conclusion")
   )
 
 ;;; Use  (argument object)  1 ...( argument
-                        ;;; object 2)  in                         read-aloud 
-(defmethod read-aloud  (( inference inference )) 
+                        ;;; object 2)  in                         read-aloud
+(defmethod read-aloud  (( inference inference ))
   "Read aloud method for object inference "
   (afl:new-block
    (read-aloud  (argument 1 inference ))
@@ -179,17 +179,17 @@
 
 
 
-(define-text-object :macro-name "afl" 
+(define-text-object :macro-name "afl"
   :number-args 0
-  :processing-function afl-expand 
-  :precedence  nil 
+  :processing-function afl-expand
+  :precedence  nil
   :object-name afl
   :supers (document)
   :children-are-called nil
   )
 
-;;; Object has 0 slots 
-(defmethod read-aloud  (( afl afl )) 
+;;; Object has 0 slots
+(defmethod read-aloud  (( afl afl ))
   "Read aloud method for object afl "
   (with-reading-state (reading-state 'bold)
     (read-aloud " afl "))

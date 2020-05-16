@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (in-package :user)
@@ -18,7 +18,7 @@
 
 (def-reading-rule (integral descriptive)
     "Descriptive reading rule for integrals"
-  (let* 
+  (let*
       ((lower-limit (subscript integral ))
        (upper-limit (superscript integral ))
        (children (children integral))
@@ -28,7 +28,7 @@
     (afl:with-surrounding-pause pause-amount
       (read-aloud " Integral ")
       (cond
-        ((and lower-limit upper-limit) 
+        ((and lower-limit upper-limit)
          (read-aloud "[)] from  ")
          (when variable-of-integration
            (read-aloud (children variable-of-integration))
@@ -97,9 +97,9 @@
     )
   )
 
-(def-reading-rule (integral  long-descriptive) 
+(def-reading-rule (integral  long-descriptive)
     "long Descriptive reading rule for integrals"
-  (let* 
+  (let*
       ((lower-limit (subscript integral ))
        (upper-limit (superscript integral ))
        (children (children integral))
@@ -113,16 +113,16 @@
       (read-aloud " with respect to ")
       (read-aloud (children variable-of-integration)))
     (cond
-      ((and lower-limit upper-limit) 
+      ((and lower-limit upper-limit)
        (read-aloud "[_], [/]with lower limit, ")
-       (with-reading-state (reading-state 'subscript) 
+       (with-reading-state (reading-state 'subscript)
          (read-aloud lower-limit))
        (read-aloud " [_], and upper limit, ")
-       (with-reading-state (reading-state 'superscript) 
+       (with-reading-state (reading-state 'superscript)
          (read-aloud upper-limit)))
       (lower-limit
        (read-aloud " over, ")
-       (with-reading-state (reading-state 'subscript) 
+       (with-reading-state (reading-state 'subscript)
          (read-aloud lower-limit ))))
     (afl:force-speech)
     (read-aloud "the expression being integrated is, ")
@@ -165,7 +165,7 @@
       ( (and  (= 1 (weight contents ))
               (null (subscript parent )))
        (read-aloud contents )); to read x^*
-      (t (reading-rule superscript 'default  )) 
+      (t (reading-rule superscript 'default  ))
       )
     )
   )
@@ -245,7 +245,7 @@
        )
     (cond
       ((and  subscript
-             superscript 
+             superscript
              (equal contents "D" ))
        (reading-rule ordinary 'derivative ))
       (t  (reading-rule ordinary 'simple ))
@@ -266,7 +266,7 @@
       (t (when
              (= 2 (length (children (parent ordinary ))))
            (setf (pattern (parent ordinary )) 'derivative ))
-         (afl:with-surrounding-pause pause-amount 
+         (afl:with-surrounding-pause pause-amount
            (when  superscript  (read-aloud
                                 (cardinal-number superscript )))
            (read-aloud "derivative ")
@@ -290,13 +290,13 @@
   ;;; Function: INDEX-VARIABLE-P                               Author: raman
   ;;; Created: Fri Dec 25 17:04:44 1992
 
-(defun index-variable-p (ordinary) 
+(defun index-variable-p (ordinary)
   "Is this an index variable?"
   (and (ordinary-p ordinary)
        (find (contents ordinary) *index-variables* :test #'equal))
   )
 
-(def-reading-rule  (subscript descriptive) 
+(def-reading-rule  (subscript descriptive)
     "Descriptive reading rule for subscript "
   (let  ((contents (contents   subscript ))
          (parent (parent subscript )))
@@ -313,12 +313,12 @@
     )
   )
 
-(def-reading-rule  (subscript long-descriptive) 
+(def-reading-rule  (subscript long-descriptive)
     "Long Descriptive reading rule for subscript "
   (let  ((contents (contents   subscript ))
          (parent (parent subscript )))
     (cond
-      ((and  (ordinary-p  parent ) 
+      ((and  (ordinary-p  parent )
              (= 1 (weight subscript  )))
        (read-aloud "sub ")
        (read-aloud contents )
@@ -331,9 +331,9 @@
   )
 
 (def-reading-rule (log descriptive)
-    (let* 
+    (let*
         ((subscript (subscript  log ))
-         (children (children log )) 
+         (children (children log ))
          (attributes (attributes log ))
          (remaining-attributes (remove 'subscript  attributes
                                        :key #'attribute-name )))
@@ -352,9 +352,9 @@
 
 (def-reading-rule (log read-base-first)
     "Read base first if possible, eg log base a of x"
-  (let* 
+  (let*
       ((subscript (subscript  log ))
-       (children (children log )) 
+       (children (children log ))
        (attributes (attributes log ))
        (remaining-attributes (remove 'subscript  attributes
                                      :key #'attribute-name )))
@@ -381,9 +381,9 @@
   )
 
 (def-reading-rule (log alternative)
-    (let* 
+    (let*
         ((subscript (subscript  log ))
-         (children (children log )) 
+         (children (children log ))
          (attributes (attributes log ))
          (remaining-attributes (remove 'subscript  attributes
                                        :key #'attribute-name )))
@@ -399,7 +399,7 @@
            (read-aloud subscript )
            (read-aloud "of")
            (afl:comma-intonation))
-         (mapc #'read-math-child children))   
+         (mapc #'read-math-child children))
         (t (read-aloud "log ")
            (mapc #'read-aloud  (sorted-attributes remaining-attributes ))
            (loop for child in children
@@ -446,7 +446,7 @@
       ((>  (length children ) 2)
        (loop for tail on children
              do
-             (when (>= (length tail) 2) 
+             (when (>= (length tail) 2)
                (read-math-child (first tail) )
                (read-aloud " sub-group ")
                (read-aloud (second tail ))

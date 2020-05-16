@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (in-package :user)
@@ -29,7 +29,7 @@
 ;;; Function: FONT-NAME                                      Author: raman
 ;;; Created: Thu Sep  3 09:48:56 1992
 
-(defun font-name (font) 
+(defun font-name (font)
   "return font name"
   (assert (valid-font? font)  nil
           "~a is not a font"
@@ -41,7 +41,7 @@
 ;;; Function: VALID-FONT?                                    Author: raman
 ;;; Created: Thu Sep  3 10:04:13 1992
 
-(defun valid-font? (font) 
+(defun valid-font? (font)
   "validate font"
   (and
    (listp font)
@@ -52,19 +52,19 @@
 ;;; Function: DEFINE-FONT-RULE                               Author: raman
 ;;; Created: Thu Sep  3 09:57:56 1992
 
-(defun define-font-rule (font-name afl-setter) 
+(defun define-font-rule (font-name afl-setter)
   "define afl-setter as the action to be taken for handling font font-name"
   (setf (gethash font-name *font-afl-state-table* )
         afl-setter)
   )
 
-;;; default is identity 
+;;; default is identity
 ;;; Function: GET-FONT-RULE                                  Author: raman
 ;;; Created: Thu Sep  3 09:59:31 1992
 
-(defun get-font-rule (font-name) 
+(defun get-font-rule (font-name)
   "Retrive afl setter for this font"
-  (or 
+  (or
    (gethash font-name *font-afl-state-table*)
    #'identity)
   )
@@ -75,7 +75,7 @@
 ;;; Function: RETRIEVE-FONT-RULE                             Author: raman
 ;;; Created: Thu Sep  3 10:06:51 1992
 
-(defun retrieve-font-rule (font) 
+(defun retrieve-font-rule (font)
   "retrieve font rule for this font"
   (get-font-rule (font-name font))
   )

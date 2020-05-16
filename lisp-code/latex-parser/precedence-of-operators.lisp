@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 
@@ -36,7 +36,7 @@
 ;;; Function: PREC                                           Author: raman
 ;;; Created: Wed Oct 28 12:12:13 1992
 
-(defun prec (operator) 
+(defun prec (operator)
   "Return precedence of operator as an integer. For internal use:"
   (let
       ((precedence (loop for row in *precedence-table*
@@ -54,7 +54,7 @@
 ;;; Function: PRECEDENCE-DEFINED-P                           Author: raman
 ;;; Created: Wed Oct 28 16:03:15 1992
 
-(defun precedence-defined-p (operator) 
+(defun precedence-defined-p (operator)
   "Test if precedence already defined"
   (loop for row in *precedence-table*
         and
@@ -78,7 +78,7 @@
 ;;; Created: Wed Oct 28 12:28:48 1992
 
 (defmethod  precedence-< (operator-1  operator-2  &key (key #'identity))
-  "Predicate tests if precedence less than" 
+  "Predicate tests if precedence less than"
   (<
    (prec (funcall key operator-1))
    (prec (funcall key operator-2 )))
@@ -154,7 +154,7 @@
 ;;; Function: DEFINE-PRECEDENCE                              Author: raman
 ;;; Created: Wed Oct 28 12:41:33 1992
 
-(defun define-precedence (operator &key same-as) 
+(defun define-precedence (operator &key same-as)
   "Define precedence for operator to be the same as an existing operator."
   (when  (prec same-as)
     (pushnew operator
@@ -167,7 +167,7 @@
 ;;; Function: REMOVE-PRECEDENCE                              Author: raman
 ;;; Created: Wed Oct 28 15:37:32 1992
 
-(defun remove-precedence (operator) 
+(defun remove-precedence (operator)
   "Remove operator from precedence table"
   (when (prec operator)
     (setf      (elt *precedence-table*
@@ -182,7 +182,7 @@
 ;;; Function: REDEFINE-PRECEDENCE                            Author: raman
 ;;; Created: Thu Oct 29 10:07:57 1992
 
-(defun redefine-precedence (operator &key same-as ) 
+(defun redefine-precedence (operator &key same-as )
   "Redefine precedence flushing previous precedence if any"
   (when (precedence-defined-p operator)
     (remove-precedence operator))
@@ -199,7 +199,7 @@
               (eq where :after)) nil
               "Where should be either :before or :after  not ~a"
               where)
-  (unless (precedence-defined-p  operator) 
+  (unless (precedence-defined-p  operator)
     (let
         ((pos (cond
                 ((eq where :before )
@@ -219,21 +219,21 @@
 ;;; Function: INSERT!                                        Author: raman
 ;;; Created: Wed Oct 28 15:16:04 1992
 
-(defun insert! (item position original-list) 
+(defun insert! (item position original-list)
   "Insert item at position position of original-list"
   (append
    (butlast original-list   (- (length original-list)
-                               position )) ; front 
-   (list item)                      ; insertion 
-   (nthcdr position  original-list)     ; tail 
-   )  
+                               position )) ; front
+   (list item)                      ; insertion
+   (nthcdr position  original-list)     ; tail
+   )
   )
 
 
 ;;; Function: REMOVE-PRECEDENCE-ROW                          Author: raman
 ;;; Created: Wed Oct 28 15:31:33 1992
 
-(defun remove-precedence-row (operator) 
+(defun remove-precedence-row (operator)
   "Remove precedence row containing this operator"
   (setf *precedence-table*
         (remove-if #'(lambda(row)
@@ -245,7 +245,7 @@
 ;;; Created: Wed Oct 28 15:56:29 1992
 
 
-(defun setup-precedence-table () 
+(defun setup-precedence-table ()
   "Setup precedence table of operators. "
   (add-precedence-row 'arrow-operator :where :before
                       :existing-operator  'addition)
@@ -274,39 +274,39 @@
   (add-precedence-row 'math-list-operator :where :before
                       :existing-operator 'conditional-operator)
   (loop for  classification being the hash-values of
-        *math-classification-table* 
-        using (hash-key math-symbol) 
-        when (equal 'arrow-operator classification) 
-        do (define-precedence 
+        *math-classification-table*
+        using (hash-key math-symbol)
+        when (equal 'arrow-operator classification)
+        do (define-precedence
                math-symbol :same-as 'arrow-operator))
   (loop for  classification being the hash-values of
-        *math-classification-table* 
-        using ( hash-key math-symbol) 
-        when (equal 'relational-operator classification) 
-        do (define-precedence 
+        *math-classification-table*
+        using ( hash-key math-symbol)
+        when (equal 'relational-operator classification)
+        do (define-precedence
                math-symbol :same-as 'relational-operator))
   (loop for  classification being the hash-values of
-        *math-classification-table* 
-        using (hash-key math-symbol) 
-        when (equal 'big-operator classification) 
-        do (define-precedence 
+        *math-classification-table*
+        using (hash-key math-symbol)
+        when (equal 'big-operator classification)
+        do (define-precedence
                math-symbol :same-as 'big-operator))
   (loop for  classification being the hash-values of
-        *math-classification-table* 
-        using ( hash-key math-symbol) 
-        when (equal 'mathematical-function-name  classification) 
-        do (define-precedence 
+        *math-classification-table*
+        using ( hash-key math-symbol)
+        when (equal 'mathematical-function-name  classification)
+        do (define-precedence
                math-symbol :same-as 'mathematical-function))
   (loop for  classification being the hash-values of
-        *math-classification-table* 
-        using ( hash-key math-symbol) 
-        when (equal 'quantifier  classification) 
-        do (define-precedence 
+        *math-classification-table*
+        using ( hash-key math-symbol)
+        when (equal 'quantifier  classification)
+        do (define-precedence
                math-symbol :same-as 'quantifier))
   )
 
 #+lucid
-(defun setup-precedence-table () 
+(defun setup-precedence-table ()
   "Setup precedence table of operators. "
   (add-precedence-row 'arrow-operator :where :before
                       :existing-operator  'addition)
@@ -335,34 +335,34 @@
   (add-precedence-row 'math-list-operator :where :before
                       :existing-operator 'conditional-operator)
   (loop for  classification being the hash-values of
-        *math-classification-table* 
-        using ( key math-symbol) 
-        when (equal 'arrow-operator classification) 
-        do (define-precedence 
+        *math-classification-table*
+        using ( key math-symbol)
+        when (equal 'arrow-operator classification)
+        do (define-precedence
                math-symbol :same-as 'arrow-operator))
   (loop for  classification being the hash-values of
-        *math-classification-table* 
-        using ( key math-symbol) 
-        when (equal 'relational-operator classification) 
-        do (define-precedence 
+        *math-classification-table*
+        using ( key math-symbol)
+        when (equal 'relational-operator classification)
+        do (define-precedence
                math-symbol :same-as 'relational-operator))
   (loop for  classification being the hash-values of
-        *math-classification-table* 
-        using ( key math-symbol) 
-        when (equal 'big-operator classification) 
-        do (define-precedence 
+        *math-classification-table*
+        using ( key math-symbol)
+        when (equal 'big-operator classification)
+        do (define-precedence
                math-symbol :same-as 'big-operator))
   (loop for  classification being the hash-values of
-        *math-classification-table* 
-        using ( key math-symbol) 
-        when (equal 'mathematical-function-name  classification) 
-        do (define-precedence 
+        *math-classification-table*
+        using ( key math-symbol)
+        when (equal 'mathematical-function-name  classification)
+        do (define-precedence
                math-symbol :same-as 'mathematical-function))
   (loop for  classification being the hash-values of
-        *math-classification-table* 
-        using ( key math-symbol) 
-        when (equal 'quantifier  classification) 
-        do (define-precedence 
+        *math-classification-table*
+        using ( key math-symbol)
+        when (equal 'quantifier  classification)
+        do (define-precedence
                math-symbol :same-as 'quantifier))
   )
 
@@ -371,11 +371,11 @@
 ;;; Function: SHOW-PRECEDENCE-TABLE                          Author: raman
 ;;; Created: Thu Oct 29 08:55:26 1992
 
-(defun show-precedence-table () 
+(defun show-precedence-table ()
   "Show one entry from each row of precedence table"
   (loop for row in *precedence-table*
         and
-        i = 0 then (+ i 1) 
+        i = 0 then (+ i 1)
         do
         (format t "~d: ~a ~%" i  (last row))
         )

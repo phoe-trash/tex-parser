@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (in-package :afl)
@@ -10,7 +10,7 @@
 
 ;;; Wed Apr  7 13:02:00 EDT 1993
 
-;;; pronunciations for french mode. 
+;;; pronunciations for french mode.
 ;;;
 
 (define-pronunciation "journal" "[zh'uhrrn`aal]" :french)

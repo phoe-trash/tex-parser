@@ -5,7 +5,7 @@
 (in-package :afl)
 (proclaim '(optimize (compilation-speed 0) (safety 1) (speed 3)))
 ;;; Modified: Wed Mar 24 15:15:37 EST 1993
-;;; Moving to afl package 
+;;; Moving to afl package
 
 
 ;;; Created: Fri Sep 25 11:58:49 EDT 1992
@@ -26,7 +26,7 @@
 (define-pronunciation "?" "[_]?" :text)
 (define-pronunciation ";" "[_];" :text)
 (define-pronunciation "(" "[_]," :text) ;kluge
-(define-pronunciation ")" "[_], " :text) 
+(define-pronunciation ")" "[_], " :text)
 (define-pronunciation "u-turn" " yu-turn " :text)
 (define-pronunciation "Wed." "Wednesday, " :text)
 (define-pronunciation "i."   " eye " :text)
@@ -78,7 +78,7 @@
 ;;; {Math mode
 
 ;;; Math mode:
-;;; Capital letters.  
+;;; Capital letters.
 (define-pronunciation "A" "cap [`ey]" :math)
 (define-pronunciation "B"  "cap b" :math)
 (define-pronunciation "C"  "cap C" :math)
@@ -117,13 +117,13 @@
 
 (define-pronunciation  "varrho"   "var rho" :math)
 (define-pronunciation  "varsigma"   "var sigma" :math)
-(define-pronunciation  "varepsilon"   "var epsilon" :math) 
+(define-pronunciation  "varepsilon"   "var epsilon" :math)
 (define-pronunciation "varphi"   "var phi" :math)
-(define-pronunciation  "chi"    "ki" :math) 
+(define-pronunciation  "chi"    "ki" :math)
 (define-pronunciation  "varpi"   "var pi" :math)
-(define-pronunciation  "vartheta"   "var theta" :math) 
+(define-pronunciation  "vartheta"   "var theta" :math)
 (define-pronunciation "omega"  "ommega" :math)
-;; the rest of the lower case greek letters spoken correctly. 
+;; the rest of the lower case greek letters spoken correctly.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Upper case Greek letters:
 
@@ -217,7 +217,7 @@
 (define-pronunciation  "approx"   "is-approximately" :math)
 (define-pronunciation  "preceq"   "precedes-or-equals" :math)
 (define-pronunciation  "succeq"   "succeeds-or-equals" :math)
-                                        ; "propto" 
+                                        ; "propto"
 (define-pronunciation  "ll"   "less-than-less-than" :math)
 (define-pronunciation  "gg"   "greater-than-greater-than" :math)
 (define-pronunciation  "asymp"   "asymptotically" :math)
@@ -368,7 +368,7 @@
 (define-pronunciation  "tanh"   " tan h" :math)
 (define-pronunciation  "sqrt"   " square root" :math)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Accents: 
+;;; Accents:
 (define-pronunciation  "hat"   " hat" :math)
 (define-pronunciation  "grave"   " graav" :math)
 (define-pronunciation  "breve"   " brev" :math)

@@ -2,7 +2,7 @@
  ;;;                                                                       ;;;
  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 
@@ -28,7 +28,7 @@
 (defmacro define-text-object ( &key
                               macro-name number-args processing-function
                               children-are-called
-                              precedence object-name supers) 
+                              precedence object-name supers)
   "define new object in text"
   `(progn
     ;;; First define the class:
@@ -36,26 +36,26 @@
     (cond
      (, (= 0 number-args )
         (defclass ,object-name   ,supers
-          ((contents :initform nil :initarg  :contents 
+          ((contents :initform nil :initarg  :contents
                      :accessor contents ))
           (:documentation ,(format nil
                                    "Class ~a corresponding to  document macro ~a"
                                    object-name macro-name))
           ))
-                                        ;otherwise 
+                                        ;otherwise
         (t (defclass ,object-name   ,supers
           ((arguments :initform nil :initarg :arguments
                       :accessor arguments :accessor children)
            (children-are-called :initform  ,children-are-called
-                                :initarg :children-are-called 
+                                :initarg :children-are-called
                                 :accessor children-are-called )
-           (contents :initform nil :initarg  :contents 
+           (contents :initform nil :initarg  :contents
                      :accessor contents ))
           (:documentation ,(format nil
                                    "Class ~a corresponding to  document macro ~a"
                                    object-name macro-name))
           ))
-        )                               ; end if 
+        )                               ; end if
     ;;; Now define the processing function:
     ;;; Modified to match class definition
     (defun ,processing-function (&rest arguments)
@@ -72,18 +72,18 @@ processing function")
            (processor (if (math-p self)
                           #'process-argument-as-math
                           #'process-argument )))
-        (unless (= 0 ,number-args) 
-          (setf (arguments self) 
-                (loop for arg in arguments  
-                      collect 
+        (unless (= 0 ,number-args)
+          (setf (arguments self)
+                (loop for arg in arguments
+                      collect
                       (funcall processor  arg)
                       )))
         self)
       )
 ;;; define argument accessor method
-                                        ; and children-called method 
+                                        ; and children-called method
     ;;; only if n-args is not 0
-    (when ,(>  number-args 0) 
+    (when ,(>  number-args 0)
       (defmethod argument ((,object-name ,object-name) (n integer))
         "Automatically generated argument accessor"
         (assert  (<= n (length (arguments  ,object-name ))) nil
@@ -99,7 +99,7 @@ processing function")
                  n  ,object-name (length (arguments ,object-name )))
         (elt  (arguments ,object-name)  (- n 1 ))
         )
-      )                                 ; end when 
+      )                                 ; end when
                                         ; children-are-called
     (when ,children-are-called
       (defmethod name-of-child  ((,object-name ,object-name) (n integer))
@@ -131,11 +131,11 @@ processing function")
           (t (error "Should not have got here. "))
           )
         )
-      )                                 ; end when 
+      )                                 ; end when
     ;;; define precedence
     (when ',precedence
       (define-precedence ,macro-name :same-as ',precedence))
-   ;;; Install processing function 
+   ;;; Install processing function
     (define-tex-macro ,macro-name ,number-args ',processing-function)
     )
   )
@@ -176,7 +176,7 @@ processing function")
                                          macro-name  processing-function
                                          (label-first t)
                                          ;(label-is-a-label t)
-                                         precedence object-name supers) 
+                                         precedence object-name supers)
   "define new object in text"
   `(progn
     ;;; First define the class:
@@ -184,7 +184,7 @@ processing function")
                                (list  'labelled-class 'numbered-class ))
       ((arguments :initform nil :initarg :arguments
                   :accessor arguments :accessor children)
-       (contents :initform nil :initarg  :contents 
+       (contents :initform nil :initarg  :contents
                  :accessor contents ))
       (:documentation ,(format nil
                                "Class ~a corresponding to
@@ -194,7 +194,7 @@ processing function")
 ;;; Modified:
     ;;; process label,
     ;;; then process referend
-    ;;; finally install the label 
+    ;;; finally install the label
     ;;; Now define the processing function:
     ;;; Modified to match class definition
     (defun ,processing-function (&rest arguments)
@@ -208,19 +208,19 @@ passed to automatically generated processing function")
            (processor (if (math-p self)
                           #'process-argument-as-math
                           #'process-argument )))
-        ;;; First process the object: 
+        ;;; First process the object:
         (setf (arguments self)
               (if ,label-first
                   (funcall processor (second arguments ))
                   (funcall processor (first arguments ))))
-                                        ; Now make it the referend 
+                                        ; Now make it the referend
         (add-enclosing-referend self)
                                         ; number it
         (when (numbered-class-p self )
           (increment-counter-value  (class-name (class-of self )))
           (setf (number self )  (next-counter-value (class-name (class-of self )))))
                                         ; Now process the label,
-                                        ;it will automatically point to the referend 
+                                        ;it will automatically point to the referend
         (if ,label-first
             (funcall processor (first arguments ))
             (funcall processor (second arguments )))
@@ -246,7 +246,7 @@ passed to automatically generated processing function")
     ;;; define precedence
     (when ',precedence
       (define-precedence ,macro-name :same-as ',precedence))
-   ;;; Install processing function 
+   ;;; Install processing function
     (define-tex-macro ,macro-name 2 ',processing-function)
     )
   )
@@ -272,7 +272,7 @@ passed to automatically generated processing function")
                             (position document (children
                                                 this-parent )))))
     (when child-position  (incf child-position ))
-    (when this-parent 
+    (when this-parent
       (name-of-child (or child-position  1) this-parent ))
     )
   )

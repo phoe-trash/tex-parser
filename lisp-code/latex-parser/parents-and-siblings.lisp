@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 
@@ -63,7 +63,7 @@
     (unless    (equal 'root parent )
       (unless parent                    ;mark as linked
         (setf (parent current) 'root ))
-      (mapc #'link-children-to-parent attributes )  
+      (mapc #'link-children-to-parent attributes )
       (unless (equal  'undefined (parent contents ))
         (setf (parent contents)   current)
         (link-children-to-parent contents)
@@ -94,7 +94,7 @@
     (unless    (equal 'root parent )
       (unless parent                    ;mark as linked
         (setf (parent article) 'root ))
-      (when abstract 
+      (when abstract
         (setf  (parent abstract) article)
         (link-children-to-parent abstract))
       (link-siblings initial-body)
@@ -145,7 +145,7 @@
                   (setf (parent block) current)
                   (unless (word-p block )
                     (link-children-to-parent block ))))))
-      (unless (equal 'undefined children ) 
+      (unless (equal 'undefined children )
         (link-siblings children)
         (loop for child in children
               do
@@ -207,7 +207,7 @@
                                         ; link only if it is safe
              (let
                  ((top  (first column )))
-               (loop for current in (rest column) 
+               (loop for current in (rest column)
                      do
                      (setf (table-element-below  top) current)
                      (setf (table-element-above  current) top )
@@ -248,10 +248,10 @@
 
 (defmethod link-siblings ((children  list))
   "Link siblings "
-  (when (next-and-previous-defined-p children) 
+  (when (next-and-previous-defined-p children)
     (let
         ((previous (first children )))
-      (loop for current in (rest children) 
+      (loop for current in (rest children)
             do
             (setf (next previous) current)
             (setf (previous current) previous )
@@ -263,7 +263,7 @@
   ;;; Function: NEXT-AND-PREVIOUS-DEFINED-P                    Author: raman
   ;;; Created: Fri Dec 25 13:57:25 1992
 
-(defun next-and-previous-defined-p (list) 
+(defun next-and-previous-defined-p (list)
   "Validate items of list"
   (notany #'(lambda(item)
               (or (equal 'undefined (next item ))
@@ -271,7 +271,7 @@
           list)
   )
 
-;;; { default parent and sibling methods catch all: 
+;;; { default parent and sibling methods catch all:
 
   ;;; Method: PARENT                                           Author: raman
   ;;; Created: Wed Dec 23 09:04:08 1992

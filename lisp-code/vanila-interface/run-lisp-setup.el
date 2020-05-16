@@ -1,5 +1,5 @@
 
-;;; load this to use run-lisp  with clisp 
+;;; load this to use run-lisp  with clisp
 
 (require 'cl)
 (require 'define-text-objects)
@@ -18,15 +18,15 @@
 		   'lisp-insert-modification-time))))
 
 
-(defvar clisp "clisp" 
+(defvar clisp "clisp"
   "Where your Lisp is installed. ")
 
-(defvar aster-init 
+(defvar aster-init
   (expand-file-name "~/emacs/lisp/aster/clisp-init.lisp"))
 
 
-(defvar aster-lisp  
-  (format "%s -on-error appease -i -q  %s" 
+(defvar aster-lisp
+  (format "%s -on-error appease -i -q  %s"
 	  clisp aster-init )
   "How to start up Aster")
 
@@ -35,7 +35,7 @@
   (interactive)
   (declare (special aster-lisp))
   (if (featurep 'slime)
-      (slime aster-lisp)    
+      (slime aster-lisp)
     (run-lisp aster-lisp))
   (load-library "reader-browse"))
 

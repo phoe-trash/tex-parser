@@ -1,5 +1,5 @@
 (in-package :user)
-;;; 
+;;;
 ;;; Sat May  1 12:52:01 EDT 1993
  ;;;
 ;;; Making query.lisp a system:

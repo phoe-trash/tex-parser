@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 
@@ -30,14 +30,14 @@
 ;;; Created: Sun Jan 26 11:17:17 1992
 
 (defvar *processing-function-table*
-  (make-hash-table :test #'equal) 
+  (make-hash-table :test #'equal)
   "Holds the table of node types and their associated processing functions.")
 
 
 ;;; Function: DEFINE-PARSING-FUNCTION                           Author: raman
 ;;; Created: Mon Mar  2 20:57:04 1992
 
-(defun define-parsing-function (object parser) 
+(defun define-parsing-function (object parser)
   "Installs a parsing function for object by adding
 a suitable entry to the table *processing-function-table*"
   (setf  (gethash object *processing-function-table*)  parser)
@@ -71,7 +71,7 @@ a suitable entry to the table *processing-function-table*"
 (define-parsing-function 'item'process-item)
 (define-parsing-function 'equation'process-equation)
 (define-parsing-function 'eqnarray'process-eqnarray)
-(define-parsing-function 'eqalign 'process-eqalign) 
+(define-parsing-function 'eqalign 'process-eqalign)
 (define-parsing-function 'slide 'process-slide)
 (define-parsing-function 'verbatim 'process-verbatim)
 (define-parsing-function 'new-environment'process-new-environment)
@@ -126,10 +126,10 @@ a suitable entry to the table *processing-function-table*"
 ;;; Created: Mon Mar  2 22:12:55 1992
 ;;; Modified: Fri Dec 25 09:04:01 EST 1992
 ;;; Converting to using hash tables.  <(old version  backed up. )>
-(defun define-tex-macro  (macro-name macro-n-args macro-def) 
+(defun define-tex-macro  (macro-name macro-n-args macro-def)
   "Add entry for macro-name to *tex-macro-table*
 the table of known tex macros "
-  (setf (gethash macro-name *tex-macro-table*) 
+  (setf (gethash macro-name *tex-macro-table*)
         (make-tex-macro
          :name macro-name
          :number-of-args macro-n-args
@@ -171,7 +171,7 @@ the table of known tex macros "
 (define-tex-macro "date" 1 'date-expand)
 (define-tex-macro "address" 1 'address-expand)
 
-(define-tex-macro "mathrel" 1 'mathrel-expand) 
+(define-tex-macro "mathrel" 1 'mathrel-expand)
 (define-tex-macro "root" 3 'root-expand)
 (define-tex-macro  'default 0  'default)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -190,7 +190,7 @@ the table of known tex macros "
 ;;; Macro: DEFINE-MATH-DELIMITER                             Author: raman
 ;;; Created: Fri Mar  6 10:31:33 1992
 
-(defmacro define-math-delimiter (open close delimiter-name) 
+(defmacro define-math-delimiter (open close delimiter-name)
   "define a math delimiter"
   `(push
     (make-math-delimiter
@@ -203,9 +203,9 @@ the table of known tex macros "
 
 ;;; Now set up the table
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(define-math-delimiter  "{" "}"  "braces") 
-(define-math-delimiter  "(" ")"  "paren") 
-(define-math-delimiter  "[" "]"  "brackets") 
+(define-math-delimiter  "{" "}"  "braces")
+(define-math-delimiter  "(" ")"  "paren")
+(define-math-delimiter  "[" "]"  "brackets")
                                         ;(define-math-delimiter  "|" "|"  'pipe)
 (define-math-delimiter '(math-cs  "langle") '(math-cs  "rangle")
   "angle brackets")
@@ -213,7 +213,7 @@ the table of known tex macros "
 (define-math-delimiter '(math-cs "lbrack")  '(math-cs "rbrack" ) "brackets")
 
 (define-math-delimiter '(math-cs "lbrace")  '(math-cs "rbrace" )
-  "braces") 
+  "braces")
 (define-math-delimiter '(math-cs "lfloor")  '(math-cs "rfloor" )
   "floor-brackets")
 (define-math-delimiter '(math-cs "lceil")   '(math-cs "rceil" )
@@ -227,7 +227,7 @@ the table of known tex macros "
 
 ;;; Variable: *SIGNAL-ERROR-ON-UNKNOWN-TEX-MACRO*            Author: raman
 ;;; Created: Thu Jan 30 11:54:06 1992
-;;; external variable: 
+;;; external variable:
 (defvar *do-not-signal-error-on-unknown-tex-macro*  nil
   "tell parser to signal error or continue when undefined tex macro
   seen.")

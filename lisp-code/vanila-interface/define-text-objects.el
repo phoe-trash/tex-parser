@@ -16,7 +16,7 @@
   (let
       ((macro-name (read-from-minibuffer "Enter macro name: "
                                          nil nil nil)) ; get a string
-       (number-of-args (read-minibuffer "Number of arguments: " )) 
+       (number-of-args (read-minibuffer "Number of arguments: " ))
        (processing-function
         (read-minibuffer
          "processing function: "))
@@ -29,7 +29,7 @@
                 "Supers: a list"))
        )
 ;;; Now generate the template:
-    (save-excursion 
+    (save-excursion
       (insert
        (format
         "(define-text-object \
@@ -46,7 +46,7 @@
     (indent-sexp)
     (forward-sexp 1)
     (insert (format "\n\n"))
-    
+
     (if (= 0 number-of-args )
         (insert
          (format ";;; Object has 0 slots \n"))
@@ -58,9 +58,9 @@
     )
   )
 
-(defun generate-read-aloud-method(class) 
+(defun generate-read-aloud-method(class)
   (interactive "SEnter object name")
-  "Generate an empty read aloud method for class class" 
+  "Generate an empty read aloud method for class class"
   (save-excursion
     (insert
      (format
@@ -87,7 +87,7 @@
       (forward-char 2)
       (mark-sexp 1)
       (copy-region-as-kill (point) (mark)))
-;;; Now generate template: 
+;;; Now generate template:
     (insert  (format
               "(read-aloud (argument %d  " slot-number))
     (yank)
@@ -106,13 +106,13 @@
       ((slot-number (read-minibuffer"Enter slot number: " ))
        (class-name (read-minibuffer "enter class name: "))
        )
-;;; Now generate template: 
+;;; Now generate template:
     (insert  (format
-              "(read-aloud (argument %s %d ))" 
+              "(read-aloud (argument %s %d ))"
               slot-number class-name))
     (beginning-of-line)
     (lisp-indent-line)
     (end-of-line))
-  
+
   )
 

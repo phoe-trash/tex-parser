@@ -6,10 +6,10 @@
 ;;; ****************************************************************
 ;;;
 ;;; The Automatic User Manual Creation system is a common lisp portable
-;;; system for automatically generating user's guides from the 
+;;; system for automatically generating user's guides from the
 ;;; source definitions and their documentation strings. It uses several
 ;;; heuristics for formatting the documentation segments nicely.
-;;; If Waters' XP pretty printer is available, it uses that instead to 
+;;; If Waters' XP pretty printer is available, it uses that instead to
 ;;; format the argument lists.
 ;;;
 ;;; The user guide for this file was created using this program and
@@ -21,9 +21,9 @@
 ;;; Address: Carnegie Mellon University
 ;;;          School of Computer Science
 ;;;          Pittsburgh, PA 15213
-;;; 
+;;;
 ;;; Copyright (c) 1990. All rights reserved.
-;;; 
+;;;
 ;;; See general license below.
 ;;;
 
@@ -36,8 +36,8 @@
 ;;; ANY WARRANTY. The author(s) do not accept responsibility to anyone for
 ;;; the consequences of using it or for whether it serves any particular
 ;;; purpose or works at all. No warranty is made about the software or its
-;;; performance. 
-;;; 
+;;; performance.
+;;;
 ;;; Use and copying of this software and the preparation of derivative
 ;;; works based on this software are permitted, so long as the following
 ;;; conditions are met:
@@ -46,38 +46,38 @@
 ;;; 	o  No fees or compensation are charged for use, copies, or
 ;;; 	   access to this software. You may charge a nominal
 ;;; 	   distribution fee for the physical act of transferring a
-;;; 	   copy, but you may not charge for the program itself. 
+;;; 	   copy, but you may not charge for the program itself.
 ;;; 	o  If you modify this software, you must cause the modified
 ;;; 	   file(s) to carry prominent notices (a Change Log)
 ;;; 	   describing the changes, who made the changes, and the date
 ;;; 	   of those changes.
 ;;; 	o  Any work distributed or published that in whole or in part
-;;; 	   contains or is a derivative of this software or any part 
-;;; 	   thereof is subject to the terms of this agreement. The 
+;;; 	   contains or is a derivative of this software or any part
+;;; 	   thereof is subject to the terms of this agreement. The
 ;;; 	   aggregation of another unrelated program with this software
 ;;; 	   or its derivative on a volume of storage or distribution
 ;;; 	   medium does not bring the other program under the scope
 ;;; 	   of these terms.
 ;;; 	o  Permission is granted to manufacturers and distributors of
 ;;; 	   lisp compilers and interpreters to include this software
-;;; 	   with their distribution. 
-;;; 
-;;; This software is made available AS IS, and is distributed without 
+;;; 	   with their distribution.
+;;;
+;;; This software is made available AS IS, and is distributed without
 ;;; warranty of any kind, either expressed or implied.
-;;; 
+;;;
 ;;; In no event will the author(s) or their institutions be liable to you
 ;;; for damages, including lost profits, lost monies, or other special,
 ;;; incidental or consequential damages arising out of or in connection
 ;;; with the use or inability to use (including but not limited to loss of
 ;;; data or data being rendered inaccurate or losses sustained by third
-;;; parties or a failure of the program to operate as documented) the 
+;;; parties or a failure of the program to operate as documented) the
 ;;; program, even if you have been advised of the possibility of such
 ;;; damanges, or for any claim by any other party, whether in an action of
 ;;; contract, negligence, or other tortious action.
-;;; 
+;;;
 ;;; The current version of this software and a variety of related
 ;;; utilities may be obtained by anonymous ftp from ftp.cs.cmu.edu
-;;; (128.2.206.173) or any other CS machine in the directory 
+;;; (128.2.206.173) or any other CS machine in the directory
 ;;;       /afs/cs.cmu.edu/user/mkant/Public/Lisp-Utilities/
 ;;; You must cd to this directory in one fell swoop, as the CMU
 ;;; security mechanisms prevent access to other directories from an
@@ -88,12 +88,12 @@
 ;;; The file COPYING contains the current copy of this license agreement.
 ;;; Of course, if your site runs the Andrew File System and you have
 ;;; afs access, you can just cd to the directory and copy the files directly.
-;;; 
+;;;
 ;;; Please send bug reports, comments, questions and suggestions to
 ;;; mkant@cs.cmu.edu. We would also appreciate receiving any changes
-;;; or improvements you may make. 
-;;; 
-;;; If you wish to be added to the Lisp-Utilities@cs.cmu.edu mailing list, 
+;;; or improvements you may make.
+;;;
+;;; If you wish to be added to the Lisp-Utilities@cs.cmu.edu mailing list,
 ;;; send email to Lisp-Utilities-Request@cs.cmu.edu with your name, email
 ;;; address, and affiliation. This mailing list is primarily for
 ;;; notification about major updates, bug fixes, and additions to the lisp
@@ -116,15 +116,15 @@
 ;;; 28-JAN-91 rit   Changed format clauses with @: to :@ in handle-form-output.
 ;;;                 Otherwise Franz Allegro CL barfs.
 ;;;           mk    Note that CLtL2 specifies that either is OK, although
-;;;                 :@ is traditional. 
+;;;                 :@ is traditional.
 ;;; 28-JAN-91 mk    Added Scribe output format in addition to TEXT output
 ;;;                 format.
 ;;; 31-JAN-91 duff  Doc-handler for define-condition.
 ;;; 05-FEB-91 wds   Added doc-handlers for defmethod, defgeneric, defclass,
 ;;;                 deftype and defsetf.
-;;; 05-FEB-91 mk    Fixed handler for defmethod to handle qualifiers such 
+;;; 05-FEB-91 mk    Fixed handler for defmethod to handle qualifiers such
 ;;;                 as :before, :after, and :around. Fixed defsetf handler
-;;;                 to include alternate format. Extended deftype handler. 
+;;;                 to include alternate format. Extended deftype handler.
 ;;; 07-FEB-91 dick  Doc-handlers for CLOS defclass. [This was better than
 ;;;                 wds's. I've merged the capabilities of the two.
 ;;;                 Also, I added :blank for use in leaving the args
@@ -155,11 +155,11 @@
 ;;; ignore comment stubs and only include the meaty stuff.
 ;;;
 ;;; Clean up use of XP pretty printer.
-;;; 
+;;;
 ;;; Need 'latex output-format. In 'scribe mode, need to convert @ to @@.
 ;;;
 ;;; Note that using :output-format 'scribe and running scribe with
-;;; the -device FILE arguments should produce output similar to 
+;;; the -device FILE arguments should produce output similar to
 ;;; :output-format 'text, except without semicolons in the left margin.
 ;;;
 
@@ -283,7 +283,7 @@
 ;;;
 ;;; CREATE-USER-MANUAL (filename &key (output-format (quote text))   [FUNCTION]
 ;;;                     (output-stream *standard-output*))
-;;;    Automatically creates a user manual for the functions in a file by 
+;;;    Automatically creates a user manual for the functions in a file by
 ;;;    collecting the documentation strings and argument lists of the
 ;;;    functions and formatting the output nicely. Returns a list of the
 ;;;    definition types of the forms it couldn't handle. Output-format
@@ -321,7 +321,7 @@
 ;;;    Finds an appropriate point to break the string at given a target
 ;;;    length. If arglistp is T, tries to find an intelligent position to
 ;;;    break the string. If filled is T, tries to fill out the string as
-;;;    much as possible. 
+;;;    much as possible.
 ;;;
 ;;; LAMBDA-LIST-KEYWORD-POSITION (string                             [FUNCTION]
 ;;;                               &optional end trailer-only)
@@ -334,7 +334,7 @@
 ;;;    at most 1 unbalanced left parenthesis.
 ;;;
 ;;; PARSE-WITH-DELIMITER (line &optional (delim #\newline))          [FUNCTION]
-;;;    Breaks LINE into a list of strings, using DELIM as a 
+;;;    Breaks LINE into a list of strings, using DELIM as a
 ;;;    breaking point.
 ;;;
 
@@ -377,7 +377,7 @@
    definition form handled (e.g., defun), DESCRIPTION is a one-word
    string equivalent of definer (e.g., \"function\"), and ARGLIST
    and BODY together define a function that takes the form as input
-   and value-returns the name, argument-list, documentation string, 
+   and value-returns the name, argument-list, documentation string,
    and a list of any qualifiers of the form."
   `(setf (gethash ',definer *documentation-handlers*)
 	 (list #'(lambda ,arglist
@@ -448,7 +448,7 @@
 (define-doc-handler define-condition (form)
   "condition"
   (values (cadr form)
-          ;; handled here like defstruct. 
+          ;; handled here like defstruct.
 	  ;; might want to skip this and return nil.
           (mapcar #'atom-or-car (fourth form))
           (cadr (find :documentation (nthcdr 4 form) :key #'car))))
@@ -478,7 +478,7 @@
 
 (define-doc-handler DEFSETF (form)
   "setf mapping"
-  ;; name args doc. 
+  ;; name args doc.
   ;; defsetf has two formats:
   ;;    (defsetf name update-fn doc)
   ;;    (defsetf name lambda-list (store-variable) doc-string body)
@@ -622,8 +622,8 @@
 				    (output-format 'text)
 				    (output-stream *standard-output*)
 				    (purge-latex t))
-  "Automatically creates a user manual for the functions in a file by 
-   collecting the documentation strings and argument lists of the 
+  "Automatically creates a user manual for the functions in a file by
+   collecting the documentation strings and argument lists of the
    functions and formatting the output nicely. Returns a list of the
    definition types of the forms it couldn't handle. Output-format may
    be either 'TEXT, 'SCRIBE or 'LATEX. In this last case the extra
@@ -652,11 +652,11 @@
    segment to the output stream."
   (let* ((key (first form))
 	 (handler-entry (find-doc-handler key)))
-    (cond (handler-entry 
+    (cond (handler-entry
 	   (let ((handler (first handler-entry))
 		 (type (second handler-entry))
 		 )
-	     (multiple-value-bind (name args documentation qualifiers) 
+	     (multiple-value-bind (name args documentation qualifiers)
 		 (funcall handler form)
 	       (let ((name-length 0)
 		     (args (cond ((stringp args) ; variable
@@ -676,7 +676,7 @@
 		 (decf type-pos (+ (length type) 2))
 		 (let ((width (- type-pos (+ 1 4 1 ) name-length)))
 		   (unless (eq output-format 'text)
-		     ;; Add in the width of ";;; " since we use it 
+		     ;; Add in the width of ";;; " since we use it
 		     ;; only in text mode.
 		     (incf width 4))
 		   (setq args
@@ -708,10 +708,10 @@
 (defun output-text-documentation (name type args documentation args-tab-pos
 				       type-pos
 				       &optional (stream *standard-output*))
-  "Prints out the user guide entry for a form in TEXT mode." 
+  "Prints out the user guide entry for a form in TEXT mode."
   (format stream "~%;;; ~A ~A ~VT[~A]" name (first args) type-pos type)
   (dolist (arg (rest args))
-    (format stream "~%;;; ~0,1,V,' @A" 
+    (format stream "~%;;; ~0,1,V,' @A"
 	    (+ #+:XP 1 #-:XP 2 args-tab-pos)
 	    arg))
   (when (stringp documentation)
@@ -722,7 +722,7 @@
       (format stream "~&;;;    ~A" string)))
   (format stream "~%;;;"))
 
-(defun output-scribe-documentation (name type args documentation 
+(defun output-scribe-documentation (name type args documentation
 					 &optional (stream *standard-output*))
   "Prints out the user guide entry for a form in SCRIBE mode."
   (format stream "~%@begin(format,group)~%@tabclear()")
@@ -739,7 +739,7 @@
       (format stream "~%~A" string)))
   (format stream "~%@end(quotation)~%@end(format)~%"))
 
-(defun output-latex-documentation (name type args documentation 
+(defun output-latex-documentation (name type args documentation
 					 &optional
 					 (stream *standard-output*)
 					 (purge-documentation t))
@@ -856,7 +856,7 @@
 				   (parse-with-delimiter string #\newline)))
 	   string))))
 
-(defun split-string (string width 
+(defun split-string (string width
 			    &optional arglistp filled (trim-whitespace t))
   "Splits a string into a list of strings, each of which is shorter
    than the specified width. Tries to be intelligent about where to
@@ -885,14 +885,14 @@
 	  (push first result))
 	(when (and second (not (string-equal second "")))
 	  (setf rest
-		(list* 
+		(list*
 		 nil
 		 (concatenate 'string
 			      (string-trim '(#\space #\tab) second)
 			      " "
 			      (and (cadr rest)
 				   (string-trim '(#\space #\tab)
-						(cadr rest)))) 
+						(cadr rest))))
 		 (cddr rest))))))))
 
 ;;; need some way for the last line from an arglist to possibly
@@ -918,13 +918,13 @@
 	 ;; zero (actually, the conditions are much more complex).
 	 ;; Then check if the previous "word" is a lambda-list keyword.
 	 ;; This gives it a preference for lambda-list keywords.
-	 (let* ((space-pos (position #\space string :from-end t 
+	 (let* ((space-pos (position #\space string :from-end t
 				    :end max-length))
 		(pos space-pos))
 	   (when arglistp
-	     (let* ((paren (balanced-parenthesis-position 
+	     (let* ((paren (balanced-parenthesis-position
 			    string (or space-pos max-length)))
-		    (lambda (lambda-list-keyword-position 
+		    (lambda (lambda-list-keyword-position
 			     string (or paren max-length))))
 	       (cond ((and lambda paren space-pos arglistp
 			   (not (zerop lambda))
@@ -946,13 +946,13 @@
 (defun lambda-list-keyword-position (string &optional end trailer-only)
   "If the previous symbol is a lambda-list keyword, returns
    its position. Otherwise returns end."
-  ;; possibly extend this to also search for colons for keywords? 
+  ;; possibly extend this to also search for colons for keywords?
   (when (null end) (setf end (length string)))
   (let ((ampersand (position #\& string :from-end t :end end))
 	(rightmost-space (position #\space string :from-end t :end end)))
-    (if ampersand 
+    (if ampersand
 	(cond ((find (string-trim '(#\space) (subseq string ampersand end))
-		   lambda-list-keywords 
+		   lambda-list-keywords
 		   :key #'symbol-name
 		   :test #'string-equal)
 	       ampersand)
@@ -961,7 +961,7 @@
 		    (find (string-trim '(#\space)
 				       (subseq string
 					       ampersand rightmost-space))
-			  lambda-list-keywords 
+			  lambda-list-keywords
 			  :key #'symbol-name
 			  :test #'string-equal))
 	       ampersand)
@@ -971,7 +971,7 @@
 
 (defun balanced-parenthesis-position (string &optional end)
   "Finds the position of the left parenthesis which is closest to END
-   but leaves the prefix of the string with balanced parentheses or 
+   but leaves the prefix of the string with balanced parentheses or
    at most 1 unbalanced left parenthesis."
   (when (null end) (setf end (length string)))
   (let* ((num-left (count #\( string :end end))
@@ -995,8 +995,8 @@
 			   ;; parens before it account for the imbalance
 			   ;; actually, we need to do a fancier balancing
 			   ;; operation here to absorb balanced left
-			   ;; parentheses. 
-			   (not (< (1- (count #\( string 
+			   ;; parentheses.
+			   (not (< (1- (count #\( string
 					  :end leftmost-right-paren))
 			      imbalance)))
 			  ((find #\space string :end rightmost-left-paren)
@@ -1012,7 +1012,7 @@
 	     end)))))
 
 (defun parse-with-delimiter (line &optional (delim #\newline))
-  "Breaks LINE into a list of strings, using DELIM as a 
+  "Breaks LINE into a list of strings, using DELIM as a
    breaking point."
   ;; what about #\return instead of #\newline?
   (let ((pos (position delim line)))

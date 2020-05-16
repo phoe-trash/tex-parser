@@ -48,7 +48,7 @@
 ;;; Macro: DEFINE-READING-RULE                               Author: raman
 ;;; Created: Wed Nov 11 11:16:57 1992
 
-(defmacro define-reading-rule ((&key rule-name class) &body body) 
+(defmacro define-reading-rule ((&key rule-name class) &body body)
   "Define a reading rule"
   `(let
     ((rule (make-instance 'reading-rule
@@ -64,7 +64,7 @@
 ;;; Function: DELETE-reading-RULE Author: raman
 ;;; Created: Sat Nov 14 12:24:34 1992
 
-(defun delete-reading-rule (name class) 
+(defun delete-reading-rule (name class)
   "Delete this rule"
   (setf *reading-rule-table*
         (remove-if #'(lambda(rule)
@@ -76,7 +76,7 @@
 ;;; Function: GET-READING-RULE                               Author: raman
 ;;; Created: Wed Nov 11 11:35:36 1992
 
-(defun get-reading-rule (name class) 
+(defun get-reading-rule (name class)
   "REtrieve reading rule"
   (let ((rule (find-if  #'(lambda(reading-rule)
                             (and (equal name (rule-name reading-rule))
@@ -89,22 +89,22 @@
 ;;; Function: DEFINED-READING-RULE-P                         Author: raman
 ;;; Created: Wed Nov 11 15:26:04 1992
 
-(defun defined-reading-rule-p (name class) 
+(defun defined-reading-rule-p (name class)
   "Check if rule defined"
 (let ((rule (find-if  #'(lambda(rule)
                             (and (equal name (rule-name rule) )
                                  (equal class  (rule-class  rule ))))
                         *reading-rule-table*)))
-    (when rule t ))  
+    (when rule t ))
   )
 
 ;;; Macro: SELECT-READING-RULE                                  Author: raman
 ;;; Created: Wed Nov 11 11:25:11 1992
 
-(defmacro select-reading-rule (&key name class ) 
+(defmacro select-reading-rule (&key name class )
   "Activate reading rule named name for class class"
-  `(when ,(defined-reading-rule-p name class) 
-    (defmethod read-aloud((,class ,class)) 
+  `(when ,(defined-reading-rule-p name class)
+    (defmethod read-aloud((,class ,class))
       , (get-reading-rule  name class )))
   )
 
@@ -112,8 +112,8 @@
 ;;; Function: PRODUCE-READ-ALOUD-METHOD Author: raman
 ;;; Created: Fri Dec  4 08:53:57 1992
 
-(defun  produce-read-aloud-method  (rule) 
-"produce defmethod from rule body " 
+(defun  produce-read-aloud-method  (rule)
+"produce defmethod from rule body "
   `(defmethod read-aloud  (( ,(rule-class rule) ,(rule-class rule) ))
     ,(rule-body rule)
     )
@@ -126,11 +126,11 @@
 ;;; in which the defmethod gets defined.
 ;;; If this problem fixed, replace (generate-read-aloud-method rule)
 ;;; for  (eval (produce-read-aloud-method rule ))
-;;; Thus avoiding the explicit call to eval. 
+;;; Thus avoiding the explicit call to eval.
 ;;; Macro: GENERATE-READ-ALOUD-METHOD                        Author: raman
 ;;; Created: Sat Dec  5 16:44:45 1992
 
-(defmacro generate-read-aloud-method (rule) 
+(defmacro generate-read-aloud-method (rule)
   "Generate read aloud method "
   `(let
     ((class  (rule-class ,rule))
@@ -139,11 +139,11 @@
       body)
     )
   )
-  
+
 ;;; Function: ACTIVATE-READING-STYLE                            Author: raman
 ;;; Created: Fri Dec  4 09:01:44 1992
 
-(defun  activate-reading-style  (&key name) 
+(defun  activate-reading-style  (&key name)
   "Activate all reading rules of this name"
   (let ((rules  (remove nil
                         (loop for rule in  *reading-rule-table*

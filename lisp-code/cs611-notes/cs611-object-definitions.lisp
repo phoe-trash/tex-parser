@@ -27,13 +27,13 @@
 (defmethod read-aloud ((subst subst))
   "read aloud a subst object"
   (afl:new-block
-                   (afl:local-set-state 
+                   (afl:local-set-state
                     (afl:multi-step-by afl:*current-speech-state*
                                        '(afl:average-pitch 1)))
                    (read-aloud (argument subst 1))
                    (read-aloud " with ")
                    (read-aloud (argument subst 3))
-                   (read-aloud "replaced by ") 
+                   (read-aloud "replaced by ")
                    (read-aloud (argument subst 2))
                    )
   )
@@ -42,14 +42,14 @@
 #|
 (defmethod read-aloud ((subst subst))
   "read aloud a subst object"
-  (afl:new-block 
-                   (afl:local-set-state 
+  (afl:new-block
+                   (afl:local-set-state
                     (afl:multi-step-by afl:*current-speech-state*
                                        '(afl:average-pitch 1)))
                    (read-aloud (argument subst 1))
                    (read-aloud " with ")
                    (read-aloud (argument subst 2))
-                   (read-aloud " for  ") 
+                   (read-aloud " for  ")
                    (read-aloud (argument subst 3))
                    )
   )
@@ -79,7 +79,7 @@
 ;;; { abstraction
 
 ;;; \renewcommand{\abs}[2]{\lambda(#1. #2)}
-(define-text-object     :macro-name "abs" 
+(define-text-object     :macro-name "abs"
   :number-args  2
   :processing-function  abs-expand
   :object-name abstraction
@@ -118,9 +118,9 @@
 ;;; }
 ;;; { application
 
-(define-text-object     :macro-name "ap" 
+(define-text-object     :macro-name "ap"
   :number-args 2
-  :processing-function ap-expand 
+  :processing-function ap-expand
   :object-name application
   :supers (math-object)
   )
@@ -134,11 +134,11 @@
   )
 
 #|
-(defmethod read-aloud  (( application application )) 
+(defmethod read-aloud  (( application application ))
   "Read aloud method for object application "
   (read-aloud (argument application 1))
   (read-aloud " applied to ")
-  (with-reading-state   (reading-state 'argument) 
+  (with-reading-state   (reading-state 'argument)
   (read-aloud (argument application 2)))
   )
 |#

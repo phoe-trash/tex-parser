@@ -9,7 +9,7 @@
 ;;;    Process initial  body of the article,  ie upto first section.
 ;;;
 ;;; GET-REFERENCES! (text-buffer)                                    [FUNCTION]
-;;;    Buffered version. 
+;;;    Buffered version.
 ;;;
 ;;; *VALID-SECTIONAL-UNIT-NAMES* "()"                                [VARIABLE]
 ;;;    list of valid sectioning units
@@ -18,7 +18,7 @@
 ;;;    return name of the child of this unit
 ;;;
 ;;; EXISTS-CHILD-OF-SECTIONAL-UNIT? (sectional-unit-name)            [FUNCTION]
-;;;    Sees if child posible 
+;;;    Sees if child posible
 ;;;
 ;;; VALIDATE-SECTIONAL-UNIT-NAME (unit-name)                         [FUNCTION]
 ;;;    check if unit-name is a valid sectional unit
@@ -39,7 +39,7 @@
 ;;;    Return first item in buffer and advance pointer if it is a block.
 ;;;
 ;;; GET-LABEL! (text-buffer)                                         [FUNCTION]
-;;;    Return argument to label if found and advance pointer 
+;;;    Return argument to label if found and advance pointer
 ;;;
 ;;; PROCESS-TEXT (text-buffer                                        [FUNCTION]
 ;;;               &optional
@@ -47,19 +47,19 @@
 ;;;               (function end-of-buffer?)))
 ;;;    Takes a buffer  containing text, and  processes it until
 ;;;    termination-condition is satisfied.  Upon exit, buffer-pointer points
-;;;    to after processed text 
+;;;    to after processed text
 ;;;
 ;;; PROCESS-WORD (text-buffer &key (do-not-test nil))                [FUNCTION]
-;;;    Process a word 
+;;;    Process a word
 ;;;
 ;;; PROCESS-COMMENT (text-buffer &key (do-not-test nil))             [FUNCTION]
 ;;;    Process a comment
 ;;;
 ;;; PROCESS-NEWLINE (text-buffer &key (do-not-test nil))             [FUNCTION]
-;;;    process newlines 
+;;;    process newlines
 ;;;
 ;;; PROCESS-ABSTRACT (text-buffer &key (do-not-test nil))            [FUNCTION]
-;;;    Process abstract 
+;;;    Process abstract
 ;;;
 ;;; PROCESS-CENTER (text-buffer &key (do-not-test nil))              [FUNCTION]
 ;;;    process center
@@ -103,13 +103,13 @@
 ;;;    process tex macro
 ;;;
 ;;; PROCESS-ARRAY (text-buffer &key (do-not-test nil))               [FUNCTION]
-;;;    Process an array 
+;;;    Process an array
 ;;;
 ;;; PROCESS-TABULAR (text-buffer &key (do-not-test nil))             [FUNCTION]
-;;;    Process a table 
+;;;    Process a table
 ;;;
 ;;; *VALID-LIST-ENVIRONMENT-TYPES* "()"                              [VARIABLE]
-;;;    valid types of list environments 
+;;;    valid types of list environments
 ;;;
 ;;; VALIDATE-LIST-ENVIRONMENT-TYPE (list-environment-type)           [FUNCTION]
 ;;;    validate list environment type
@@ -122,29 +122,29 @@
 ;;;    default is enumerated list.
 ;;;
 ;;; PROCESS-ENUMERATE (text-buffer &key (do-not-test nil))           [FUNCTION]
-;;;    Process enumerated list of items 
+;;;    Process enumerated list of items
 ;;;
 ;;; PROCESS-DESCRIPTION (text-buffer &key (do-not-test nil))         [FUNCTION]
-;;;    process a latex description environment 
+;;;    process a latex description environment
 ;;;
 ;;; PROCESS-ITEMIZE (text-buffer &key (do-not-test nil))             [FUNCTION]
-;;;    process a latex   itemize environment 
+;;;    process a latex   itemize environment
 ;;;
 ;;; PROCESS-ITEM (text-buffer &key (do-not-test nil))                [FUNCTION]
-;;;    process a latex   item environment 
+;;;    process a latex   item environment
 ;;;
 ;;; PROCESS-EQUATION (text-buffer &key (do-not-test nil))            [FUNCTION]
-;;;    process a latex   equation environment 
+;;;    process a latex   equation environment
 ;;;
 ;;; PROCESS-EQNARRAY (text-buffer &key (do-not-test nil))            [FUNCTION]
-;;;    process a latex   eqnarray environment 
+;;;    process a latex   eqnarray environment
 ;;;
 ;;; PROCESS-SLIDE (text-buffer &key (do-not-test nil))               [FUNCTION]
 ;;;    process a slide
 ;;;
 ;;; BLOCK-CONTENTS (item)                                            [FUNCTION]
 ;;;    returns  all but first element of item which is assumed to be a block
-;;;    marked as such by its first element. 
+;;;    marked as such by its first element.
 ;;;
 ;;; PROCESS-ARRAY-ELEMENT (element)                                  [FUNCTION]
 ;;;    process element by passing to process-text
@@ -166,7 +166,7 @@
 ;;;
 ;;; CS-NAME (token)                                                  [FUNCTION]
 ;;;    Return name of cs where cs is a list of two elements, the marker 'cs
-;;;    and the name of the cs. 
+;;;    and the name of the cs.
 ;;;
 ;;; MATH-CS-NAME (token)                                             [FUNCTION]
 ;;;    return name of math cs
@@ -281,7 +281,7 @@
 ;;;    checks if token is a close delimiter
 ;;;
 ;;; GET-MATH-PARSER (token)                                          [FUNCTION]
-;;;    Gets appropriate math mode parsing function from global variable. 
+;;;    Gets appropriate math mode parsing function from global variable.
 ;;;
 ;;; MARK-AS-PROCESSED (token)                                        [FUNCTION]
 ;;;    mark token as having been processed
@@ -293,7 +293,7 @@
 ;;;    process a tex control sequence in math mode
 ;;;
 ;;; PROCESS-SUBFORMULA (math-buffer &key (do-not-test nil))          [FUNCTION]
-;;;    Process a subformula 
+;;;    Process a subformula
 ;;;
 ;;; GET-MATH-OBJECT! (math-buffer)                                   [FUNCTION]
 ;;;    Get the math object at front of buffer modifying buffer pointer
@@ -341,24 +341,24 @@
 ;;;    Looks at current entry  in buff. Does not modify pointer
 ;;;
 ;;; LOOKAT-NEXT-N-ENTRIES (buff &optional (n 1))                     [FUNCTION]
-;;;    Looks at the next n entries in the buffer buff 
+;;;    Looks at the next n entries in the buffer buff
 ;;;
 ;;; ADVANCE-POINTER (buff)                                           [FUNCTION]
-;;;    return buffer after advancing pointer. 
+;;;    return buffer after advancing pointer.
 ;;;
 ;;; POP-WHILE-TRUE (text-buffer predicate)                           [FUNCTION]
 ;;;    Pops off entries reseting pointer while predicate is satisfied.
 ;;;
 ;;; POP-WHEN-TRUE (text-buffer predicate)                            [FUNCTION]
 ;;;    Pops off first entry in buffer reseting pointer if this satisfies
-;;;    predicate. 
+;;;    predicate.
 ;;;
 ;;; END-OF-BUFFER? (buff)                                            [FUNCTION]
 ;;;    Checks if pointer is at the end of buff
 ;;;
 ;;; RESET-POINTER (buff &optional (pos nil))                         [FUNCTION]
 ;;;    REsets buffer pointer to point to the beginning of buff or pos if
-;;;    supplied. 
+;;;    supplied.
 ;;;
 ;;; MATH ""                                                             [CLASS]
 ;;;    super class of all mathematical objects
@@ -372,7 +372,7 @@
 ;;; MATH-OPERATOR ""                                                    [CLASS]
 ;;;    Holds a math-operator of the form a op  b op  c op ...
 ;;;    Superclasses: MATH
-;;;    Slots: 
+;;;    Slots:
 ;;;       NAME
 ;;;       ASSOCIATIVITY
 ;;;       OPERANDS
@@ -384,7 +384,7 @@
 ;;; SUM ""                                                              [CLASS]
 ;;;    sum of the form a + b + c + ...
 ;;;    Superclasses: MATH-OPERATOR
-;;;    Slots: 
+;;;    Slots:
 ;;;       NAME
 ;;;       ASSOCIATIVITY
 ;;;
@@ -395,7 +395,7 @@
 ;;; TIMES ""                                                            [CLASS]
 ;;;    product of the form a times b times c times ...
 ;;;    Superclasses: MATH-OPERATOR
-;;;    Slots: 
+;;;    Slots:
 ;;;       NAME
 ;;;       ASSOCIATIVITY
 ;;;
@@ -406,7 +406,7 @@
 ;;; DIFFERENCE ""                                                       [CLASS]
 ;;;    Difference of the form a - b - c - ...
 ;;;    Superclasses: MATH-OPERATOR
-;;;    Slots: 
+;;;    Slots:
 ;;;       NAME
 ;;;       ASSOCIATIVITY
 ;;;
@@ -417,7 +417,7 @@
 ;;; QUOTIENT ""                                                         [CLASS]
 ;;;    quotient of the form a / b / c / ... Considered left associative
 ;;;    Superclasses: MATH-OPERATOR
-;;;    Slots: 
+;;;    Slots:
 ;;;       NAME
 ;;;       ASSOCIATIVITY
 ;;;
@@ -428,7 +428,7 @@
 ;;; POWER ""                                                            [CLASS]
 ;;;    exponentiation of the form a power b power c where power is right
 ;;;    associative. Superclasses: MATH-OPERATOR
-;;;    Slots: 
+;;;    Slots:
 ;;;       NAME
 ;;;       ASSOCIATIVITY
 ;;;
@@ -439,7 +439,7 @@
 ;;; MATH-VARIABLE ""                                                    [CLASS]
 ;;;    A math variable with its visual annotations
 ;;;    Superclasses: MATH
-;;;    Slots: 
+;;;    Slots:
 ;;;       NAME
 ;;;       SUBSCRIPT
 ;;;       SUPERSCRIPT
@@ -455,7 +455,7 @@
 ;;; MATH-FUNCTION ""                                                    [CLASS]
 ;;;    A Mathematical function of the form name arguments
 ;;;    Superclasses: MATH
-;;;    Slots: 
+;;;    Slots:
 ;;;       NAME
 ;;;       ARGUMENTS
 ;;;
@@ -466,7 +466,7 @@
 ;;; SIN-FUNCTION ""                                                     [CLASS]
 ;;;    A sin function with args
 ;;;    Superclasses: MATH-FUNCTION
-;;;    Slots: 
+;;;    Slots:
 ;;;       NAME
 ;;;       N-ARGS
 ;;;       ARGUMENTS
@@ -478,7 +478,7 @@
 ;;; COSIN-FUNCTION ""                                                   [CLASS]
 ;;;    A cosin function with args
 ;;;    Superclasses: MATH-FUNCTION
-;;;    Slots: 
+;;;    Slots:
 ;;;       NAME
 ;;;       N-ARGS
 ;;;       ARGUMENTS
@@ -490,7 +490,7 @@
 ;;; TAN-FUNCTION ""                                                     [CLASS]
 ;;;    A tan function with args
 ;;;    Superclasses: MATH-FUNCTION
-;;;    Slots: 
+;;;    Slots:
 ;;;       NAME
 ;;;       N-ARGS
 ;;;       ARGUMENTS
@@ -502,7 +502,7 @@
 ;;; LOG-FUNCTION ""                                                     [CLASS]
 ;;;    A log function with args
 ;;;    Superclasses: MATH-FUNCTION
-;;;    Slots: 
+;;;    Slots:
 ;;;       NAME
 ;;;       N-ARGS
 ;;;       ARGUMENTS
@@ -514,7 +514,7 @@
 ;;; MAX-FUNCTION ""                                                     [CLASS]
 ;;;    A max function with args
 ;;;    Superclasses: MATH-FUNCTION
-;;;    Slots: 
+;;;    Slots:
 ;;;       NAME
 ;;;       N-ARGS
 ;;;       ARGUMENTS
@@ -526,7 +526,7 @@
 ;;; MIN-FUNCTION ""                                                     [CLASS]
 ;;;    A min function with args
 ;;;    Superclasses: MATH-FUNCTION
-;;;    Slots: 
+;;;    Slots:
 ;;;       NAME
 ;;;       N-ARGS
 ;;;       ARGUMENTS
@@ -538,7 +538,7 @@
 ;;; ABS-FUNCTION ""                                                     [CLASS]
 ;;;    A abs function with args
 ;;;    Superclasses: MATH-FUNCTION
-;;;    Slots: 
+;;;    Slots:
 ;;;       NAME
 ;;;       N-ARGS
 ;;;       ARGUMENTS
@@ -568,7 +568,7 @@
 ;;; ARTICLE ""                                                          [CLASS]
 ;;;    A document belonging to the article class
 ;;;    Superclasses: DOCUMENT
-;;;    Slots: 
+;;;    Slots:
 ;;;       TITLE
 ;;;       AUTHOR
 ;;;       ADDRESS
@@ -588,7 +588,7 @@
 ;;; SECTIONAL-UNIT ""                                                   [CLASS]
 ;;;    A sectional unit, such as section, subsection etc.
 ;;;    Superclasses: DOCUMENT
-;;;    Slots: 
+;;;    Slots:
 ;;;       NAME
 ;;;       TITLE
 ;;;       LABEL
@@ -608,7 +608,7 @@
 ;;; SECTION ""                                                          [CLASS]
 ;;;    a section in an article
 ;;;    Superclasses: SECTIONAL-UNIT
-;;;    Slots: 
+;;;    Slots:
 ;;;       NAME
 ;;;
 ;;; MAKE-SECTION "()"                                                [FUNCTION]
@@ -618,7 +618,7 @@
 ;;; SUBSECTION ""                                                       [CLASS]
 ;;;    A subsection in an article
 ;;;    Superclasses: SECTIONAL-UNIT
-;;;    Slots: 
+;;;    Slots:
 ;;;       NAME
 ;;;
 ;;; MAKE-SUBSECTION "()"                                             [FUNCTION]
@@ -628,7 +628,7 @@
 ;;; SUBSUBSECTION ""                                                    [CLASS]
 ;;;    a subsubsection in an article
 ;;;    Superclasses: SECTIONAL-UNIT
-;;;    Slots: 
+;;;    Slots:
 ;;;       NAME
 ;;;
 ;;; MAKE-SUBSUBSECTION "()"                                          [FUNCTION]
@@ -638,7 +638,7 @@
 ;;; PARAGRAPH ""                                                        [CLASS]
 ;;;    A paragraph of text.
 ;;;    Superclasses: DOCUMENT
-;;;    Slots: 
+;;;    Slots:
 ;;;       CONTENTS
 ;;;
 ;;; MAKE-PARAGRAPH (&key (contents nil))                             [FUNCTION]
@@ -651,7 +651,7 @@
 ;;; TEXT-BLOCK ""                                                       [CLASS]
 ;;;    A block of text with its own local bindings
 ;;;    Superclasses: DOCUMENT
-;;;    Slots: 
+;;;    Slots:
 ;;;       CONTENTS
 ;;;       LOCAL-ENVIRONMENT
 ;;;
@@ -665,7 +665,7 @@
 ;;; ABSTRACT ""                                                         [CLASS]
 ;;;    The abstract of a document
 ;;;    Superclasses: DOCUMENT
-;;;    Slots: 
+;;;    Slots:
 ;;;       CONTENTS
 ;;;
 ;;; MAKE-ABSTRACT "()"                                               [FUNCTION]
@@ -676,7 +676,7 @@
 ;;;    Super class for all list environments such as
 ;;;    enumerated and itemized lists.
 ;;;    Superclasses: DOCUMENT
-;;;    Slots: 
+;;;    Slots:
 ;;;       ITEMS
 ;;;
 ;;; MAKE-LIST-ENVIRONMENT (                                          [FUNCTION]
@@ -689,7 +689,7 @@
 ;;; ENUMERATED-LIST ""                                                  [CLASS]
 ;;;    An enumerated list
 ;;;    Superclasses: LIST-ENVIRONMENT
-;;;    Slots: 
+;;;    Slots:
 ;;;       TYPE
 ;;;
 ;;; MAKE-ENUMERATED-LIST "()"                                        [FUNCTION]
@@ -699,7 +699,7 @@
 ;;; ITEMIZED-LIST ""                                                    [CLASS]
 ;;;    An itemized list
 ;;;    Superclasses: LIST-ENVIRONMENT
-;;;    Slots: 
+;;;    Slots:
 ;;;       TYPE
 ;;;
 ;;; MAKE-ITEMIZED-LIST "()"                                          [FUNCTION]
@@ -709,7 +709,7 @@
 ;;; DESCRIPTION-LIST ""                                                 [CLASS]
 ;;;    An description list
 ;;;    Superclasses: LIST-ENVIRONMENT
-;;;    Slots: 
+;;;    Slots:
 ;;;       TYPE
 ;;;
 ;;; MAKE-DESCRIPTION-LIST "()"                                       [FUNCTION]
@@ -717,9 +717,9 @@
 ;;; DESCRIPTION-LIST-P (self)                                           [MACRO]
 ;;;
 ;;; ITEM ""                                                             [CLASS]
-;;;    An item of text 
+;;;    An item of text
 ;;;    Superclasses: DOCUMENT
-;;;    Slots: 
+;;;    Slots:
 ;;;       MARKER
 ;;;       CONTENTS
 ;;;
@@ -730,7 +730,7 @@
 ;;; CENTERED-TEXT ""                                                    [CLASS]
 ;;;    Centered text
 ;;;    Superclasses: DOCUMENT
-;;;    Slots: 
+;;;    Slots:
 ;;;       CONTENTS
 ;;;
 ;;; MAKE-CENTERED-TEXT (&key (contents nil))                         [FUNCTION]
@@ -738,9 +738,9 @@
 ;;; CENTERED-TEXT-P (self)                                              [MACRO]
 ;;;
 ;;; QUOTED-TEXT ""                                                      [CLASS]
-;;;    quotations 
+;;;    quotations
 ;;;    Superclasses: DOCUMENT
-;;;    Slots: 
+;;;    Slots:
 ;;;       CONTENTS
 ;;;
 ;;; MAKE-QUOTED-TEXT (&key (quoted-text-type (quote inline-quote)))  [FUNCTION]
@@ -750,7 +750,7 @@
 ;;; QUOTE-ENVIRONMENT ""                                                [CLASS]
 ;;;    the quote environment of latex
 ;;;    Superclasses: QUOTED-TEXT
-;;;    Slots: 
+;;;    Slots:
 ;;;       TYPE
 ;;;
 ;;; MAKE-QUOTE-ENVIRONMENT "()"                                      [FUNCTION]
@@ -760,7 +760,7 @@
 ;;; QUOTATION-ENVIRONMENT ""                                            [CLASS]
 ;;;    the quotation environment of latex
 ;;;    Superclasses: QUOTED-TEXT
-;;;    Slots: 
+;;;    Slots:
 ;;;       TYPE
 ;;;
 ;;; MAKE-QUOTATION-ENVIRONMENT "()"                                  [FUNCTION]
@@ -770,7 +770,7 @@
 ;;; INLINE-QUOTE ""                                                     [CLASS]
 ;;;    in-line quote.
 ;;;    Superclasses: QUOTED-TEXT
-;;;    Slots: 
+;;;    Slots:
 ;;;       TYPE
 ;;;
 ;;; MAKE-INLINE-QUOTE "()"                                           [FUNCTION]
@@ -778,9 +778,9 @@
 ;;; INLINE-QUOTE-P (self)                                               [MACRO]
 ;;;
 ;;; COMMENT ""                                                          [CLASS]
-;;;    A comment in the typesetting source. 
+;;;    A comment in the typesetting source.
 ;;;    Superclasses: DOCUMENT
-;;;    Slots: 
+;;;    Slots:
 ;;;       CONTENTS
 ;;;
 ;;; MAKE-COMMENT (&key (contents nil))                               [FUNCTION]
@@ -790,7 +790,7 @@
 ;;; NEW-ENVIRONMENT ""                                                  [CLASS]
 ;;;    A new environment not previously handled.
 ;;;    Superclasses: DOCUMENT
-;;;    Slots: 
+;;;    Slots:
 ;;;       NAME
 ;;;       CONTENTS
 ;;;
@@ -801,7 +801,7 @@
 ;;; TEX-DEFINED-MACRO ""                                                [CLASS]
 ;;;    a tex macro.
 ;;;    Superclasses: DOCUMENT
-;;;    Slots: 
+;;;    Slots:
 ;;;       NAME
 ;;;       READ-AS
 ;;;
@@ -813,7 +813,7 @@
 ;;; CITATION ""                                                         [CLASS]
 ;;;    A citation in a document.
 ;;;    Superclasses: DOCUMENT
-;;;    Slots: 
+;;;    Slots:
 ;;;       LABEL
 ;;;
 ;;; MAKE-CITATION (&key (label nil))                                 [FUNCTION]
@@ -823,7 +823,7 @@
 ;;; FOOTNOTE ""                                                         [CLASS]
 ;;;    a footnote
 ;;;    Superclasses: DOCUMENT
-;;;    Slots: 
+;;;    Slots:
 ;;;       LABEL
 ;;;       TEXT
 ;;;
@@ -834,7 +834,7 @@
 ;;; SLIDE ""                                                            [CLASS]
 ;;;    A slide
 ;;;    Superclasses: DOCUMENT
-;;;    Slots: 
+;;;    Slots:
 ;;;       CONTENTS
 ;;;
 ;;; MAKE-SLIDE (&key (contents nil))                                 [FUNCTION]
@@ -844,7 +844,7 @@
 ;;; MATH ""                                                             [CLASS]
 ;;;    parent class for math mode.
 ;;;    Superclasses: DOCUMENT
-;;;    Slots: 
+;;;    Slots:
 ;;;       CONTENTS
 ;;;       TYPE
 ;;;
@@ -859,7 +859,7 @@
 ;;;    The program which does the lexical analysis
 ;;;
 ;;; PARSE-ARTICLE (filename)                                         [FUNCTION]
-;;;    Parses a Latex article 
+;;;    Parses a Latex article
 ;;;
 ;;; LOADALL "()"                                                     [FUNCTION]
 ;;;
@@ -922,7 +922,7 @@
 ;;; *IP-PAPER* "\"~/lisp-code/samples/ip\""                          [VARIABLE]
 ;;;
 ;;; *A-EXAM-PAPER* "()"                                              [VARIABLE]
-;;;    a exam write up. 
+;;;    a exam write up.
 ;;;
 ;;; *DEMO-PAPER* "()"                                                [VARIABLE]
 ;;;    short demo version of a exam paper.
@@ -975,7 +975,7 @@
 ;;;    read aloud an abject on the multivoice.
 ;;;
 ;;; READ-ALOUD (token)                                                 [METHOD]
-;;;    default method to read aloud 
+;;;    default method to read aloud
 ;;;
 ;;; READ-ALOUD ((document document))                                   [METHOD]
 ;;;    read aloud a document, default method.
@@ -1062,7 +1062,7 @@
 ;;;    start up a csound process ready for realtime synthesis
 ;;;
 ;;; STOP-CSOUND "()"                                                 [FUNCTION]
-;;;    kill csound 
+;;;    kill csound
 ;;;
 ;;; TYPE-UNTIL-HUNG (stream)                                         [FUNCTION]
 ;;;
@@ -1096,7 +1096,7 @@
 ;;;
 ;;; *PROCESSING-FUNCTION-TABLE* "()"                                 [VARIABLE]
 ;;;    Holds the table of node types and their associated processing
-;;;    functions. 
+;;;    functions.
 ;;;
 ;;; DEFINE-PARSING-FUNCTION (object parser)                             [MACRO]
 ;;;    defines a parsing function for object by adding
@@ -1107,7 +1107,7 @@
 ;;;
 ;;; DEFINE-TEX-MACRO (macro-name macro-n-args macro-def)                [MACRO]
 ;;;    Add entry for macro-name to *tex-macro-table*
-;;;    the table of known tex macros 
+;;;    the table of known tex macros
 ;;;
 ;;; *TABLE-OF-MATH-FUNCTIONS* "()"                                   [VARIABLE]
 ;;;    table of known mathematical functions
@@ -1119,7 +1119,7 @@
 ;;;    Table of known operators.
 ;;;
 ;;; DEFINE-MATH-OPERATOR (op-string op-name op-weight op-n-args)        [MACRO]
-;;;    define a math operator 
+;;;    define a math operator
 ;;;
 ;;; *TABLE-OF-MATH-DELIMITERS* "()"                                  [VARIABLE]
 ;;;    table of mathematical delimiters.
@@ -1129,11 +1129,11 @@
 ;;;
 ;;; *DO-NOT-SIGNAL-ERROR-ON-UNKNOWN-TEX-MACRO* "()"                  [VARIABLE]
 ;;;    tell parser to signal error or continue when undefined tex macro
-;;;    seen. 
+;;;    seen.
 ;;;
 ;;; *RETURN-A-DEFAULT-PARSER* "()"                                   [VARIABLE]
 ;;;    switch indicating if a default parser is to be returned if none found
-;;;    in parse table 
+;;;    in parse table
 ;;;
 ;;; *CONVERT-TO-INFIX* "()"                                          [VARIABLE]
 ;;;    If true convert math expressions to infix
@@ -1151,7 +1151,7 @@
 ;;;
 ;;; WHAT-IS? (token)                                                 [FUNCTION]
 ;;;    returns token marker for lists which is the first element, or word if
-;;;    string. 
+;;;    string.
 ;;;
 ;;; MATH-WHAT-IS? (token)                                            [FUNCTION]
 ;;;    classify token according to math mode
@@ -1160,7 +1160,7 @@
 ;;;    checks if string is a quoted number
 ;;;
 ;;; GET-PARSER (token &key (math-flag nil))                          [FUNCTION]
-;;;    Get the right parsing function from the global variable 
+;;;    Get the right parsing function from the global variable
 ;;;
 ;;; GET-TEX-MACRO (macro-name)                                       [FUNCTION]
 ;;;    gets the entry for macro macro-name from the table

@@ -12,5 +12,5 @@ lispify.c: lispify.l
 	rm -f lispify.c
 	$(LEX)  $(FLEXFLAGS) lispify.l >   $@
 clean:
-	rm -f lispify.o lispify.c lispify 
+	rm -f lispify.o lispify.c lispify
 	

@@ -88,7 +88,7 @@
                       (let ((sel (ccl::first-selected-cell sequence)))
                         (when sel
                           (cell-deselect sequence sel))
-                        (set-table-sequence 
+                        (set-table-sequence
                          sequence (nconc (table-sequence sequence) (list file)))
                         (cell-select sequence (or sel #@(0 1))))
                       (dialog-item-enable button)
@@ -99,7 +99,7 @@
 
 
 (defun SEARCH-SYSTEMS (String &optional (Systems (get-list-of-systems-from-user))) "
-  in: String {string}, 
+  in: String {string},
       &optional Systems {list of: {keyword}} default (get-list-of-systems-from-user).
   Search all files in all <Systems> for <String>."
   (dolist (System Systems)
@@ -116,13 +116,13 @@
              (dolist (Item Old-Items (reverse New-Items))
                (push Item New-Items)
                (when (equal Item Search-File-Menu-Item)
-                 (push 
+                 (push
                   (make-instance
                     'menu-item
-                    :menu-item-title "Search Systems…"     
-                    :menu-item-action 
-                    #'(lambda () (eval-enqueue 
-                                  '(search-systems 
+                    :menu-item-title "Search Systems…"
+                    :menu-item-action
+                    #'(lambda () (eval-enqueue
+                                  '(search-systems
                                     (get-string-from-user "System Search String:")))))
                   New-Items)))))))
 

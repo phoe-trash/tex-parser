@@ -8,7 +8,7 @@
 ;;; which make all the different create-[sub]section functions obselete.
 ;;; Modified: Thu Apr  2 15:40:22 EST 1992
 ;;; Modifying to use classes for document components instead of
-;;; structures. 
+;;; structures.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; New version:  Sun Jan 26 09:37:20 EST 1992
 ;;; Made to work with a more intelligent lexer.
@@ -32,7 +32,7 @@
 ;;; Created: Fri Oct 11 11:20:10 1991
 ;;; Modified: Sun Apr 26 17:58:38 EDT 1992
 ;;; declaring *new-article* to be special so that title author date etc.
-;;; can be handled cleanly. 
+;;; can be handled cleanly.
 ;;; Modified: Thu Apr  2 15:41:46 EST 1992
 ;;; Modified to use class article
 ;;; Function: CREATE-ARTICLE                                Author: raman
@@ -95,7 +95,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Modified: Sat Apr 11 18:12:09 EDT 1992
-;;; All the process environment functions now work with classes. 
+;;; All the process environment functions now work with classes.
 ;;; Modified: Sun Jan 26 10:20:44 EST 1992
 ;;; An older version which relied on a very simple lexer is in jan-24-version.
 ;;; The lexer has now been made powerful so that the tokens
@@ -136,7 +136,7 @@
 ;;; This handles nestings well,  and allows for
 ;;; nesting enumerate inside itemize, and then nest the whole thing
 ;;; inside a description.
-;;; Similarly,  arrays and tables can also be nested. 
+;;; Similarly,  arrays and tables can also be nested.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Sun Jan 26 10:22:05 EST 1992
 ;;; In the light of the above,  the lexer has been made more intelligent.
@@ -175,7 +175,7 @@
 ;;; Created: Wed Nov 13 21:31:01 1991
 ;;; Modified: Wed Jan 29 10:46:22 EST 1992
 ;;; set local environment in the buffer structure
-;;; and stop using special variables. 
+;;; and stop using special variables.
 ;;; Function: PROCESS-INLINE-QUOTE                           Author: raman
 ;;; Created: Thu Feb 13 20:03:11 1992
 ;;; Variable: *VALID-QUOTED-TEXT-TYPES*                      Author: raman
@@ -203,7 +203,7 @@
 ;;; This function will also become  table driven.
 ;;; Eventually do away with the use of special variable
 ;;; for handling font changing by passing parse state
-;;; along with the text buffer. 
+;;; along with the text buffer.
 ;;; Function: EXPAND-TEX-MACRO                               Author: raman
 ;;; Created: Thu Feb  6 11:52:43 1992
 ;;; this function is untidy  at present.
@@ -843,9 +843,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; This function prints the output from a program that has been started
 ;;; with RUN-PROGRAM. On a heavily loaded system, pauses in program output
-;;; can cause premature termination of this function.  In this case the 
+;;; can cause premature termination of this function.  In this case the
 ;;; function can simply be called again to get the rest of the output.
-;; The C shell is set to the stream that is used for standard input and 
+;; The C shell is set to the stream that is used for standard input and
 ;; standard output for csh.  The terminal remains the standard error
 ;; output stream.
 ;; Send a date command to csh.
@@ -973,7 +973,7 @@
 ;;; An operator such as "+"
 ;;; Structure: MATH-DELIMITER                                Author: raman
 ;;; Created: Tue Feb  4 18:34:12 1992
-;;; hold a math delimiter 
+;;; hold a math delimiter
 ;;; Structure: MATH-SYMBOL                                   Author: raman
 ;;; Created: Tue Feb 25 13:27:50 1992
 ;;; A math symbol classified as variable operator etc.

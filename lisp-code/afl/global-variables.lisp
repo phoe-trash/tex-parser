@@ -30,7 +30,7 @@
 
 ;;; Each fold  contains a variable and its associated accessors and
 ;;; modifiers.
-;;; Only the modifiers exported. 
+;;; Only the modifiers exported.
 ;;; Contains all defvars etc used by afl.
 ;;; Also contains accessor and modifiers for these defvars.
 
@@ -54,7 +54,7 @@
 ;;; Function: ADD-DIMENSION                                  Author: raman
 ;;; Created: Sat Aug  8 15:45:51 1992
 
-(defun add-dimension (name) 
+(defun add-dimension (name)
   "Add dimension named NAME to speech space"
   (push name *list-of-speech-dimensions*)
   (rearrange-dimensions-for-dectalk)
@@ -64,7 +64,7 @@
 ;;; Function: LIST-OF-SPEECH-DIMENSIONS                             Author: raman
 ;;; Created: Sat Oct  3 12:18:18 1992
 
-(defun list-of-speech-dimensions () 
+(defun list-of-speech-dimensions ()
   "Return current list of dimensions"
   *list-of-speech-dimensions*
   )
@@ -74,7 +74,7 @@
 ;;;  comments on global settings implementation
 
 ;;; *global-values* holds the global settings of parameters in the
-;;; speech space.  It is a hashtable, and has an 
+;;; speech space.  It is a hashtable, and has an
 ;;; entry  associated with each dimension in the speech space,
 ;;; and the value assigned to it is of type reference, a structure
 ;;; that implements indirection.
@@ -82,10 +82,10 @@
 ;;; the speech space. Provide set of macros for defining speech space
 ;;; abstractly once the first pass of the afl-language is done.
 ;;; The function setup-globals sets up global settings base don the
-;;; dimensions defined. etc. 
+;;; dimensions defined. etc.
 ;;; currently global settings are stored in a hash table.
 
-;;; 
+;;;
 
 ;;; Variable: *GLOBAL-VALUES*                              Author: raman
 ;;; Created: Fri Aug  7 12:46:20 1992
@@ -106,7 +106,7 @@
 ;;; Function: GET-GLOBAL-VALUE                                  Author: raman
 
 ;;; Created: Fri Aug  7 13:29:55 1992
-(defun  get-global-value  (dimension) 
+(defun  get-global-value  (dimension)
   "return global value for dimension dimension."
   (gethash dimension *global-values*)
   )
@@ -115,7 +115,7 @@
 ;;; Function: SET-GLOBAL-VALUE                               Author: raman
 ;;; Created: Wed Aug 26 15:18:24 1992
 
-(defun set-global-value (dimension value) 
+(defun set-global-value (dimension value)
   "set new global value to set for the first time use define-default-value"
   (assert (gethash dimension *global-values*) nil
           "Error: First define a global value for dimension ~a "
@@ -152,7 +152,7 @@
 ;;; Function: DEFINE-UNIT-SIZE                               Author: raman
 ;;; Created: Fri Aug  7 17:51:13 1992
 
-(defun define-unit-size (dimension value) 
+(defun define-unit-size (dimension value)
   "Define  VALUE as unit-size for dimension DIMENSION"
   (setf (gethash dimension *table-of-units*)
         value)
@@ -161,7 +161,7 @@
 ;;; Function: GET-UNIT-SIZE                                  Author: raman
 ;;; Created: Fri Aug  7 17:52:43 1992
 
-(defun get-unit-size (dimension) 
+(defun get-unit-size (dimension)
   "retrieve unit for this dimension"
   (gethash dimension *table-of-units*)
   )
@@ -179,7 +179,7 @@
 ;;; Function: DEFINE-SYNTHESIZER-CODE Author: raman
 ;;; Created: Fri Aug  7 17:51:13 1992
 
-(defun define-synthesizer-code (dimension value) 
+(defun define-synthesizer-code (dimension value)
   "Define   VALUE as the synthesizer-code for setting dimension DIMENSION"
   (setf (gethash dimension *table-of-synthesizer-codes*)
         value)
@@ -188,7 +188,7 @@
 ;;; Function: GET-SYNTHESIZER-CODE Author: raman
 ;;; Created: Fri Aug  7 17:52:43 1992
 
-(defun get-synthesizer-code (dimension) 
+(defun get-synthesizer-code (dimension)
   "retrieve synthesizer code  for this dimension"
   (gethash dimension *table-of-synthesizer-codes*)
   )
@@ -208,20 +208,20 @@
 ;;; Function: DEFINE-STEP-SIZE                               Author: raman
 ;;; Created: Fri Aug  7 17:51:13 1992
 
-(defun define-step-size (dimension value) 
+(defun define-step-size (dimension value)
   "Define VALUE as the step-size  for dimension DIMENSION"
   (setf (gethash dimension *table-of-step-sizes*)
         (make-reference :val value))
   )
 
 ;;; Modified: Thu Aug 20 16:29:24 EDT 1992
-;;; If no step-size defined, return 0. 
+;;; If no step-size defined, return 0.
 ;;; Function: GET-STEP-SIZE                                  Author: raman
 ;;; Created: Fri Aug  7 17:52:43 1992
 
-(defun get-step-size (dimension) 
+(defun get-step-size (dimension)
   "retrieve step-size for this dimension"
-  (or 
+  (or
    (gethash dimension *table-of-step-sizes*)
    0)
   )
@@ -230,7 +230,7 @@
 ;;; Function: SET-STEP-SIZE                                  Author: raman
 ;;; Created: Fri Aug 21 09:07:24 1992
 
-(defun set-step-size (dimension step-size) 
+(defun set-step-size (dimension step-size)
   "Set global step size for dimension."
   (assert (gethash dimension *table-of-step-sizes*) nil
           "Error: First define a step size  for dimension ~a "
@@ -257,7 +257,7 @@
   ;;; Function: DEFINE-MINIMUM-VALUE                           Author: raman
   ;;; Created: Mon Dec 14 10:39:23 1992
 
-(defun define-minimum-value (dimension min-value) 
+(defun define-minimum-value (dimension min-value)
   "Define minimum value "
   (setf (gethash dimension *table-of-minimum-values*) min-value)
   )
@@ -266,9 +266,9 @@
   ;;; Function: MINIMUM-VALUE                                  Author: raman
   ;;; Created: Mon Dec 14 10:40:10 1992
 
-(defun minimum-value (dimension) 
+(defun minimum-value (dimension)
   "Retrieve minimum value for this dimension"
-  (gethash dimension *table-of-minimum-values*) 
+  (gethash dimension *table-of-minimum-values*)
   )
 
 ;;; }
@@ -285,7 +285,7 @@
   ;;; Function: DEFINE-MAXIMUM-VALUE                           Author: raman
   ;;; Created: Mon Dec 14 10:39:23 1992
 
-(defun define-maximum-value (dimension max-value) 
+(defun define-maximum-value (dimension max-value)
   "Define maximum  value "
   (setf (gethash dimension *table-of-maximum-values*) max-value)
   )
@@ -294,9 +294,9 @@
   ;;; Function: MAXIMUM-VALUE                                  Author: raman
   ;;; Created: Mon Dec 14 10:40:10 1992
 
-(defun maximum-value (dimension) 
+(defun maximum-value (dimension)
   "Retrieve maximum  value for this dimension"
-  (gethash dimension *table-of-maximum-values*) 
+  (gethash dimension *table-of-maximum-values*)
   )
 
 ;;; }
@@ -306,7 +306,7 @@
   ;;; Function: DIMENSION-RANGE                                Author: raman
   ;;; Created: Mon Dec 14 11:16:39 1992
 
-(defun dimension-range (dimension-name) 
+(defun dimension-range (dimension-name)
   "Return difference between maximum and minimum values for this
 dimension"
   (assert   (find dimension-name  (list-of-speech-dimensions))  nil
@@ -320,7 +320,7 @@ dimension"
   ;;; Function: COMPUTE-RANGE                                  Author: raman
   ;;; Created: Mon Dec 14 17:13:51 1992
 
-(defun compute-range (state dimension) 
+(defun compute-range (state dimension)
   "Compute distance from maximum value for this dimension"
   (- (maximum-value dimension)
      (current-value  dimension state))
@@ -331,7 +331,7 @@ dimension"
   ;;; Function: LENGTH-OF-SUBINTERVAL                          Author: raman
   ;;; Created: Fri Dec 18 09:50:55 1992
 
-(defun length-of-subinterval (dimension-name number-of-end-points) 
+(defun length-of-subinterval (dimension-name number-of-end-points)
   "Compute length of a subinterval when dimension subdivided into
 number-of-end-points -1 subintervals"
   (let
@@ -366,7 +366,7 @@ number-of-end-points -1 subintervals"
 ;;; Function: SAVE-POINT-IN-SPEECH-SPACE                     Author: raman
 ;;; Created: Sun Aug  9 15:52:02 1992
 
-(defun save-point-in-speech-space (name point) 
+(defun save-point-in-speech-space (name point)
   "Define point  as a distinguished point in speech space called name."
   (export (list name))
   (assert (point-in-speech-space-p point) nil
@@ -420,9 +420,9 @@ assign a value to it"
 ;;; Modified: Thu Aug 20 11:28:52 EDT 1992
 ;;; returns multiple values, point and a list of dimensions
 
-(defun get-point-in-speech-space (name) 
+(defun get-point-in-speech-space (name)
   "return predefined point associated with name"
-  (values 
+  (values
    (embed-point-in-speech-space (gethash name *standard-voices*))
    *list-of-speech-dimensions*)
   )

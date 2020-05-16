@@ -10,7 +10,7 @@
 ;;; Contains objects from Dennis-Math-Books's
 ;;; One file will have object definitions, and the rest reading rules.
 
-;;; First load complete read-aloud system then this system 
+;;; First load complete read-aloud system then this system
 
 (defsystem dennis-math-books
     :source-pathname
@@ -19,7 +19,7 @@
   :initially-do (unless (featurep :read-aloud)
                   (load-system 'read-aloud))
   :finally-do (announce "Prepared to read dennis-math-books")
-  :components( 
+  :components(
               (:file "kd-object-definitions")
               (:file "kd-reading-rules"
                      :depends-on (  "kd-object-definitions"))

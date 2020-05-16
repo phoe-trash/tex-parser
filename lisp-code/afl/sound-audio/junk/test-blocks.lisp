@@ -9,7 +9,7 @@
 ;;; Fri Feb 12 10:10:14 EST 1993
 ;;; testing blocks of cross products
 
-(new-block 
+(new-block
  (send-text "No sound is currently playing. ")
  (local-set-state (toggle-switch *current-audio-state* ))
  (send-text "Now a local set state has toggled the audio switch. ")

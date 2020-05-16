@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (in-package :afl)
@@ -12,10 +12,10 @@
 
 
 
-;;; export all dimension names. 
+;;; export all dimension names.
 
 ;;; This file has the user definition of speech space, ie: set up list
-;;; of dimensions, specify default values etc. 
+;;; of dimensions, specify default values etc.
 ;;; Each fold contains assignments to one global table
 
 ;;; { *list-of-speech-dimensions*
@@ -23,7 +23,7 @@
 ;;; Function: REARRANGE-DIMENSIONS-FOR-DECTALK               Author: raman
 ;;; Created: Sun Aug 16 12:33:28 1992
 
-(defun rearrange-dimensions-for-dectalk () 
+(defun rearrange-dimensions-for-dectalk ()
   "Rearrange dimensions in list-of-speech-dimensions for dectalk so that voice
 is at front"
   (if (find 'voice *list-of-speech-dimensions*)
@@ -50,12 +50,12 @@ is at front"
 ;;; :tone 500,
 ;;; then setting right volume will actually produce a beep, with the duration
 ;;; determined by the value to which we would have set right volume.
-;;; What a kluge:- 
+;;; What a kluge:-
  (add-dimension 'left-volume)
  (add-dimension 'right-volume)
-;;; this went away after dectalk 3: 
+;;; this went away after dectalk 3:
  (add-dimension 'loudness)
-;;; common dimensions to multivoice and express 
+;;; common dimensions to multivoice and express
 (add-dimension 'lax-breathiness)
 (add-dimension 'average-pitch)
 (add-dimension 'pitch-range)
@@ -98,7 +98,7 @@ is at front"
 #+multivoice (define-synthesizer-code 'loudness ":dv lo ")
 #+express  (define-synthesizer-code 'loudness ":dv g5 ")
 ;;; }
-;;; { define-default-value 
+;;; { define-default-value
 
 ;;; Some default values
 (define-default-value 'head-size 100)
@@ -151,14 +151,14 @@ is at front"
 (define-unit-size 'richness 'percent)
 (define-unit-size 'speech-rate 'words-per-minute)
 (define-unit-size 'average-pitch 'hertz)
-(define-unit-size 'pitch-range 'percent) 
+(define-unit-size 'pitch-range 'percent)
  (define-unit-size 'left-volume 'decibel)
 #+multivoice (define-unit-size 'right-volume 'decibel)
 #+express  (define-unit-size 'right-volume 'duration)
 (define-unit-size 'laryngilization 'percent)
 (define-unit-size 'baseline-fall 'hertz)
 (define-unit-size 'hat-rise 'hertz )
-(define-unit-size 'stress-rise 'hertz) 
+(define-unit-size 'stress-rise 'hertz)
 (define-unit-size 'assertiveness 'percent)
 (define-unit-size 'quickness 'percent)
  (define-unit-size 'loudness 'decibel)
@@ -189,21 +189,21 @@ is at front"
 ;;; }
 ;;; { Maximum values.
 
-(define-maximum-value  'head-size 145) 
+(define-maximum-value  'head-size 145)
 (define-maximum-value 'breathiness 72)
 (define-maximum-value 'lax-breathiness 100)
 (define-maximum-value 'smoothness 100)
 (define-maximum-value 'richness 100)
 (define-maximum-value 'laryngilization 100)
-(define-maximum-value 'baseline-fall 40) 
-(define-maximum-value 'hat-rise 100) 
-(define-maximum-value 'stress-rise 100) 
+(define-maximum-value 'baseline-fall 40)
+(define-maximum-value 'hat-rise 100)
+(define-maximum-value 'stress-rise 100)
 (define-maximum-value 'assertiveness 100)
-(define-maximum-value 'quickness 100) 
-(define-maximum-value 'average-pitch 350) 
-(define-maximum-value 'pitch-range 250) 
- (define-maximum-value 'left-volume 100) 
-  (define-maximum-value 'right-volume  100) 
+(define-maximum-value 'quickness 100)
+(define-maximum-value 'average-pitch 350)
+(define-maximum-value 'pitch-range 250)
+ (define-maximum-value 'left-volume 100)
+  (define-maximum-value 'right-volume  100)
   (define-maximum-value 'loudness 86)
 (define-maximum-value 'speech-rate 550)
 ;;; }

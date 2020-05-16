@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (in-package :user)
@@ -25,7 +25,7 @@
   ;;; Function: DEFINE-CARDINAL-NUMBER                         Author: raman
   ;;; Created: Wed Dec 23 12:09:04 1992
 
-(defun define-cardinal-number (string cardinal) 
+(defun define-cardinal-number (string cardinal)
   "Define cardinal number "
   (setf (gethash string *cardinal-numbers-table* ) cardinal)
   )

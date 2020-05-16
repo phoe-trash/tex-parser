@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (in-package :user)
@@ -14,11 +14,11 @@
 ;;; defmethod reading-rule.
 ;;; Will eventually replace the reading rules in math-reading-rules.lisp
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(def-reading-rule (math-object simple) 
-    "Simple reading rule for math objects "  
-  (let* 
+(def-reading-rule (math-object simple)
+    "Simple reading rule for math objects "
+  (let*
       ((pause-duration  (compute-pause math-object )))
-    (afl:with-surrounding-pause pause-duration 
+    (afl:with-surrounding-pause pause-duration
       (cond
         ((leaf-p math-object) (read-math-object-and-attributes math-object))
         ( (read-as-infix?  math-object) (read-as-infix math-object))
@@ -27,10 +27,10 @@
         )))
   )
 
-(def-reading-rule (diagonal-dots simple) 
+(def-reading-rule (diagonal-dots simple)
     "Reading rule for diagonal dots. "
   (afl:new-block
-   (loop for i from 1 to 3 do 
+   (loop for i from 1 to 3 do
          (afl:send-text "and so on")
          (afl:low-intonation)
          (afl:force-speech)
@@ -56,7 +56,7 @@
   (afl:force-speech ))
 
 (def-reading-rule(phantom  simple) nil)
-(def-reading-rule (v-phantom simple) nil) 
+(def-reading-rule (v-phantom simple) nil)
 
 (def-reading-rule (generalized-root simple)
     "a simple reading rule for radicals"
@@ -66,14 +66,14 @@
        (radical-arg (second children  )))
     (read-aloud  (cardinal-number nth-root-of ))
     (read-aloud " root of ")
-    (with-reading-state (reading-state 'children ) 
+    (with-reading-state (reading-state 'children )
       (read-aloud radical-arg  )))
   )
 
 
 
 
-(def-reading-rule (fraction simple) 
+(def-reading-rule (fraction simple)
     "simple reading rule for fractions "
   (let ((pause-amount  (compute-pause fraction ))
         (parent (parent fraction)))
@@ -88,7 +88,7 @@
          (read-aloud (numerator-of fraction))
          (when (> (weight (numerator-of fraction )) 1)
            (afl:subclause-boundary))
-         (read-aloud "over" ) 
+         (read-aloud "over" )
          (read-aloud
           (denominator-of fraction ))
          (afl:comma-intonation))
@@ -103,7 +103,7 @@
   )
 
 (def-reading-rule (delimited-expression simple)
-    " Simple reading rule for delimited expressions " 
+    " Simple reading rule for delimited expressions "
   (afl:with-surrounding-pause (* *pause-around-child*
                                  (weight  delimited-expression))
     (read-aloud(open-delimiter delimited-expression ))
@@ -115,12 +115,12 @@
                      (delimited-expression-type delimited-expression)))
       (read-aloud (close-delimiter delimited-expression)))
     (when (attributes delimited-expression)
-      (mapc #'read-aloud 
+      (mapc #'read-aloud
             (sorted-attributes  (attributes
                                  delimited-expression )))))
   )
 (def-reading-rule (parenthesis simple)
-    " Simple reading rule for delimited expressions " 
+    " Simple reading rule for delimited expressions "
   (afl:with-surrounding-pause (* *pause-around-child*
                                  (weight  parenthesis))
     (read-aloud "quantity")
@@ -128,16 +128,16 @@
       (loop for child in (children parenthesis)
             do           (read-aloud child  )))
     (when  (attributes parenthesis)
-      
+
       (read-aloud "close quantity "))
     (when (attributes parenthesis )
-      (mapc #'read-aloud 
+      (mapc #'read-aloud
             (sorted-attributes  (attributes
                                  parenthesis )))))
   )
 
 (def-reading-rule (math-subformula simple)   "Simple reading rule for math subformula"
-  (read-math-object-and-attributes math-subformula) 
+  (read-math-object-and-attributes math-subformula)
   )
 
 
@@ -161,7 +161,7 @@
   (let ((pause-amount (compute-pause juxtaposition ))
         (children (children juxtaposition )))
     (afl:with-surrounding-pause pause-amount
-      (read-aloud (first  children)) 
+      (read-aloud (first  children))
       (loop for child in  (rest children)
             do
             (read-aloud  "times" )
@@ -171,14 +171,14 @@
 
 (def-reading-rule  (math-eqnarray simple)
     "Simple reading rule for eqnarray: uses directional audio"
-  (afl:with-pronunciation-mode (:mode :math) 
+  (afl:with-pronunciation-mode (:mode :math)
     (loop for equation  in  (contents math-eqnarray)
           do
-          (let 
+          (let
               ((left-hand-side   (first equation))
                (relational (second equation))
                (right-hand-side (third equation )))
-            (when left-hand-side 
+            (when left-hand-side
               (with-reading-state (reading-state 'left-hand-side)
                 (read-aloud left-hand-side)
                 (afl:force-speech )))
@@ -193,7 +193,7 @@
 
 (define-reading-state 'left-hand-side
     #'(lambda(state)
-        (afl:multi-move-to  state 
+        (afl:multi-move-to  state
                             '(afl:left-volume 100)
                             '(afl:right-volume 0 )))
   )
@@ -238,11 +238,11 @@
         (label-name  (when (label math-equation)
                        (label-name (label math-equation  )))))
     (afl:new-block
-     (afl:local-set-state :math) 
+     (afl:local-set-state :math)
      (afl:local-set-state (reading-state 'math ) )
      (read-aloud equation )
      (afl:pause 5)
-     (if label-name 
+     (if label-name
          (read-aloud label-name)
          (read-aloud  (format nil "math equation ~a" number  )))
      (afl:force-speech )
@@ -290,9 +290,9 @@
             (setf right-offset  (afl:length-of-subinterval
                                  'afl:right-volume (length row )))
             (afl:new-block
-             (afl:with-surrounding-pause *math-surround* 
+             (afl:with-surrounding-pause *math-surround*
                (read-aloud (first row ))))
-            (loop for column in (rest row) do 
+            (loop for column in (rest row) do
                   (afl:local-set-state
                    (afl:multi-move-by
                     afl:*current-speech-state*
@@ -301,13 +301,13 @@
                   (when column
                     (afl:new-block      ;dummy
                      (read-aloud  column ))
-                    )                   ;end when 
+                    )                   ;end when
                   )))                   ;done reading row
-     )                                  ;Done reading all rows. 
+     )                                  ;Done reading all rows.
    )
   )
 
-;;; Making the same changes as to the reading rule for arrays. 
+;;; Making the same changes as to the reading rule for arrays.
 
 (def-reading-rule (tabular simple)
     "Simple reading rule for arrays, uses directional audio"
@@ -327,9 +327,9 @@
            (setf right-offset  (afl:length-of-subinterval
                                 'afl:right-volume (length row )))
            (afl:new-block
-            (afl:with-surrounding-pause *math-surround* 
+            (afl:with-surrounding-pause *math-surround*
               (read-aloud (first row))
-              (loop for column in (rest row) do 
+              (loop for column in (rest row) do
                     (afl:local-set-state
                      (afl:multi-move-by
                       afl:*current-speech-state*
@@ -338,9 +338,9 @@
                     (when column
                       (afl:new-block    ;dummy
                        (read-aloud  column ))
-                      )                 ;end when 
+                      )                 ;end when
                     )))                 ;done reading row
-           )                            ;Done reading all rows. 
+           )                            ;Done reading all rows.
      ))
   )
 
@@ -350,11 +350,11 @@
 
 ;;; Modified: Sun Apr 11 13:36:17 EDT 1993
 ;;; <(Fixed the bug that caused relative readings to fail. )>
-(def-reading-rule (tabular bus-schedule) 
+(def-reading-rule (tabular bus-schedule)
     "Simple reading rule for arrays, uses directional audio"
   (afl:new-block (afl:local-set-state :text)
                  (afl:local-set-state (reading-state 'array-start))
-                 (let* 
+                 (let*
                      ((contents  (if *transpose-table*
                                      (transpose-table (contents
                                                        tabular))
@@ -373,7 +373,7 @@
                             (afl:send-text " at ")
                             (read-aloud (first row))
                             (loop for column in (rest row)
-                                  and head in (rest headers) do 
+                                  and head in (rest headers) do
                                   (afl:local-set-state
                                    (afl:multi-move-by
                                     afl:*current-speech-state*
@@ -384,9 +384,9 @@
                                      (read-aloud  head)
                                      (afl:send-text " at ")
                                      (read-aloud  column ))
-                                    )   ;end when 
+                                    )   ;end when
                                   )))   ;done reading row
-                         )              ;Done reading all rows. 
+                         )              ;Done reading all rows.
                    ))
   )
 
@@ -399,7 +399,7 @@
           (null (attributes  (argument square-root 1 ))))
      (read-aloud (argument square-root 1 )))
     (t(read-aloud " of ")
-      (with-reading-state (reading-state 'children) 
+      (with-reading-state (reading-state 'children)
         (read-aloud (argument square-root 1 ))))
     )
   )
@@ -407,7 +407,7 @@
 (def-reading-rule (overbrace simple)
     (with-reading-state (reading-state 'overbrace)
       (read-aloud (argument overbrace 1 )))
-  (read-attributes overbrace) 
+  (read-attributes overbrace)
   )
 (define-reading-state 'overbrace
     #'(lambda(state)

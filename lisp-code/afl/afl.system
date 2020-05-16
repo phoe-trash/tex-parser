@@ -8,7 +8,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;; Modified: Fri Aug 21 14:43:44 EDT 1992
-;;; cleaning up and moving completely to defsystem. 
+;;; cleaning up and moving completely to defsystem.
 ;;; defsystem for audio formatting language.
 ;;; Modified: Thu Aug 13 10:07:55 EDT 1992
 ;;; Introducing package audio-formatting-language
@@ -18,14 +18,14 @@
 (unless (find-package :dectalk)
   (make-package :dectalk :use '(lisp )))
 
-#+lucid 
+#+lucid
 (unless (find-package 'afl)
   (make-package 'afl :use '(lisp    lucid lcl dectalk clos make
                             )))
 #+(and pcl clisp)
 (unless (find-package 'afl)
   (make-package 'afl :use '(lisp    dectalk pcl  make)))
-#+(and clos clisp) 
+#+(and clos clisp)
 (unless (find-package 'afl)
   (make-package 'afl :use '(lisp    dectalk clos  make)))
 
@@ -79,7 +79,7 @@
                                        (find-symbol
                                         "INITIALIZE-SPEECH-SPACE"
                                         "AFL")))
-                        :components( 
+                        :components(
                                     (:file "reference-variables")
                                     (:file "global-variables")
                                     (:file "01-speech-space"
@@ -102,7 +102,7 @@
                                         ; now becomes a module
                (:module  "sound-audio"
                          :source-pathname "sound-audio"
-                         :package afl 
+                         :package afl
                          :finally-do
                          (progn
                            (pushnew  :sound-audio *features* )
@@ -168,7 +168,7 @@
 ;;; Function: CREATE-AFL-USER-MANUAL                                Author: raman
 ;;; Created: Sat Aug 15 13:59:16 1992
 
-(defun create-afl-user-manual () 
+(defun create-afl-user-manual ()
   "Create user manual for afl"
   (with-open-file (out-stream *afl-doc-file* :direction :output)
     (dolist
@@ -186,7 +186,7 @@
 (defvar *afl-external-doc-file*
   "/usr/u/raman/lisp-code/afl/external-afl-user-manual.txt"
   "external user manual")
-(defun create-external-afl-user-manual () 
+(defun create-external-afl-user-manual ()
   "Create user manual for afl"
   (with-open-file (out-stream *afl-external-doc-file* :direction :output)
     (dolist
@@ -203,15 +203,15 @@
 ;;; Function: GENERATE-LIST-OF-FILES                         Author: raman
 ;;; Created: Wed Aug 19 15:42:10 1992
 
-(defun generate-list-of-files (system-name) 
+(defun generate-list-of-files (system-name)
   "given system name finds it and extracs the file names"
   (let*
       ((files nil)
        (system (find-system   'system-name ))
        (list-of-components (component-components system )))
                                         ;(make-pathname  :directory  (component-source-root-dir (first
-                                        ;*l*)) 
-                                        ;:name 
+                                        ;*l*))
+                                        ;:name
                                         ;(component-source-pathname (first *l*))
                                         ;:type (component-source-extension (first *l*))
                                         ;)
@@ -219,6 +219,6 @@
   )
 
 
-(pushnew :afl *features*) 
+(pushnew :afl *features*)
 
 

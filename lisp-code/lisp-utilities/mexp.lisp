@@ -8,14 +8,14 @@
 (provide 'mexp)
 
 ;;; Macroexpand top-level loop. Expands one-level of macros. If the
-;;; optional argument is given, will expand all levels of macros. 
+;;; optional argument is given, will expand all levels of macros.
 
 ;;; Written by Alberto Segre (1988).
 
 (defun mexp (&optional fullexpand?)
   (prog (expr)
      (format t "~&Macroexpand top-level loop (:q or :a to quit).~%")
-     loop 
+     loop
      (format t "~%~A> " (cond (fullexpand? "mexp*")
 			      (t "mexp")))
      (setq expr (read))

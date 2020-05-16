@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (in-package 'user)
@@ -31,7 +31,7 @@
   ;;; Function: SWITCH-AUDIO-PORT                              Author: raman
   ;;; Created: Sun Jan 10 12:45:05 1993
 
-(defun switch-audio-port (port) 
+(defun switch-audio-port (port)
   "Switch audio port either :headphone or :speaker"
   (cond
     ((eql :headphone port ) (switch-audio-port-internal 1))

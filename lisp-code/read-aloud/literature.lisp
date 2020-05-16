@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (in-package :user)
@@ -11,45 +11,45 @@
 
 ;;; Some literature hacks to show off afl and recognizer:
 
-(define-text-object     :macro-name "characterone" 
+(define-text-object     :macro-name "characterone"
   :number-args 1
-  :processing-function character-one-expand 
+  :processing-function character-one-expand
   :object-name character-one
   :supers (document)
   )
 
-;;; Use slots argument-1 ... argument-1 in                         read-aloud 
-(defmethod read-aloud  (( character-one character-one )) 
+;;; Use slots argument-1 ... argument-1 in                         read-aloud
+(defmethod read-aloud  (( character-one character-one ))
   "Read aloud method for object character-one "
-  (with-reading-state  (reading-state 'annotation-voice) 
+  (with-reading-state  (reading-state 'annotation-voice)
     (read-aloud (argument character-one 1  )))
   (afl:local-set-state (reading-state 'character-one))
   )
 
-(define-text-object     :macro-name "charactertwo" 
+(define-text-object     :macro-name "charactertwo"
   :number-args 1
-  :processing-function character-two-expand 
+  :processing-function character-two-expand
   :object-name character-two
   :supers (document)
   )
 
-;;; Use slots argument- ... argument-1 in                         read-aloud 
-(defmethod read-aloud  (( character-two character-two )) 
+;;; Use slots argument- ... argument-1 in                         read-aloud
+(defmethod read-aloud  (( character-two character-two ))
   "Read aloud method for object character-two "
-  (with-reading-state (reading-state 'annotation-voice) 
+  (with-reading-state (reading-state 'annotation-voice)
     (read-aloud (argument character-two 1 )))
   (afl:local-set-state (reading-state 'character-two))
   )
 
-(define-text-object     :macro-name "characterthree" 
+(define-text-object     :macro-name "characterthree"
   :number-args 1
-  :processing-function character-three-expand 
+  :processing-function character-three-expand
   :object-name character-three
   :supers (document)
   )
 
-;;; Use slots argument-1 ... argument-1 in                         read-aloud 
-(defmethod read-aloud  (( character-three character-three )) 
+;;; Use slots argument-1 ... argument-1 in                         read-aloud
+(defmethod read-aloud  (( character-three character-three ))
   "Read aloud method for object character-three "
   (with-reading-state (reading-state 'annotation-voice)
     (read-aloud (argument character-three 1 )))
@@ -73,7 +73,7 @@
 (define-reading-state 'character-three
     #'(lambda(state)
         (declare (ignore state))
-        (let ((new-state 
+        (let ((new-state
                (afl:get-point-in-speech-space 'afl:harry )))
           (afl:multi-move-to new-state
                              '(afl:left-volume 50)

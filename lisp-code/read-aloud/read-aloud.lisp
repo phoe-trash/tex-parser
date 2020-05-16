@@ -705,19 +705,19 @@ reading full documents. ")
 
 (defmethod read-aloud ((math-array math-array))
   "Read math array, not fully implemented"
-  (afl:with-pronunciation-mode (:mode :math) 
+  (afl:with-pronunciation-mode (:mode :math)
     (let
         ((contents  (if *transpose-table*
                         (transpose-table (contents
                                           math-array))
                         (contents math-array ))))
-      (loop for row in   contents 
+      (loop for row in   contents
             do
             (loop for column in row
                   and
-                  col-index = 1 then (+ 1 col-index) 
+                  col-index = 1 then (+ 1 col-index)
                   do
-                  (dotimes (i col-index) 
+                  (dotimes (i col-index)
                     (afl:synchronize-and-play  *column-cue*))
                   (read-aloud  column))
             (afl:synchronize-and-play  *row-cue*)))))

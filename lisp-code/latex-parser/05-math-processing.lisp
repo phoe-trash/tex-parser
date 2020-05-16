@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 
@@ -26,7 +26,7 @@
 ;;; <(refer to old version which is backed up)>
 ;;; <(use push instead of cons, backed up old version )>
 (defun process-math(math-buffer
-                    &optional (termination-condition? #'end-of-buffer?)) 
+                    &optional (termination-condition? #'end-of-buffer?))
   "process math stream"
   (declare (optimize (compilation-speed 0) (safety 1) (speed 3 )))
   (let
@@ -56,7 +56,7 @@
 ;;; Function: IS-A-SPACE?                                    Author: raman
 ;;; Created: Mon Sep 28 08:49:23 1992
 
-(defun is-a-space? (token) 
+(defun is-a-space? (token)
   "Check if token is a space.  "
   (and (stringp token)
        (equal " " token))
@@ -65,9 +65,9 @@
 ;;; Function: MATHIFY                                        Author: raman
 ;;; Created: Mon Sep 21 20:06:30 1992
 
-(defun mathify (object) 
+(defun mathify (object)
   "mathify object"
-  (if  (typep  object 'math-object) 
+  (if  (typep  object 'math-object)
        object
        (make-instance 'math-object
                       :contents  object))
@@ -78,12 +78,12 @@
 ;;; precedence wrong. Fails for f g x which it wrongly builds up as
 ;;; f(g)  followed by x.  The step where mathematical functions are
 ;;; processed postponed to the prefix conversion step where they will
-;;; be treated as unary operators. 
+;;; be treated as unary operators.
 ;;; Function: COLLAPSE                                       Author: raman
 ;;; Created: Wed Sep 16 15:06:01 1992
 
 (proclaim '(inline collapse))
-(defun collapse (processed-math) 
+(defun collapse (processed-math)
   "collapse  math objects"
   (if (>  (length processed-math) 1)
       (collapse-subscripts-and-superscripts processed-math)
@@ -107,7 +107,7 @@
 ;;; Introducing function create-delimited-expression
 ;;; Each type of matched delimited expression now has its own subclass
 
-(defun process-delimited-expression (math-buffer &key(do-not-test nil)) 
+(defun process-delimited-expression (math-buffer &key(do-not-test nil))
   "process expression delimited by delimiter at front of buffer"
   (let*
       ((token (lookat-current-entry math-buffer ))
@@ -118,7 +118,7 @@
     (or do-not-test
 	(assert
 	 delimiter nil
-	 "Assert: Process-delimiter: token at front of buffer is not valid: 
+	 "Assert: Process-delimiter: token at front of buffer is not valid:
 but is an unrecognised ~a delimiter"
 	 token))
     (setf  close-delimiter
@@ -127,7 +127,7 @@ but is an unrecognised ~a delimiter"
 	  (process-math
 	   (advance-pointer math-buffer)
 	   #'(lambda(x)
-	       (or 
+	       (or
 		(equal  close-delimiter
 			(lookat-current-entry x))
 		(close-delimiter? (lookat-current-entry x))
@@ -143,12 +143,12 @@ but is an unrecognised ~a delimiter"
                         :open-delimiter  (math-delimiter-open delimiter )
                         :children (list processed-expression)
                         :type 'unmatched-delimiter))
-	((equal   matched 
+	((equal   matched
 		  close-delimiter)
 	 (pop-current-entry math-buffer)
-         (create-delimited-expression 
+         (create-delimited-expression
           :type 'delimited-expression
-          :contents 
+          :contents
           (math-delimiter-name
            delimiter )
           :open-delimiter
@@ -160,7 +160,7 @@ but is an unrecognised ~a delimiter"
 	 (pop-current-entry math-buffer)
          (make-instance 'delimited-expression
                         :type 'mismatched-delimiters
-                        :contents (list  
+                        :contents (list
                                    (math-delimiter-open
                                     delimiter)
                                    matched )
@@ -180,7 +180,7 @@ matched ~a "
 ;;; Function: OPEN-DELIMITER?                                     Author: raman
 ;;; Created: Wed Feb 19 10:40:56 1992
 
-(defun open-delimiter? (token) 
+(defun open-delimiter? (token)
   "Checks if token is a delimiter."
   (find token
 	*table-of-math-delimiters*
@@ -192,12 +192,12 @@ matched ~a "
 ;;; Function: CLOSE-DELIMITER?                               Author: raman
 ;;; Created: Wed Feb 19 11:05:24 1992
 
-(defun close-delimiter? (token) 
+(defun close-delimiter? (token)
   "checks if token is a close delimiter"
   (find token
 	*table-of-math-delimiters*
 	:key #'math-delimiter-close
-	:test #'equal)  
+	:test #'equal)
   )
 
 
@@ -205,11 +205,11 @@ matched ~a "
 ;;; Function: GET-MATH-PARSER                                Author: raman
 ;;; Created: Tue Feb 25 12:39:43 1992
 
-(defun get-math-parser (token) 
+(defun get-math-parser (token)
   "Gets appropriate math mode parsing function from global variable. "
   (let
-      ((parser 
-	(parse-table-parser 
+      ((parser
+	(parse-table-parser
 	 (find
 	  (what-is? token)
 	  *processing-function-table*
@@ -223,11 +223,11 @@ matched ~a "
 ;;; Function: MARK-AS-PROCESSED                              Author: raman
 ;;; Created: Mon Feb 10 09:55:02 1992
 
-(defun mark-as-processed (token) 
+(defun mark-as-processed (token)
   "mark token as having been processed"
-  (if 
+  (if
    (processed? token)
-   token 
+   token
    (cons 'processed token)
    )
   )
@@ -236,9 +236,9 @@ matched ~a "
 ;;; Function: PROCESSED?                                     Author: raman
 ;;; Created: Mon Feb 10 09:57:51 1992
 
-(defun processed? (token) 
+(defun processed? (token)
   "see if token is tagged as having been processed"
-  (if 
+  (if
    (and
     (listp token)
     (eq 'processed
@@ -252,7 +252,7 @@ matched ~a "
 ;;; Created: Thu Feb 13 14:25:41 1992
 
 
-(defun process-math-cs (math-buffer &key(do-not-test nil)) 
+(defun process-math-cs (math-buffer &key(do-not-test nil))
   "process a tex control sequence in math mode"
   (or do-not-test
       (assert  (is-a 'math-cs
@@ -261,7 +261,7 @@ matched ~a "
 at front of buffer  is not a cs"
 		     (lookat-current-entry math-buffer)))
   (let
-      ((macro-name (math-cs-name 
+      ((macro-name (math-cs-name
 		    (lookat-current-entry math-buffer ))))
     (cond
                                         ;user defined macros have precedence
@@ -275,9 +275,9 @@ at front of buffer  is not a cs"
 	(get-parser macro-name :math-flag t)
 	math-buffer :do-not-test t))
       (t (let ((result (expand-tex-macro math-buffer)))
-           (if   (math-object-subtype-p result)  
+           (if   (math-object-subtype-p result)
                  result
-                 (when result 
+                 (when result
                    (make-instance 'math-object
                                   :contents result
                                   :type 'tex-macro)))))
@@ -296,12 +296,12 @@ at front of buffer  is not a cs"
   (let ((contents nil)
         (buffer-contents (rest
                           (pop-current-entry math-buffer ))))
-    (when buffer-contents 
+    (when buffer-contents
       (setf contents (process-math
                       (make-buffer :contents buffer-contents ))))
-    (make-instance 'math-subformula 
-                   :type 'subformula 
-                   :contents (or contents ;empty subformula? 
+    (make-instance 'math-subformula
+                   :type 'subformula
+                   :contents (or contents ;empty subformula?
                                  " "))
     )
   )
@@ -315,7 +315,7 @@ at front of buffer  is not a cs"
 ;;; and handed back to caller
 ;;; thus assuming that the caller knows what he is doing.
 
-(defun get-math-object! (math-buffer) 
+(defun get-math-object! (math-buffer)
   "Get the math object at front of buffer modifying buffer pointer"
   (let
       ((token (pop-current-entry math-buffer))
@@ -351,7 +351,7 @@ at front of buffer  is not a cs"
 ;;; Function: PROCESS-MATH-STRING                               Author: raman
 ;;; Created: Thu Feb 27 22:01:53 1992
 
-(defun process-math-string (math-buffer &key(do-not-test nil)) 
+(defun process-math-string (math-buffer &key(do-not-test nil))
   "Process an math-string math symbol"
   (or  do-not-test
        (assert  (eq 'math-string
@@ -370,7 +370,7 @@ at front of buffer  is not a cs"
 ;;; Function: PROCESS-ORDINARY                               Author: raman
 ;;; Created: Thu Feb 27 22:01:53 1992
 
-(defun process-ordinary (math-buffer &key(do-not-test nil)) 
+(defun process-ordinary (math-buffer &key(do-not-test nil))
   "Process an ordinary math symbol"
   (or  do-not-test
        (assert  (eq 'ordinary
@@ -389,7 +389,7 @@ at front of buffer  is not a cs"
 ;;; Function: PROCESS-QUANTIFIER                               Author: raman
 ;;; Created: Thu Feb 27 22:01:53 1992
 
-(defun process-quantifier (math-buffer &key(do-not-test nil)) 
+(defun process-quantifier (math-buffer &key(do-not-test nil))
   "Process an quantifier math symbol"
   (or  do-not-test
        (assert  (eq 'quantifier
@@ -409,11 +409,11 @@ at front of buffer  is not a cs"
 
 ;;; Modified: Wed Dec  9 13:50:14 EST 1992
 ;;; introducing create-big-operator
-;;; process-big-operator now returns integral summation etc. 
+;;; process-big-operator now returns integral summation etc.
 ;;; Function: PROCESS-BIG-OPERATOR                         Author: raman
 ;;; Created: Thu Feb 27 22:06:23 1992
 
-(defun process-big-operator (math-buffer &key(do-not-test nil)) 
+(defun process-big-operator (math-buffer &key(do-not-test nil))
   "Process a large operator"
   (or  do-not-test
        (assert  (eq 'large-operator
@@ -432,7 +432,7 @@ at front of buffer  is not a cs"
 ;;; Function: PROCESS-BINARY-OPERATOR                         Author: raman
 ;;; Created: Thu Feb 27 22:06:23 1992
 
-(defun process-binary-operator (math-buffer &key(do-not-test nil)) 
+(defun process-binary-operator (math-buffer &key(do-not-test nil))
   "Process a binary operator"
   (or  do-not-test
        (assert  (eq 'binary-operator
@@ -451,7 +451,7 @@ at front of buffer  is not a cs"
 ;;; Function: PROCESS-RELATIONAL-OPERATOR                         Author: raman
 ;;; Created: Thu Feb 27 22:06:23 1992
 
-(defun process-relational-operator (math-buffer &key(do-not-test nil)) 
+(defun process-relational-operator (math-buffer &key(do-not-test nil))
   "Process a relational operator"
   (or  do-not-test
        (assert  (eq 'relational-operator
@@ -470,7 +470,7 @@ at front of buffer  is not a cs"
 ;;; Function: PROCESS-NEGATION-OPERATOR                         Author: raman
 ;;; Created: Thu Feb 27 22:06:23 1992
 
-(defun process-negation-operator (math-buffer &key(do-not-test nil)) 
+(defun process-negation-operator (math-buffer &key(do-not-test nil))
   "Process a negation operator"
   (or  do-not-test
        (assert  (eq 'negation-operator
@@ -489,7 +489,7 @@ at front of buffer  is not a cs"
 ;;; Function: PROCESS-ARROW-OPERATOR                         Author: raman
 ;;; Created: Thu Feb 27 22:06:23 1992
 
-(defun process-arrow-operator (math-buffer &key(do-not-test nil)) 
+(defun process-arrow-operator (math-buffer &key(do-not-test nil))
   "Process a arrow operator"
   (or  do-not-test
        (assert  (eq 'arrow-operator
@@ -509,7 +509,7 @@ at front of buffer  is not a cs"
 ;;; Created: Thu Feb 27 22:06:23 1992
 
 
-(defun process-mathematical-function-name (math-buffer &key(do-not-test nil)) 
+(defun process-mathematical-function-name (math-buffer &key(do-not-test nil))
   "Process a mathematical function name  "
   (or  do-not-test
        (assert  (eq 'mathematical-function-name
@@ -533,8 +533,8 @@ at front of buffer  is not a cs"
 ;;; Function: PROCESS-ACCENT Author: raman
 ;;; Created: Wed Sep 16 09:54:20 1992
 
-(defun process-accent (math-buffer &key(do-not-test nil)) 
-  "Process a math accent" 
+(defun process-accent (math-buffer &key(do-not-test nil))
+  "Process a math accent"
   (or  do-not-test
        (assert  (eq 'accent
 		    (lookup-math-classification
@@ -546,13 +546,13 @@ at front of buffer  is not a cs"
        )
   (let ((accent (get-math-object! math-buffer))
         (object-to-be-accented  nil))
-    (setf object-to-be-accented 
+    (setf object-to-be-accented
           (process-math
            (make-buffer :contents
                         (list
                          (pop-current-entry
                           math-buffer )))))
-    (add-attribute 'accent 
+    (add-attribute 'accent
                    (make-instance 'ordinary
                                   :contents accent)
                    object-to-be-accented)
@@ -563,8 +563,8 @@ at front of buffer  is not a cs"
 ;;; Function: PROCESS-UNDERBAR Author: raman
 ;;; Created: Wed Sep 16 09:54:20 1992
 
-(defun process-underbar (math-buffer &key(do-not-test nil)) 
-  "Process a math underbar" 
+(defun process-underbar (math-buffer &key(do-not-test nil))
+  "Process a math underbar"
   (or  do-not-test
        (assert  (eq 'underbar
 		    (lookup-math-classification
@@ -576,13 +576,13 @@ at front of buffer  is not a cs"
        )
   (let ((underbar (get-math-object! math-buffer))
         (object-to-be-underbarred  nil))
-    (setf object-to-be-underbarred 
+    (setf object-to-be-underbarred
           (process-math
            (make-buffer :contents
                         (list
                          (pop-current-entry
                           math-buffer )))))
-    (add-attribute 'underbar 
+    (add-attribute 'underbar
                    (make-instance 'ordinary
                                   :contents underbar)
                    object-to-be-underbarred)
@@ -596,7 +596,7 @@ at front of buffer  is not a cs"
 ;;; Function: PROCESS-NUMBER                         Author: raman
 ;;; Created: Thu Feb 27 22:06:23 1992
 
-(defun process-number (math-buffer &key(do-not-test nil)) 
+(defun process-number (math-buffer &key(do-not-test nil))
   "Process a number"
   (or  do-not-test
        (assert   (number-string? (lookat-current-entry math-buffer))
@@ -605,7 +605,7 @@ at front of buffer  is not a cs"
 ~a does not match classification"
 		 (lookat-current-entry math-buffer))
        )
-  (make-instance 'math-number 
+  (make-instance 'math-number
                                         ;                 :type 'number
                  :contents (pop-current-entry math-buffer))
   )
@@ -615,7 +615,7 @@ at front of buffer  is not a cs"
 ;;; Function: PROCESS-SUPERSCRIPT                            Author: raman
 ;;; Created: Fri Mar  6 09:25:49 1992
 
-(defun process-superscript (math-buffer &key (do-not-test nil)) 
+(defun process-superscript (math-buffer &key (do-not-test nil))
   "Process superscript operator"
   (or  do-not-test
        (assert (eq 'superscript     (lookup-math-classification
@@ -637,7 +637,7 @@ at front of buffer  is not a cs"
 ;;; Function: PROCESS-SUBSCRIPT                            Author: raman
 ;;; Created: Fri Mar  6 09:25:49 1992
 
-(defun process-subscript (math-buffer &key (do-not-test nil)) 
+(defun process-subscript (math-buffer &key (do-not-test nil))
   "Process subscript operator"
   (or  do-not-test
        (assert (eq 'subscript     (lookup-math-classification
@@ -668,7 +668,7 @@ at front of buffer  is not a cs"
   ;;; Function: VOID-MATH-OBJECT-P                             Author: raman
   ;;; Created: Tue Dec 29 10:28:44 1992
 
-(defun void-math-object-p (math-object) 
+(defun void-math-object-p (math-object)
   "Is this a void math object "
   (and (null (contents math-object ))
        (null (children math-object ))
@@ -681,7 +681,7 @@ at front of buffer  is not a cs"
 ;;; remove void math objects first
 
 
-(defun collapse-subscripts-and-superscripts (list-of-math-objects) 
+(defun collapse-subscripts-and-superscripts (list-of-math-objects)
   "Collapse subscript and superscripts "
   (assert  (every #'math-object-subtype-p list-of-math-objects ) nil
            "~a is not a math object"
@@ -701,13 +701,13 @@ at front of buffer  is not a cs"
             (next-math-object  (rest list-of-math-objects))
           (cond
             ((subscript? next-math-object)  (add-attribute
-                                             'subscript ; with value 
+                                             'subscript ; with value
                                              (contents
-                                              next-math-object ) 
-                                        ;to  math object 
+                                              next-math-object )
+                                        ;to  math object
                                              current-math-object))
             ((superscript? next-math-object) (add-attribute
-                                              'superscript ; with  value 
+                                              'superscript ; with  value
                                               (contents
                                                next-math-object )
                                         ; to math object
@@ -727,7 +727,7 @@ at front of buffer  is not a cs"
 ;;; Function: SUBSCRIPT?                                     Author: raman
 ;;; Created: Tue Sep 15 19:11:48 1992
 
-(defun subscript? (math-object) 
+(defun subscript? (math-object)
   "Tests if math-object is of type subscript"
   (and  (math-object-p math-object)
         (eq 'subscript (math-object-type math-object))
@@ -739,7 +739,7 @@ at front of buffer  is not a cs"
 ;;; Function: SUPERSCRIPT?                                   Author: raman
 ;;; Created: Tue Sep 15 19:13:09 1992
 
-(defun superscript? (math-object) 
+(defun superscript? (math-object)
   "Checks if math object is of type superscript"
   (and (math-object-p math-object)
        (eq 'superscript (math-object-type math-object))
@@ -751,7 +751,7 @@ at front of buffer  is not a cs"
 ;;; Function: MATHEMATICAL-FUNCTION-NAME?                    Author: raman
 ;;; Created: Wed Sep 16 11:42:11 1992
 
-(defun mathematical-function-name? (math-object) 
+(defun mathematical-function-name? (math-object)
   "Check if math-object is a mathematical-function-name"
   (and  (math-object-p math-object)
         (eq 'mathematical-function-name (math-object-type math-object))

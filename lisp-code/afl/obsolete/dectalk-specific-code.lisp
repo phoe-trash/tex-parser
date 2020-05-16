@@ -9,7 +9,7 @@
 ;;; package.
 
 
-(export '( 
+(export '(
           pause
           interrogative
           exclamation
@@ -74,7 +74,7 @@
 
 
 (export '(
-          subclause-boundary audio-prompt 
+          subclause-boundary audio-prompt
           high-intonation
           low-intonation
           high-low-intonation
@@ -85,7 +85,7 @@
   ;;; Function: SUBCLAUSE-BOUNDARY                             Author: raman
   ;;; Created: Tue Dec 22 17:22:18 1992
 (proclaim '(inline subclause-boundary))
-(defun subclause-boundary () 
+(defun subclause-boundary ()
   "Insert a subclause boundary"
   (format t "[)]")
   )
@@ -96,7 +96,7 @@
   ;;; Function: HIGH-INTONATION                                Author: raman
   ;;; Created: Thu Dec 31 12:03:25 1992
 (proclaim '(inline high-intonation))
-(defun high-intonation () 
+(defun high-intonation ()
   "Generate H*"
   (tts:queue  "[/]"))
 
@@ -104,7 +104,7 @@
   ;;; Function: LOW-INTONATION                                 Author: raman
   ;;; Created: Thu Dec 31 12:04:09 1992
 (proclaim'(inline low-intonation))
-(defun low-intonation () 
+(defun low-intonation ()
   "Generate L*"
   (tts:queue "[\]")
   )
@@ -114,7 +114,7 @@
   ;;; Created: Thu Dec 31 12:04:48 1992
 
 (proclaim '(inline high-low-intonation))
-(defun high-low-intonation () 
+(defun high-low-intonation ()
   "Generate Hl*"
   (tts:queue "[/\]")
   )
@@ -123,12 +123,12 @@
   ;;; Function: COMMA-INTONATION                               Author: raman
   ;;; Created: Thu Feb  4 16:42:12 1993
 (proclaim '(inline comma-intonation ))
-(defun comma-intonation () 
+(defun comma-intonation ()
   "Generate a comma intonation"
   (tts:queue "[_,] ")
   )
 (proclaim '(inline period-intonation ))
-(defun period-intonation () 
+(defun period-intonation ()
   "Generate a period intonation"
   (tts:queue "[_.] ")
   )
@@ -138,37 +138,37 @@
   ;;; Created: Sun Jan  3 10:32:42 1993
 
 (proclaim '(inline paragraph-begin))
-(defun paragraph-begin  () 
+(defun paragraph-begin  ()
   "Begin a paragraph"
   (tts:queue "[+]")
   )
 
 (proclaim '(inline exclamation))
-(defun exclamation  () 
+(defun exclamation  ()
   "Send an exclamation. "
   (tts:queue "[_!]")
   )
 
 (proclaim '(inline interrogative))
-(defun interrogative  () 
+(defun interrogative  ()
   "Send an interrogative. "
   (tts:queue "[_?]")
   )
 
 (proclaim '(inline primary-stress))
-(defun primary-stress  () 
+(defun primary-stress  ()
   "Send a  primary-stress. "
   (tts:queue "[']")
   )
 
 (proclaim '(inline secondary-stress))
-(defun secondary-stress  () 
+(defun secondary-stress  ()
   "Send a  secondary-stress. "
   (tts:queue "[`]")
   )
 
 (proclaim '(inline exclamatory-stress))
-(defun exclamatory-stress  () 
+(defun exclamatory-stress  ()
   "Send an   exclamatory-stress. "
   (tts:queue "[\"]")
   )

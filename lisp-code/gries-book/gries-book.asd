@@ -3,7 +3,7 @@
 ;;; Contains objects from Gries's book.
 ;;; One file will have object definitions, and the rest reading rules.
 
-;;; First load complete read-aloud system then this system 
+;;; First load complete read-aloud system then this system
 
 (defsystem "gries-book"
   :components

@@ -4,7 +4,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (in-package :afl)
@@ -55,7 +55,7 @@
   ;;; Function: GET-AUDIO-GLOBAL-VALUE                         Author: raman
   ;;; Created: Thu Feb 11 20:09:49 1993
 
-(defun get-audio-global-value (dimension) 
+(defun get-audio-global-value (dimension)
   "Get global audio value"
   (gethash dimension *audio-globals*)
   )
@@ -70,7 +70,7 @@
   ;;; Function: SET-AUDIO-GLOBAL-VALUE                         Author: raman
   ;;; Created: Thu Feb 11 20:22:49 1993
 
-(defun set-audio-global-value (dimension value) 
+(defun set-audio-global-value (dimension value)
   "Set global value for this audio dimension"
   (setf (reference-val (gethash dimension *audio-globals*) )
         value)
@@ -94,11 +94,11 @@
   ;;; Macro: DEFINE-POINT-IN-AUDIO-SPACE                       Author: raman
   ;;; Created: Sat Feb 20 16:24:20 1993
 
-(defmacro define-point-in-audio-space () 
+(defmacro define-point-in-audio-space ()
   "Defines points in audio space. "
   `(progn
     (defstruct (point-in-audio-space )
-      ,@(loop for dim in *audio-dimensions* collect 
+      ,@(loop for dim in *audio-dimensions* collect
               `(,dim (get-audio-global-value  ',dim )))
       )
                                         ; define accessor
@@ -106,23 +106,23 @@
       (ecase  slot-name
         .,
         (loop for slot in *audio-dimensions*
-              collect 
+              collect
               `(,slot (,(find-symbol
                          (format nil "POINT-IN-AUDIO-SPACE-~a" slot)
                          #.(package-name *package* )) struct )))))
-    
+
   ;;; generate defsetf forms for the accessor
-    #+LUCID 
-    (loop for slot in *audio-dimensions* do 
-     (defsetf audio-point-accessor (struct slot) (value) 
-       `(setf  (system:structure-ref ,struct 
+    #+LUCID
+    (loop for slot in *audio-dimensions* do
+     (defsetf audio-point-accessor (struct slot) (value)
+       `(setf  (system:structure-ref ,struct
                 (position ,slot *audio-dimensions*)
                 'point-in-audio-space) ,value ))))
   )
 
 #+clisp
-(loop for slot in *audio-dimensions* do 
-     (defsetf audio-point-accessor (struct slot) (value) 
+(loop for slot in *audio-dimensions* do
+     (defsetf audio-point-accessor (struct slot) (value)
        `(setf  (system::%structure-ref 'point-in-audio-space
                 ,struct
                 (+ 1 (position ,slot *audio-dimensions* )))  ,value )))

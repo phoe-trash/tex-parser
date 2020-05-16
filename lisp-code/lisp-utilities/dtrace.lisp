@@ -11,7 +11,7 @@
 ;;; tool most Common Lisp implementations provide.
 ;;;
 ;;; From the book "Common Lisp:  A Gentle Introduction to
-;;;      Symbolic Computation" by David S. Touretzky.  
+;;;      Symbolic Computation" by David S. Touretzky.
 ;;; The Benjamin/Cummings Publishing Co., 1990.
 ;;;
 ;;; This version is for Lucid Common Lisp.
@@ -21,7 +21,7 @@
 ;;;   DUNTRACE - same syntax as UNTRACE
 ;;;
 ;;; Copyright (c) 1988,1989 Symbolic Technology, Ltd.
-;;; This software may not be sold or used for commercial purposes without 
+;;; This software may not be sold or used for commercial purposes without
 ;;; prior written permission from the copyright holder.
 
 ;(in-package "DTRACE" :use '("LISP"afl user))
@@ -228,7 +228,7 @@ function")
 ;;; Created: Thu Nov  5 20:17:08 1992
 
 (defparameter *exit-cue*
-"/home/raman/sounds/cues/paragraph.au" 
+"/home/raman/sounds/cues/paragraph.au"
   "Sound cue played on exit")
 
 (defparameter *trace-wraparound* 15)
@@ -237,8 +237,8 @@ function")
 (defun display-function-entry (name &optional ftype)
   (space-over)
   (draw-entry-arrow)
-  
-  (when *audio-display-on-entry* 
+
+  (when *audio-display-on-entry*
     (with-reading-state  (reading-state  'center)
      (user::read-aloud
       (format nil  " ~S " name ))))
@@ -249,7 +249,7 @@ function")
 (defun display-one-arg (val name)
   (space-over)
   (when *audio-display-on-entry*
-(with-reading-state (reading-state 'variable-name) 
+(with-reading-state (reading-state 'variable-name)
      (read-aloud name))
 (with-reading-state (reading-state 'variable-value)
      (read-aloud val )))
@@ -290,7 +290,7 @@ function")
            (format *trace-output* " ~S" (first results)))
 	  (t
            (when *audio-display-on-exit*
-             (with-reading-state (reading-state 'return-value) 
+             (with-reading-state (reading-state 'return-value)
                (mapcar #'read-aloud
                        (butlast results)
                        (car (last results ))))))

@@ -17,12 +17,12 @@
 (defparameter *play-args* '("-v" "1" "-h") "command line args to
 play")
 ;;; For the present not using above variables since it is just as easy
-;;; to change the function itself. 
+;;; to change the function itself.
                                         ;using run-program:
 (proclaim '(inline play-file))
 (defun play-file (filename)
   "use run-program to play file"
-  (run-program   "play" 
+  (run-program   "play"
                  :arguments  (list "-v" "1" "-h" filename)
                  :wait  t)
   )
@@ -50,7 +50,7 @@ play")
   ;;; Function: MAKE-AUDIO-PATHNAME                            Author: raman
   ;;; Created: Fri Jan  8 12:46:58 1993
 
-(defun make-audio-pathname (name &optional (directory *sound-directory*)) 
+(defun make-audio-pathname (name &optional (directory *sound-directory*))
   "Make a pathname to an audio file in the default sound directory"
   (make-pathname :directory directory
                  :name name :type "au" )
@@ -74,7 +74,7 @@ play")
 
   ;;; Variable: *SOUND-DIR-NAME*                               Author: raman
   ;;; Created: Fri Jan  8 13:21:15 1993
-;;; external variable: 
+;;; external variable:
 (defvar *sound-dir-name*
   "/usr/u/raman/sounds/cues/"
   "sound directory as a string")
@@ -83,7 +83,7 @@ play")
   ;;; Function: MAKE-AUDIO-FILENAME                            Author: raman
   ;;; Created: Fri Jan  8 13:22:08 1993
 
-(defun make-audio-filename  (name) 
+(defun make-audio-filename  (name)
   "Make up audio filename "
   (concatenate 'string
                *sound-dir-name*

@@ -13,7 +13,7 @@
 (export '(*current-total-audio-state* *global-total-audio-state*))
   ;;; Structure: TOTAL-AUDIO-STATE                               Author: raman
   ;;; Created: Fri Mar 26 11:11:37 1993
-;(eval-when (compile load eval ) 
+;(eval-when (compile load eval )
   (defstruct total-audio-state
     (speech nil)
     (sound nil)

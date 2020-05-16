@@ -26,7 +26,7 @@ Process Page Faults    =         61
 Dynamic Bytes Consed   =          0
 Ephemeral Bytes Consed =    260,216
 1
-USER> 
+USER>
 
 
 ;;; After making what-is inline:
@@ -58,7 +58,7 @@ Dynamic Bytes Consed   =          0
 Ephemeral Bytes Consed =    260,040
 There was 1 ephemeral GC
 1
-USER> 
+USER>
 DATE:	Mon	Apr	20	TIME:17:57:01
 ;;; timing after making process-word inline.
 ;;; Seems to make program inefficient!
@@ -73,4 +73,4 @@ Dynamic Bytes Consed   =          0
 Ephemeral Bytes Consed =    260,040
 There was 1 ephemeral GC
 1
-USER> 
+USER>

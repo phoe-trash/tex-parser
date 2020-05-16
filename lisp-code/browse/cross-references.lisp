@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (in-package :user)
@@ -43,7 +43,7 @@
   referenced object and continue.
  Behaviour determined by *follow-cross-ref-wait*. If 0, do not prompt.
 If non-zero, prompt, waiting for *follow-cross-ref-wait* seconds. "
-  (unless (zerop *follow-cross-ref-wait*) 
+  (unless (zerop *follow-cross-ref-wait*)
     (afl:synchronize-and-play *cross-ref-cue*)
     (query:y-or-n-p-wait   #\n *follow-cross-ref-wait*
                            "Follow cross ref? ")
@@ -77,7 +77,7 @@ If non-zero, prompt, waiting for *follow-cross-ref-wait* seconds. "
       (afl:new-block
        (afl:local-set-state (afl-state ref-object ))
        (read-aloud ref-object )))
-    )  
+    )
   )
 
   ;;; Method: READ-CROSS-REFERENCE                             Author: raman

@@ -3,7 +3,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Modified: Sat Apr 11 18:12:09 EDT 1992
-;;; All the process environment functions now work with classes. 
+;;; All the process environment functions now work with classes.
 ;;; Modified: Sun Jan 26 10:20:44 EST 1992
 ;;; An older version which relied on a very simple lexer is in jan-24-version.
 ;;; The lexer has now been made powerful so that the tokens
@@ -12,7 +12,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 
@@ -54,7 +54,7 @@
 ;;; This handles nestings well,  and allows for
 ;;; nesting enumerate inside itemize, and then nest the whole thing
 ;;; inside a description.
-;;; Similarly,  arrays and tables can also be nested. 
+;;; Similarly,  arrays and tables can also be nested.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;; Sun Jan 26 10:22:05 EST 1992
@@ -76,9 +76,9 @@
 ;;; Function: PEEL-OFF-LISTS                                 Author: raman
 ;;; Created: Fri Nov 27 10:49:25 1992
 
-(defun peel-off-lists (nested-list) 
+(defun peel-off-lists (nested-list)
   "Peel off unnecessary parens "
-  (cond 
+  (cond
    ((null nested-list) nested-list)
    ((not (listp nested-list))  nested-list)
    ((and (listp nested-list)
@@ -100,14 +100,14 @@
 ;;; <(version using do backed up. )>
 ;;; <(using cons instead of push backed up old version)>
 (defun process-text (text-buffer
-                     &optional (termination-condition? #'end-of-buffer?)) 
+                     &optional (termination-condition? #'end-of-buffer?))
   "Takes a buffer  containing text, and  processes it until
 termination-condition is satisfied.  Upon exit, buffer-pointer points to after processed text"
   (declare (optimize (compilation-speed 0) (safety 1) (speed 3 )))
   (let ((processed-text nil)
         (current-paragraph nil))
     (loop for token = (lookat-current-entry text-buffer )
-          until 
+          until
           (funcall termination-condition?  text-buffer)
           do
           (cond
@@ -130,7 +130,7 @@ termination-condition is satisfied.  Upon exit, buffer-pointer points to after p
            (peel-off-lists
             (nreverse
              (delete nil
-                     (push  (if processed-text 
+                     (push  (if processed-text
                                 (make-paragraph
                                  :contents
                                  (nreverse
@@ -174,7 +174,7 @@ termination-condition is satisfied.  Upon exit, buffer-pointer points to after p
 ;;; Just return nil for comments, no point in keeping it in the high
 ;;; level structure for the present.
 
-(defun process-comment (text-buffer &key (do-not-test nil)) 
+(defun process-comment (text-buffer &key (do-not-test nil))
   "Process a comment"
   (or do-not-test
       (assert  (is-a 'comment  (lookat-current-entry text-buffer)) nil
@@ -187,7 +187,7 @@ termination-condition is satisfied.  Upon exit, buffer-pointer points to after p
 ;;; Function: PROCESS-NEWLINE                                Author: raman
 ;;; Created: Thu Feb 27 20:55:28 1992
 
-(defun process-newline (text-buffer &key (do-not-test nil)) 
+(defun process-newline (text-buffer &key (do-not-test nil))
   "process newlines "
   (or do-not-test
       (assert  (is-a 'newline (lookat-current-entry text-buffer)) nil
@@ -195,7 +195,7 @@ termination-condition is satisfied.  Upon exit, buffer-pointer points to after p
 	       (lookat-current-entry text-buffer)))
   (pop-current-entry text-buffer)
   )
-(defun process-field-separator (text-buffer &key (do-not-test nil)) 
+(defun process-field-separator (text-buffer &key (do-not-test nil))
   "process field-separators "
   (or do-not-test
       (assert  (is-a 'field-separator (lookat-current-entry text-buffer)) nil
@@ -257,7 +257,7 @@ termination-condition is satisfied.  Upon exit, buffer-pointer points to after p
 ;;; Created: Wed Nov 13 21:31:01 1991
 ;;; Modified: Wed Jan 29 10:46:22 EST 1992
 ;;; set local environment in the buffer structure
-;;; and stop using special variables. 
+;;; and stop using special variables.
 
 (defun process-text-block (text-buffer &key(do-not-test nil))
   "a first implementation"
@@ -288,7 +288,7 @@ in front, but has ~a instead"
 ;;; Function: PROCESS-INLINE-QUOTE                           Author: raman
 ;;; Created: Thu Feb 13 20:03:11 1992
 
-(defun process-inline-quote (text-buffer &key(do-not-test nil)) 
+(defun process-inline-quote (text-buffer &key(do-not-test nil))
   "process inline quotation"
   (or do-not-test
       (assert  (is-a '  inline-quote (lookat-current-entry text-buffer)) nil
@@ -300,7 +300,7 @@ in front, but has ~a instead"
 					 (pop-current-entry text-buffer ))))
        (inline-quote nil)
        )
-    (setf inline-quote 
+    (setf inline-quote
 	  (process-text
 	   inline-quote-buffer
 	   #'(lambda(x)
@@ -313,7 +313,7 @@ in front, but has ~a instead"
      (end-of-buffer? inline-quote-buffer)
      (cons ' mismatched-quote
 	     inline-quote)
-     (create-QUOTED-TEXT 
+     (create-QUOTED-TEXT
       inline-quote
       :QUOTED-TEXT-TYPE 'inline-quote))
     )
@@ -336,7 +336,7 @@ in front, but has ~a instead"
 ;;; Function: VALIDATE-QUOTED-TEXT-TYPE                      Author: raman
 ;;; Created: Mon Apr 13 19:27:21 1992
 
-(defun validate-quoted-text-type (quoted-text-type) 
+(defun validate-quoted-text-type (quoted-text-type)
   "validate quoted-text-type"
   (find quoted-text-type *valid-quoted-text-types*)
   )
@@ -365,7 +365,7 @@ in front, but has ~a instead"
       (assert  (is-a '  quote (lookat-current-entry text-buffer)) nil
 	       "Assert: argument to process-quote, ~a, is not valid:"
 	       (lookat-current-entry text-buffer)))
-  (create-quoted-text 
+  (create-quoted-text
    (process-text
     (make-buffer :contents
 		 (rest
@@ -417,7 +417,7 @@ in front, but has ~a instead"
 ;;; Function: PROCESS-NEW-ENVIRONMENT                        Author: raman
 ;;; Created: Sat Feb 15 12:40:11 1992
 
-(defun process-new-environment (text-buffer &key(do-not-test nil)) 
+(defun process-new-environment (text-buffer &key(do-not-test nil))
   "process an unknown latex environment"
   (or do-not-test
       (assert
@@ -428,7 +428,7 @@ in front, but has ~a instead"
   (let* (
          (environment-contents(rest  (pop-current-entry text-buffer)))
          (environment-name  (first  environment-contents))
-         (new-environment (create-new-environment 
+         (new-environment (create-new-environment
                            :env-name   	     environment-name )))
     (when (can-this-be-cross-referenced? 'new-environment )
       (add-enclosing-referend new-environment ))
@@ -444,7 +444,7 @@ in front, but has ~a instead"
                                                   ))))
     (when (can-this-be-cross-referenced? 'new-environment )
       (pop-enclosing-referend  ))
-    new-environment 
+    new-environment
     )
   )
 
@@ -459,7 +459,7 @@ in front, but has ~a instead"
       (assert  (is-a '    inline-math  (lookat-current-entry text-buffer)) nil
 	       "Assert: argument to process-inline-math, ~a, is not valid:"
 	       (lookat-current-entry text-buffer )))
-  (make-instance 'inline-math 
+  (make-instance 'inline-math
                  :contents (list ( process-math
                                    (make-buffer :contents
                                                 (rest
@@ -476,7 +476,7 @@ in front, but has ~a instead"
       (assert  (is-a '    display-math  (lookat-current-entry text-buffer)) nil
 	       "Assert: argument to process-quotation, ~a, is not valid:"
 	       (lookat-current-entry text-buffer)))
-  (make-instance  'display-math 
+  (make-instance  'display-math
                   :contents (list  (process-math
                                     (make-buffer :contents
                                                  (rest
@@ -490,7 +490,7 @@ in front, but has ~a instead"
 ;;; This function will also become  table driven.
 ;;; Eventually do away with the use of special variable
 ;;; for handling font changing by passing parse state
-;;; along with the text buffer. 
+;;; along with the text buffer.
 (proclaim '(inline process-cs))
 (defun process-cs (text-buffer &key(do-not-test nil))
   "Process cs found in  current position in buffer"
@@ -507,7 +507,7 @@ at front of buffer  is not a cs"
   ;;; Function: DEFINED-TEX-MACRO-P                            Author: raman
   ;;; Created: Wed Dec 16 12:17:34 1992
 
-(defun defined-tex-macro-p (macro-name) 
+(defun defined-tex-macro-p (macro-name)
   "See if this has been defined as a tex macro"
   (let
       ((macro-table-entry (get-tex-macro macro-name )))
@@ -534,7 +534,7 @@ at front of buffer  is not a cs"
        )
     (cond
       (( eq  (tex-macro-name macro-table-entry) 'default)
-       (make-tex-defined-macro 
+       (make-tex-defined-macro
         :tex-defined-macro-name macro-name))
       ((equal "label" (tex-macro-name macro-table-entry ))
        (apply
@@ -557,7 +557,7 @@ at front of buffer  is not a cs"
 		macro-name
 		n-args))
       )
-    )  
+    )
   )
 
 ;;; Function: PROCESS-ARRAY                                  Author: raman
@@ -565,11 +565,11 @@ at front of buffer  is not a cs"
 ;;; Modified: Mon Mar  2 12:34:38 EST 1992
 ;;; Do not try to create a lisp array.
 ;;; Modified: Tue Jan 12 15:06:05 EST 1993
-;;; process-array links array  elements 
+;;; process-array links array  elements
 (defun process-array (text-buffer &key(do-not-test nil))
   "Process an array "
   (or do-not-test
-      (assert 
+      (assert
        (is-a 'array  (lookat-current-entry text-buffer)) nil
        "assert: front of buffer does not contain an array:
 process-array: front of buffer contains ~a instead. "
@@ -578,7 +578,7 @@ process-array: front of buffer contains ~a instead. "
       (
        ( array-contents (rest (pop-current-entry text-buffer)))
        )
-    (make-instance 'math-array 
+    (make-instance 'math-array
                    :contents   (map2-nested-list
                                 #'process-array-element
                                 array-contents ))
@@ -594,7 +594,7 @@ process-array: front of buffer contains ~a instead. "
 (defun process-tabular (text-buffer &key(do-not-test nil))
   "Process a table "
   (or do-not-test
-      (assert 
+      (assert
        (is-a 'tabular  (lookat-current-entry text-buffer)) nil
        "assert: buffer argument to process-tabular does not contain a
 table in front but has ~a instead"
@@ -605,7 +605,7 @@ table in front but has ~a instead"
        )
     (make-instance 'tabular
                    :contents  (map2-nested-list
-                               #'process-table-element 
+                               #'process-table-element
                                table-contents))
     )
   )
@@ -616,7 +616,7 @@ table in front but has ~a instead"
 (defun process-cases (text-buffer &key(do-not-test nil))
   "Process a cases environment  "
   (or do-not-test
-      (assert 
+      (assert
        (is-a 'cases  (lookat-current-entry text-buffer)) nil
        "assert: buffer argument to process-cases does not contain a
 table in front but has ~a instead"
@@ -626,7 +626,7 @@ table in front but has ~a instead"
        (table-contents (rest (pop-current-entry text-buffer)))
        )
     (cons 'cases  (map2-nested-list
-                   #'process-table-element 
+                   #'process-table-element
                    table-contents))
     )
   )
@@ -652,7 +652,7 @@ table in front but has ~a instead"
 ;;; Function: VALIDATE-LIST-ENVIRONMENT-TYPE                 Author: raman
 ;;; Created: Sat Apr 11 17:48:47 1992
 
-(defun validate-list-environment-type (list-environment-type) 
+(defun validate-list-environment-type (list-environment-type)
   "validate list environment type"
   (or
    (find list-environment-type
@@ -668,7 +668,7 @@ table in front but has ~a instead"
 ;;; Function: GENERATE-ITEM-MARKER                           Author: raman
 ;;; Created: Thu Sep  3 18:40:01 1992
 
-(defun generate-item-marker (parent child) 
+(defun generate-item-marker (parent child)
   "generate item marker"
   (if (null parent)
       (format nil  "~a" child)
@@ -676,11 +676,11 @@ table in front but has ~a instead"
       )
   )
 
-;;; numbering items works by side-effecting argument. 
+;;; numbering items works by side-effecting argument.
 ;;; Function: NUMBER-LIST-OF-ITEMS                           Author: raman
 ;;; Created: Thu Sep  3 18:33:07 1992
 
-(defun number-list-of-items (list-of-items &key(parent nil)) 
+(defun number-list-of-items (list-of-items &key(parent nil))
   "Number list of items"
   (let ((number 1))
     (dolist
@@ -695,17 +695,17 @@ table in front but has ~a instead"
       (incf number)
       )
     list-of-items
-    )  
+    )
   )
 
 
 ;;; Function: NUMBER-SUB-ITEMS-IF-NECESSARY                  Author: raman
 ;;; Created: Thu Sep  3 18:47:38 1992
 
-(defun number-sub-items-if-necessary (list-of-text &key(parent nil)) 
+(defun number-sub-items-if-necessary (list-of-text &key(parent nil))
   "Number any sub-lists in text"
   (if  (listp  list-of-text)
-       (let ; first disjunct 
+       (let ; first disjunct
            ((to-be-numbered  (remove-if-not
                               #'list-environment-p
                               list-of-text)))
@@ -729,9 +729,9 @@ table in front but has ~a instead"
 ;;; Modified: Sun Nov 29 11:33:36 EST 1992
 ;;; replaced (rest (first ...) by (rest ...)
 ;;; since process-text now peels off unnecessary lists before
-;;; returning. 
+;;; returning.
 (defun create-list-environment (list-of-items
-				&key (list-environment-type 'enumerated-list)) 
+				&key (list-environment-type 'enumerated-list))
   "Create a list environment of specified type,
 default is enumerated list."
   (let
@@ -744,7 +744,7 @@ default is enumerated list."
                                         ; since unnecessary lists now
                                         ; peeled,
                                         ;call to first removed in
-                                        ; above form. cleanup and stabilize 
+                                        ; above form. cleanup and stabilize
     (number-list-environment new-list-environment) ; side-effect:items numbered
     new-list-environment)
   )
@@ -753,7 +753,7 @@ default is enumerated list."
   ;;; Function: REMOVE-NULL-ITEM                               Author: raman
   ;;; Created: Sat Jan 30 15:33:46 1993
 
-(defun remove-null-items (list-of-items) 
+(defun remove-null-items (list-of-items)
   "Remove null item from list"
   (cond
     ((listp  list-of-items )(remove-if
@@ -785,7 +785,7 @@ default is enumerated list."
       (assert  (is-a 'enumerate (lookat-current-entry text-buffer)) nil
 	       "Assert: argument to process-enumerate, ~a, is not valid:"
 	       (lookat-current-entry text-buffer)))
-  (create-list-environment 
+  (create-list-environment
    (process-text
     (make-buffer :contents
 		 (rest
@@ -840,7 +840,7 @@ default is enumerated list."
       ((new-item (make-item )))
     (when (can-this-be-cross-referenced? 'item)
       (add-enclosing-referend new-item))
-    (setf (item-contents  new-item) 
+    (setf (item-contents  new-item)
 	  (process-text
 	   (make-buffer :contents
 			(rest
@@ -873,10 +873,10 @@ default is enumerated list."
     (when (numbered-class-p math-equation )
       (increment-counter-value 'math-equation)
       (setf (numbered-class-number math-equation )  (next-counter-value "MATH-EQUATION"  )))
-    (setf  (contents math-equation ) 
+    (setf  (contents math-equation )
            (list  (process-math
                    equation-buffer )))
-    (when (can-this-be-cross-referenced? 'math-equation) 
+    (when (can-this-be-cross-referenced? 'math-equation)
       (pop-enclosing-referend ))
     math-equation)
   )
@@ -898,7 +898,7 @@ default is enumerated list."
     (when (can-this-be-cross-referenced? 'math-eqnarray)
       (add-enclosing-referend self)
       (increment-counter-value 'math-eqnarray))
-    (setf (contents self) 
+    (setf (contents self)
           (map2-nested-list
            #'process-array-element
            eqnarray-contents))
@@ -913,7 +913,7 @@ default is enumerated list."
 ;;; Function: PROCESS-EQALIGN                                Author: raman
 ;;; Created: Sat Oct  3 17:14:44 1992
 
-(defun process-eqalign (text-buffer &key (do-not-test nil)) 
+(defun process-eqalign (text-buffer &key (do-not-test nil))
   "Process eqalign. "
   (or do-not-test
       (assert  (is-a '        eqalign (lookat-current-entry text-buffer)) nil
@@ -923,7 +923,7 @@ default is enumerated list."
       (
        ( eqalign-contents (rest (pop-current-entry text-buffer)))
        )
-    (make-instance 'math-eqnarray 
+    (make-instance 'math-eqnarray
                    :contents    (map2-nested-list
                                  #'process-array-element
                                  eqalign-contents))
@@ -939,7 +939,7 @@ default is enumerated list."
       (assert  (is-a '        slide (lookat-current-entry text-buffer)) nil
 	       "Assert: argument to process-slide, ~a, is not valid:"
 	       (lookat-current-entry text-buffer)))
-  (make-slide :contents 
+  (make-slide :contents
               (process-text
                (make-buffer :contents
                             (rest
@@ -955,7 +955,7 @@ default is enumerated list."
       (assert  (is-a '        verbatim (lookat-current-entry text-buffer)) nil
 	       "Assert: argument to process-verbatim, ~a, is not valid:"
 	       (lookat-current-entry text-buffer)))
-  (make-verbatim :contents 
+  (make-verbatim :contents
 		 (process-text
 		  (make-buffer :contents
 			       (rest
@@ -967,22 +967,22 @@ default is enumerated list."
 ;;; Function: BLOCK-CONTENTS                                    Author: raman
 ;;; Created: Thu Nov  7 16:24:15 1991
 
-(defun block-contents (item) 
+(defun block-contents (item)
   "returns  all but first element of item which is assumed to be a block marked as such by its first element."
-  (when (is-a 'block item) 
+  (when (is-a 'block item)
     (rest item))
   )
 ;;; Modified: Tue Oct  6 17:03:01 EDT 1992
 ;;; Directly pass array element to process-math.
-;;; Lexer modified accordingly. 
+;;; Lexer modified accordingly.
 ;;; Function: PROCESS-ARRAY-ELEMENT                            Author: raman
 ;;; Created: Tue Jan 28 15:20:14 1992
 ;;; Modified: Tue Jan 12 14:58:59 EST 1993
-;;; Now returns a table element 
-(defun process-array-element (element) 
+;;; Now returns a table element
+(defun process-array-element (element)
   "process element by passing to process-math"
   (make-instance 'table-element
-                 :contents (when element 
+                 :contents (when element
                              (process-math
                               (make-buffer :contents
                                            element ))))
@@ -992,10 +992,10 @@ default is enumerated list."
 ;;; Created: Tue Jan 28 15:43:54 1992
 ;;; Modified: Tue Jan 12 13:55:33 EST 1993
 ;;; now returns a table-element instead of a List
-(defun process-table-element (element) 
+(defun process-table-element (element)
   "process a table element"
   (make-instance 'table-element
-                 :contents (process-text 
+                 :contents (process-text
                             (make-buffer :contents
                                          element ))))
 
@@ -1003,7 +1003,7 @@ default is enumerated list."
   ;;; Function: VOID-LIST-P                                    Author: raman
   ;;; Created: Wed Sep 15 21:15:18 1993
 (proclaim '(inline void-list-p ))
-(defun void-list-p (list-l) 
+(defun void-list-p (list-l)
   "Is this a void list, ie (nil)?"
   (and(listp list-l)
       (= 1 (length list-l))
@@ -1014,7 +1014,7 @@ default is enumerated list."
 ;;; Function: MAP2-NESTED-LIST                               Author: raman
 ;;; Created: Tue Jan 28 14:17:42 1992
 
-(defun MAP2-NESTED-LIST(modifier nested-list) 
+(defun MAP2-NESTED-LIST(modifier nested-list)
   "map down a nested list"
   (mapcar #'(lambda(simple-list)
               (mapcar modifier
@@ -1026,7 +1026,7 @@ default is enumerated list."
 ;;; Function: PROCESS-UNKNOWN-CONSTRUCT                      Author: raman
 ;;; Created: Sat Feb 29 13:17:49 1992
 
-(defun process-unknown-construct (text-buffer &key (do-not-test t)) 
+(defun process-unknown-construct (text-buffer &key (do-not-test t))
   "Process an unknown construct, ie just stick it in"
   (declare (ignore do-not-test))
   (cons 'unknown-construct
@@ -1043,7 +1043,7 @@ default is enumerated list."
 
 (proclaim '(inline is-a))
 
-(defun is-a (doc-unit lispified-text) 
+(defun is-a (doc-unit lispified-text)
   "Checks if lispified-text is a doc-unit."
   (cond
     ((atom lispified-text)nil)
@@ -1056,7 +1056,7 @@ default is enumerated list."
 ;;; Made inline.
 (proclaim '(inline is-a-word))
 
-(defun is-a-word  (lispified-text) 
+(defun is-a-word  (lispified-text)
   "Tests if argument is a word. For the present words are atoms."
   (stringp lispified-text)
   )
@@ -1077,7 +1077,7 @@ default is enumerated list."
 ;;; Function: MATH-CS-NAME                                   Author: raman
 ;;; Created: Tue Mar  3 22:03:26 1992
 
-(defun math-cs-name (token) 
+(defun math-cs-name (token)
   "return name of math cs"
   (when (is-a 'math-cs token)
     (second token))

@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (in-package :user)
@@ -21,7 +21,7 @@
   ;;; Function: READ-POINTER                                   Author: raman
   ;;; Created: Fri Oct 22 09:25:19 1993
 (proclaim '(inline read-pointer ))
-(defun read-pointer () 
+(defun read-pointer ()
   "Return current read-pointer position. "
   *read-pointer*
   )
@@ -49,7 +49,7 @@
            )
 
 (proclaim '(inline move-inside-subformula-if-necessary))
-(defun move-inside-subformula-if-necessary() 
+(defun move-inside-subformula-if-necessary()
   "Given that read-pointer is a  subformula with no attributes move
   inside it"
   (when (and (typep *read-pointer* 'math-subformula )
@@ -57,7 +57,7 @@
     (setf *read-pointer* (contents *read-pointer* )))
   )
 (proclaim '(inline move-outside-subformula-if-necessary))
-(defun move-outside-subformula-if-necessary() 
+(defun move-outside-subformula-if-necessary()
   "Given that read-pointer is a  subformula with no attributes move
   outside  it"
   (when (and (typep *read-pointer* 'math-subformula )
@@ -74,12 +74,12 @@
                          (not (or (display-math-p *read-pointer*)
                                   (inline-math-p *read-pointer* )))))
         )
-    (save-pointer-excursion 
+    (save-pointer-excursion
      (afl:new-block
       (afl:local-set-state afl:*global-total-audio-state*)
       (if  math-flag
            (with-reading-state (reading-state 'math)
-             (afl:local-set-state :math) 
+             (afl:local-set-state :math)
              (read-aloud  *read-pointer* ))
            (read-aloud *read-pointer*))
       (afl:force-speech))
@@ -105,7 +105,7 @@
            (afl:local-set-state)
            (if  math-flag
                (with-reading-state (reading-state 'math)
-                                   (afl:local-set-state :math) 
+                                   (afl:local-set-state :math)
                                    (read-aloud  *read-pointer* ))
              (read-aloud *read-pointer*))
            (setf (afl-state *read-pointer*) nil)
@@ -156,7 +156,7 @@
                   (setf *read-pointer* (next *read-pointer*  )))))
     (cond
       (move-flag
-       (if (table-element-p *read-pointer*) 
+       (if (table-element-p *read-pointer*)
            (read-current-relatively)
            (read-current )))
       (t  (setf *read-pointer* save-pointer  )
@@ -428,7 +428,7 @@
 
 (defmethod read-node ((math-object math-object))
   "Read this node"
-  (save-pointer-excursion 
+  (save-pointer-excursion
    (read-math-object-and-attributes *read-pointer*))
   )
 
@@ -449,7 +449,7 @@
           (read-aloud *read-pointer*))
       (setf (children *read-pointer*) save-children ))
     (afl:force-speech)))
-  
+
 (defun move-to-next-in-order()
   "Move to next in reading order"
   (afl:refresh)
@@ -502,7 +502,7 @@
 (defun move-to-top-of-math()
   "Move to top of math"
   (afl:refresh)
-  (loop while (typep (parent  *read-pointer*) 'math) do 
+  (loop while (typep (parent  *read-pointer*) 'math) do
         (setf *read-pointer* (parent *read-pointer* )))
   (summarize *read-pointer*)
   )
@@ -612,8 +612,8 @@
   ;;; Function: FORWARD-SENTENCE                               Author: raman
   ;;; Created: Thu May 20 17:05:08 1993
 
-(defun read-sentence (&optional (count 1)) 
-  "Read  count sentences." 
+(defun read-sentence (&optional (count 1))
+  "Read  count sentences."
   (let
       ((parent (parent *read-pointer* )))
     (cond
@@ -628,12 +628,12 @@
                                     next)
                              do (save-pointer-excursion
                                  (read-aloud next))
-                             (setf *read-pointer* next) 
+                             (setf *read-pointer* next)
                              (setf  next (next next )))
                        (when next (setf *read-pointer* next )))))
               (loop while (and (next *read-pointer* )
                                (< counter count)) do
-                               (save-pointer-excursion 
+                               (save-pointer-excursion
                                 ( read-aloud *read-pointer*))
                                (read-to-end-of-sentence)
                                (afl:await-silence)
@@ -648,7 +648,7 @@
   )
 
 
-(defun forward-sentence (&optional (count 1)) 
+(defun forward-sentence (&optional (count 1))
   "Move forward count sentences. "
   (let
       ((parent (parent *read-pointer* )))
@@ -659,12 +659,12 @@
                  (old-position *read-pointer*)
                  (mover (if (minusp count) #'previous #'next))
                  (limit (abs count )))
-            (flet ((move-to-end-of-sentence(mover) 
+            (flet ((move-to-end-of-sentence(mover)
                      (let ((next (funcall mover  *read-pointer* )))
                        (loop while
                              (and   (not (end-of-sentence? *read-pointer* ))
                                     next)
-                             do (setf *read-pointer* next) 
+                             do (setf *read-pointer* next)
                              (setf  next (funcall mover  next )))
                        (when next (setf *read-pointer* next ))))
                    (beginning-of-sentence()
@@ -672,7 +672,7 @@
                        (loop while
                              (and   (not (end-of-sentence? *read-pointer* ))
                                     previous)
-                             do (setf *read-pointer* previous) 
+                             do (setf *read-pointer* previous)
                              (setf  previous  (previous   previous )))
                        (when previous  (setf *read-pointer*
                                              (next *read-pointer* )))))

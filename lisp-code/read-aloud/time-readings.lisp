@@ -38,8 +38,8 @@
       (truncate  (/ minutes 60 )))
     (multiple-value-setq (days hours )
       (truncate  (/ hours  24 )))
-    (list days 
-     (* 24  hours ) 
+    (list days
+     (* 24  hours )
      (* 60 minutes)
      (* 60 seconds) ))
   )
@@ -56,7 +56,7 @@
                  (- (get-universal-time)
                     (internal-time-to-read sectional-unit ))))
 
- 
+
 
   ;;; Method: TIME-TO-READ                                     Author: raman
   ;;; Created: Sat Jan  8 12:08:28 1994
@@ -90,10 +90,10 @@
   ;;; Created: Sat Jan  8 12:20:58 1994
 ;;; Using format directive instead of loop.
 ;;; <(old version has been backed up)>
-(defun speak-decoded-time (decoded-time) 
+(defun speak-decoded-time (decoded-time)
   "Speaks decoded time. Input should be a list returned by
 duration. "
-  (assert (listp decoded-time) nil 
+  (assert (listp decoded-time) nil
           "~a should be a list. " decoded-time)
   (loop for i from 1 to 4
         and field in decoded-time
@@ -116,7 +116,7 @@ duration. "
     (cond
       (guess (summarize sectional-unit)
        (guess-how-long-to-read sectional-unit))
-      (t 
+      (t
        (afl:new-block
         (afl:local-set-state
          (afl:multi-move-to
@@ -131,7 +131,7 @@ duration. "
           '(afl:left-volume 0 )
           '(afl:right-volume 100)))
         (time-to-read sectional-unit))
-       (loop for unit in (sectional-units sectional-unit ) do  
+       (loop for unit in (sectional-units sectional-unit ) do
              (table-of-contents unit )))))
   )
 
@@ -153,7 +153,7 @@ duration. "
 (defun guess-how-long-to-read(document)
   "Guess how long it will take to read this document. "
   (let ((duration
-         (duration ( round  (/ 
+         (duration ( round  (/
                              (* (weight document ) 60)
                              (* (afl:get-final-scale-factor 'afl:speech-rate)
                                 (afl:current-value 'afl:speech-rate))))

@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (in-package :afl)
@@ -13,16 +13,16 @@
 ;;; Initially assumes dectalk, but to be flexible enough to allow any
 ;;; synthesizer.
 
-;;; { Start and end markers 
+;;; { Start and end markers
 
 ;;; Variable: *BEGIN-COMMAND*                                Author: raman
 ;;; Created: Tue Aug 11 13:40:16 1992
-;;; external variable: 
+;;; external variable:
 (defvar *begin-command* "[" " string that begins a synthesizer command")
 
 ;;; Variable: *END-COMMAND*                                  Author: raman
 ;;; Created: Tue Aug 11 13:40:44 1992
-;;; external variable: 
+;;; external variable:
 (defvar *end-command* "]" "string that ends a synthesizer command")
 
 ;;; }
@@ -32,7 +32,7 @@
 ;;; Function: GENERATE-SYNTHESIZER-COMMAND                   Author: raman
 ;;; Created: Tue Aug 11 13:41:18 1992
 
-(defun generate-synthesizer-command (dimension value) 
+(defun generate-synthesizer-command (dimension value)
   "Generates synthesizer command that sets dimension dimension to
   value value"
   (flet (
@@ -54,7 +54,7 @@
                  (if (stringp value)
                      value
                      (prin1-to-string
-                      (bound-in-interval dimension 
+                      (bound-in-interval dimension
                                          (round value))))
                  " "
                  *end-command*))
@@ -81,7 +81,7 @@
 ;;; export voice whose code is defined
 ;;; Function:  DEFINE-VOICE-CODE Author: raman Created: Tue Aug 11 14:56:56 1992
 
-(defun define-voice-code (voice code) 
+(defun define-voice-code (voice code)
   "define code as code for voice voice"
   (export (list voice))
   (push
@@ -97,14 +97,14 @@
 (define-voice-code 'frank "f")
 (define-voice-code 'betty "b")
 (define-voice-code 'wendy "w")
-(define-voice-code  'rita  "r") 
+(define-voice-code  'rita  "r")
 (define-voice-code 'ursula "u")
 (define-voice-code 'kid "k")
 
 ;;; Function: GET-VOICE-CODE                                 Author: raman
 ;;; Created: Tue Aug 11 15:03:42 1992
 
-(defun get-voice-code (voice) 
+(defun get-voice-code (voice)
   "get code for voice"
   (let
       ((voice-code

@@ -11,8 +11,8 @@
 ;;; representation.
 ;;; Develop the right intermediate representation based on these
 ;;; rules.
-;;; First consider reading math expressions with no user defined 
-;;; objects. 
+;;; First consider reading math expressions with no user defined
+;;; objects.
 
 ;;; A math object is a leaf if it has no children.
 
@@ -40,12 +40,12 @@
   )
 
 (define-reading-rule  (:rule-name simple :class math-object)
-    (let* 
+    (let*
         ((object-weight (weight math-object ))
          (pause-duration (if (> object-weight 1)
-                             (* object-weight *pause-around-child*) 
+                             (* object-weight *pause-around-child*)
                              0)))
-      (afl:with-surrounding-pause pause-duration 
+      (afl:with-surrounding-pause pause-duration
         (cond
           ((leaf-p math-object) (read-math-object-and-attributes math-object))
           ( (read-as-infix?  math-object) (read-as-infix math-object))
@@ -69,9 +69,9 @@
   (let ((children (math-object-children math-object )))
        (read-math-child math-object  (first children))
        (dectalk:space)
-       (loop for child in (rest children) 
-             do 
-             (read-math-object-and-attributes math-object)    
+       (loop for child in (rest children)
+             do
+             (read-math-object-and-attributes math-object)
              (read-math-child math-object child )))
   )
 
@@ -95,11 +95,11 @@ parent.")
   "Pause  surrounding reading of child")
 ;;; Modified: Sun Dec  6 09:47:52 EST 1992
 ;;; read aloud rule for math object puts pause if necessary, the rest
-;;; of the helping functions need not do this any more. 
+;;; of the helping functions need not do this any more.
 ;;; Function: READ-MATH-CHILD                                Author: raman
 ;;; Created: Tue Nov 24 19:11:00 1992
 
-(defun read-math-child (parent child) 
+(defun read-math-child (parent child)
   "Read math child "
   (cond
     ( (leaf-p child)
@@ -109,7 +109,7 @@ parent.")
     ((precedence->  parent child :key #'math-object-contents)
      (with-reading-state (reading-state 'children)
        (read-aloud child )))
-    ((and *be-smart-about-division* 
+    ((and *be-smart-about-division*
           (equal "/" (math-object-contents child)))
 ;     (with-reading-state (reading-state 'children)
 ;       (read-aloud child ))
@@ -148,12 +148,12 @@ parent.")
 ;;; Function: READ-MATH-OBJECT-AND-ATTRIBUTES                Author: raman
 ;;; Created: Tue Nov 24 14:36:26 1992
 (proclaim '(inline read-math-object-and-attributes))
-(defun read-math-object-and-attributes (math-object) 
+(defun read-math-object-and-attributes (math-object)
   "Read the object and its attributes"
   (read-aloud (math-object-contents math-object ))
   (dectalk:space)
   (when (math-object-attributes math-object)
-    (mapc #'read-aloud 
+    (mapc #'read-aloud
             (sorted-attributes  (math-object-attributes math-object ))))
   )
 
@@ -168,7 +168,7 @@ parent.")
 ;;; Function: READ-AS-INFIX?                                 Author: raman
 ;;; Created: Tue Nov 24 13:07:01 1992
 
-(defun read-as-infix? (math-object) 
+(defun read-as-infix? (math-object)
   "Is this read as infix?"
   (or
    (find  (class-name (class-of math-object)) *objects-read-as-infix*)
@@ -187,7 +187,7 @@ parent.")
 ;;; Function: READ-AS-PREFIX?                                Author: raman
 ;;; Created: Tue Nov 24 13:15:01 1992
 
-(defun read-as-prefix? (math-object) 
+(defun read-as-prefix? (math-object)
   "Is this read as prefix?"
   (or
    (find  (class-name (class-of math-object))
@@ -205,7 +205,7 @@ parent.")
       ((and (leaf-p (fraction-numerator fraction))
             (leaf-p (fraction-denominator fraction )))
        (read-aloud (fraction-numerator fraction))
-       (read-aloud "over" ) 
+       (read-aloud "over" )
        (read-aloud
         (fraction-denominator fraction )))
       (t (read-aloud " fraction, ")
@@ -229,13 +229,13 @@ parent.")
               do           (read-aloud child  )))
       (when (math-object-attributes delimited-expression)
         (read-aloud (close-delimiter delimited-expression))
-        (mapc #'read-aloud 
+        (mapc #'read-aloud
                 (sorted-attributes  (math-object-attributes
                                      delimited-expression )))))
   )
 
 
-(define-reading-rule (:rule-name simple :class square-root) 
+(define-reading-rule (:rule-name simple :class square-root)
     (read-aloud " square root ")
   (cond
     ((and (math-object-subtype-p (argument-1 square-root))
@@ -243,7 +243,7 @@ parent.")
           (null (math-object-attributes  (argument-1 square-root ))))
      (read-aloud (argument-1 square-root )))
     (t(read-aloud " of ")
-      (with-reading-state (reading-state 'children) 
+      (with-reading-state (reading-state 'children)
         (read-aloud (argument-1 square-root ))))
       )
     )

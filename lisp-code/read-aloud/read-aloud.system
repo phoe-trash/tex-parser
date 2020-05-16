@@ -5,11 +5,11 @@
 
 ;;; Modified: Tue Mar 23 12:29:25 EST 1993
 ;;; moving pronounce module to afl since it is part of the speech
-;;; component. 
+;;; component.
 (defsystem read-aloud
     :source-pathname
   (concatenate 'string
-               *lisp-code-directory* "/" "read-aloud") 
+               *lisp-code-directory* "/" "read-aloud")
     :initially-do (progn
                     (announce "loading read aloud"))
     :finally-do (progn  (announce "done loading read aloud")
@@ -44,13 +44,13 @@
                                        (:file "handling-different-fonts")
                                        (:file "font-afl-state-definitions"
                                               :depends-on ("handling-different-fonts" ))))
-                 (:module "reading-state" :source-pathname "" 
+                 (:module "reading-state" :source-pathname ""
                           :components(
                                       (:file "handling-reading-states")
                                       (:file  "reading-state-definitions"
                                               :depends-on ("handling-reading-states" ))))
                  (:module "reading-rules-and-styles"
-                          :source-pathname "" 
+                          :source-pathname ""
                           :components(
                                       (:file "reading-styles-and-rules" )
                                       (:file "math-reader-aux")
@@ -81,7 +81,7 @@
                                        )
                           )
                  (:module "complexity" :source-pathname ""
-                          :components( 
+                          :components(
                                       (:file "complex-objects")
                                       )
                           :depends-on ("new-document-objects"))
@@ -92,7 +92,7 @@
                                       (:file "special-patterns"
                                              :depends-on ("special-pattern-macros")
                                              ))
-                          :depends-on ("read-aloud" 
+                          :depends-on ("read-aloud"
                                        "complexity"
                                        "reading-rules-and-styles"
                                        "reading-state"
@@ -112,7 +112,7 @@
                           :source-pathname ""
                           :components(
                                       (:file "var-subst"))
-                          :depends-on ("read-aloud" 
+                          :depends-on ("read-aloud"
                                        "complexity"
                                        "reading-rules-and-styles"
                                        "reading-state"
@@ -124,7 +124,7 @@
 
   ;;; Parameter: *BOOKS*                                       Author: raman
   ;;; Created: Mon Dec 21 16:30:07 1992
-          
+
 (defparameter *books*
   '( rz-book vanloan-book vavasis-book cs611-notes
      gries-book norvig-book dennis-math-books)
@@ -132,10 +132,10 @@
 
 (defun read-aloud-file (filename)
   "Read aloud this file by first parsing it. "
-  (declare (special *document*)) 
+  (declare (special *document*))
   (setf *document*
         (parse-article filename) )
-(when (featurep :express) 
+(when (featurep :express)
 (read-aloud "[:punc some]"))
   (read-aloud *document* ))
 

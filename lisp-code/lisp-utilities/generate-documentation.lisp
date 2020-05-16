@@ -34,7 +34,7 @@
 ;"/home/raman/lisp-code/read-aloud/temporary-tex-objects.lisp"
 ;"/home/raman/lisp-code/read-aloud/trying-around-methods.lisp"
 "/home/raman/lisp-code/read-aloud/var-subst.lisp")
-  
+
   "Files in directory read-aloud ")
 
 
@@ -79,7 +79,7 @@
   ;;; Function: DOCUMENT-CODE-IN-FILES                         Author: raman
   ;;; Created: Thu Sep 23 21:25:38 1993
 
-(defun document-code-in-files (list-of-files output-file) 
+(defun document-code-in-files (list-of-files output-file)
   "Document the lisp code in list-of-files"
   (with-open-file  (o-stream output-file :direction :output)
     (mapc #'(lambda(file)

@@ -42,7 +42,7 @@
   ;;; Function: VALID-PRONUNCIATION-MODE?                      Author: raman
   ;;; Created: Tue Feb 23 19:59:11 1993
 (proclaim '(inline valid-pronunciation-mode? ))
-(defun valid-pronunciation-mode? (mode) 
+(defun valid-pronunciation-mode? (mode)
   "Is this a valid pronunciation mode?"
   (find mode *valid-pronunciation-modes*)
   )
@@ -50,7 +50,7 @@
 ;;; Function: CURRENT-PRONUNCIATION-MODE                     Author: raman
 ;;; Created: Mon Oct  5 16:37:15 1992
 
-(defun current-pronunciation-mode () 
+(defun current-pronunciation-mode ()
   "Return current pronunciation mode"
   *pronunciation-mode*
   )
@@ -59,12 +59,12 @@
 ;;; Created: Fri Sep 25 11:38:07 1992
 
 (proclaim '(inline set-pronunciation-mode))
-(defun set-pronunciation-mode (mode) 
+(defun set-pronunciation-mode (mode)
   "Set pronunciation mode "
   (assert (valid-pronunciation-mode? mode) nil
           "Unknown pronunciation mode ~a "
           mode)
-  (setf *pronunciation-mode* mode) 
+  (setf *pronunciation-mode* mode)
   )
 
 
@@ -113,7 +113,7 @@
 
 ;;; Variable: *PRONOUNCE-IGNORE-CASE-IN-TEXT*                Author: raman
 ;;; Created: Tue Nov 10 15:28:51 1992
-;;; external variable: 
+;;; external variable:
 (defvar *pronounce-ignore-case-in-text* t
   "If t case ignore in text mode when choosing pronunciation")
 
@@ -121,7 +121,7 @@
 
   ;;; Variable: *ALWAYS-DEHYPHENATE*                           Author: raman
   ;;; Created: Wed May  5 09:34:26 1993
-;;; external variable: 
+;;; external variable:
 (defvar *always-dehyphenate* t
   "Always dehyphenate words. Avoids the dectalk spelling out things. ")
   ;;; Method: GET-PRONOUNCE-INTERNAL                           Author: raman
@@ -137,7 +137,7 @@
               *text-mode-pronunciations*)
      (if *always-dehyphenate*
          (dehyphenate-word string)
-         string)  )                          ; second disjunct: default  is string 
+         string)  )                          ; second disjunct: default  is string
     )
   )
 
@@ -186,7 +186,7 @@
      (gethash (if *pronounce-ignore-case-in-math* lower-case-string
                   string)
               *math-mode-pronunciations*)
-     string  )                          ; second disjunct: default  is string 
+     string  )                          ; second disjunct: default  is string
     )
   )
 
@@ -235,12 +235,12 @@
      (gethash (if *pronounce-ignore-case-in-french* lower-case-string
                   string)
               *french-mode-pronunciations*)
-     string  )                          ; second disjunct: default  is string 
+     string  )                          ; second disjunct: default  is string
     )
   )
 
 ;;; }
-;;; { lisp mode 
+;;; { lisp mode
 
   ;;; Variable: *LISP-MODE-PRONUNCIATIONS*                     Author: raman
   ;;; Created: Tue Feb 23 20:01:46 1993
@@ -309,7 +309,7 @@
   ;;; Function: HYPHENATED-LISP-WORD-P                         Author: raman
   ;;; Created: Tue Feb 23 20:14:14 1993
 (proclaim '(inline hyphenated-lisp-word-p))
-(defun hyphenated-lisp-word-p (string) 
+(defun hyphenated-lisp-word-p (string)
   "Is this a hyphenated lisp word, ie more than one hyphen?"
   (> (count #\- string :test #'char=) 0)
   )
@@ -318,8 +318,8 @@
   ;;; Function: DEHYPHENATE-LISP-WORD                          Author: raman
   ;;; Created: Tue Feb 23 20:16:25 1993
 (proclaim '(inline dehyphenate-lisp-word))
-#+lucid 
-(defun dehyphenate-lisp-word (string) 
+#+lucid
+(defun dehyphenate-lisp-word (string)
   "Remove hyphens and replace by spaces for the present."
   (let ((output-stream (make-string-output-stream )))
     (loop for char being the array-element of string do
@@ -329,7 +329,7 @@
     (get-output-stream-string output-stream))
   )
 #+clisp
-(defun dehyphenate-lisp-word (string) 
+(defun dehyphenate-lisp-word (string)
   "Remove hyphens and replace by spaces for the present."
   (let ((output-stream (make-string-output-stream )))
     (loop for char across  string do
@@ -340,8 +340,8 @@
   )
 
 (proclaim '(inline dehyphenate-word))
-#+lucid 
-(defun dehyphenate-word (string) 
+#+lucid
+(defun dehyphenate-word (string)
   "Remove hyphens and replace by spaces for the present."
   (let ((output-stream (make-string-output-stream )))
     (loop for char being the array-element of string do
@@ -351,7 +351,7 @@
     (get-output-stream-string output-stream))
   )
 #+clisp
-(defun dehyphenate-word (string) 
+(defun dehyphenate-word (string)
   "Remove hyphens and replace by spaces for the present."
   (let ((output-stream (make-string-output-stream )))
     (loop for char across  string do
@@ -368,14 +368,14 @@
 ;;; Use afl blocks.
 
 
-(defmacro with-pronunciation-mode  ((&key mode ) &body body) 
+(defmacro with-pronunciation-mode  ((&key mode ) &body body)
   "Execute body in this pronunciation mode. "
   `(new-block
     (local-set-state ,mode)
     ,@body)
   )
 
-(defmacro old-with-pronunciation-mode  ((&key mode ) &body body) 
+(defmacro old-with-pronunciation-mode  ((&key mode ) &body body)
   "Execute body in this pronunciation mode. "
   `(let  ((saved-mode *pronunciation-mode*))
     (unwind-protect

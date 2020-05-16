@@ -76,7 +76,7 @@ Audio_hdr File_hdr;		/* audio header for file */
 
 /* Global variables */
 
-void 
+void
 sigint ()
 {
   /* flush output queues before exiting */
@@ -91,7 +91,7 @@ sigint ()
 }
 
 /*
- * Play an audio file. 
+ * Play an audio file.
  */
 play (intvolume, headphone, filename, immediate)
      int intvolume;
@@ -204,7 +204,7 @@ play (intvolume, headphone, filename, immediate)
   /* comment out the sigint handler. Otherwise if called from */
   /* lucid with without-sigalrm wrapped around the call then */
   /* lucid never interrupts for the rest of the session.  */
-  /* comment out sigint handler 
+  /* comment out sigint handler
      vec.sv_handler = sigint;
      vec.sv_mask = 0;
      vec.sv_flags = 0;
@@ -372,7 +372,7 @@ parse_unsigned (str, dst, flag)
   return (0);
 }
 
-/* test 
+/* test
    main()
    {
    play(1,1,"/usr/u/raman/sounds/cues/harp.au");

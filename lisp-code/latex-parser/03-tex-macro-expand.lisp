@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 
@@ -19,7 +19,7 @@
 ;;; Function: LATEX-EXPAND                                   Author: raman
 ;;; Created: Thu May  7 19:32:00 1992
 
-(defun latex-expand (text-buffer) 
+(defun latex-expand (text-buffer)
   "process latex logo macro"
   (declare (ignore text-buffer))
   (make-tex-defined-macro :tex-defined-macro-name "latex"
@@ -30,27 +30,27 @@
 ;;; Function: EG-EXPAND                                      Author: raman
 ;;; Created: Tue May 12 18:45:32 1992
 
-(defun eg-expand (text-buffer) 
+(defun eg-expand (text-buffer)
   "expand eg macro"
   (declare (ignore text-buffer))
-  (make-tex-defined-macro :tex-defined-macro-name "eg" 
+  (make-tex-defined-macro :tex-defined-macro-name "eg"
 			  :read-as "for [`ehks'aempuhl], " )
   )
 ;;; Function: IT-EXPAND                                      Author: raman
 ;;; Created: Thu Jan 30 09:25:14 1992
 
-(defun it-expand (text-buffer) 
+(defun it-expand (text-buffer)
   "italics macro: side effect buffer passed as argument"
   (setf (buffer-local-environment text-buffer)
 	(cons   '(font italic)
-		(buffer-local-environment text-buffer))) 
+		(buffer-local-environment text-buffer)))
   nil
   )
 
 ;;; Function: BF-EXPAND                                      Author: raman
 ;;; Created: Thu Jan 30 09:26:28 1992
 
-(defun bf-expand (text-buffer) 
+(defun bf-expand (text-buffer)
   "bold face macro: side effect buffer passed as argument"
   (setf (buffer-local-environment text-buffer)
 	(cons '(font bold)
@@ -61,7 +61,7 @@
 ;;; Function: EM-EXPAND                                      Author: raman
 ;;; Created: Thu Jan 30 09:27:06 1992
 
-(defun em-expand (text-buffer) 
+(defun em-expand (text-buffer)
   "emphasize macro: side effect buffer passed as argument"
   (setf (buffer-local-environment text-buffer)
 	(cons '(font emphasize)
@@ -73,22 +73,22 @@
 ;;; Function: LARGE-EXPAND                                   Author: raman
 ;;; Created: Thu Jan 30 09:27:32 1992
 
-(defun large-expand (text-buffer) 
+(defun large-expand (text-buffer)
   "large font macro: side effect buffer passed as argument"
   (setf (buffer-local-environment text-buffer)
 	(cons '(font large)
 	      (buffer-local-environment
 	       text-buffer)))
-  nil  
+  nil
   )
 
-(defun huge-expand (text-buffer) 
+(defun huge-expand (text-buffer)
   "huge font macro: side effect buffer passed as argument"
   (setf (buffer-local-environment text-buffer)
 	(cons '(font huge)
 	      (buffer-local-environment
 	       text-buffer)))
-  nil  
+  nil
   )
 
 
@@ -96,7 +96,7 @@
 ;;; Function: RM-EXPAND                                      Author: raman
 ;;; Created: Thu Jan 30 09:28:23 1992
 
-(defun rm-expand (text-buffer) 
+(defun rm-expand (text-buffer)
   "roman font macro: side effect buffer passed as argument"
   (setf (buffer-local-environment text-buffer)
 	(cons '(font roman)
@@ -109,7 +109,7 @@
 ;;; Function: TT-EXPAND                                      Author: raman
 ;;; Created: Fri Feb 21 13:55:41 1992
 
-(defun tt-expand (text-buffer) 
+(defun tt-expand (text-buffer)
   "tt font macro: side effect buffer passed as argument"
   (setf (buffer-local-environment text-buffer)
 	(cons '(font typewriter)
@@ -118,7 +118,7 @@
   nil
   )
 
-(defun sf-expand (text-buffer) 
+(defun sf-expand (text-buffer)
   "sf font macro: side effect buffer passed as argument"
   (setf (buffer-local-environment text-buffer)
 	(cons '(font sans-seriph)
@@ -130,7 +130,7 @@
 ;;; Function: SC-EXPAND                                      Author: raman
 ;;; Created: Fri Feb 21 14:00:33 1992
 
-(defun sc-expand (text-buffer) 
+(defun sc-expand (text-buffer)
   "sc macro: side effect buffer passed as argument"
   (setf (buffer-local-environment text-buffer)
 	(cons '(font smallcaps )
@@ -143,7 +143,7 @@
 ;;; Function: SL-EXPAND                                      Author: raman
 ;;; Created: Fri Feb 21 14:10:48 1992
 
-(defun sl-expand (text-buffer) 
+(defun sl-expand (text-buffer)
   "sl macro side effect buffer passed as argument"
   (setf (buffer-local-environment text-buffer)
 	(cons '(font slanted  )
@@ -155,7 +155,7 @@
 
   ;;; Parameter: *CITATION-MUST-HAVE-A-BLOCK-ARGUMENT*         Author: raman
   ;;; Created: Sun Oct 17 16:12:16 1993
-;;; external variable: 
+;;; external variable:
 (defparameter *citation-must-have-a-block-argument* t
   "If t, then \cite should be called with its argument in braces. Note:
 AMS bulletins violate this. ")
@@ -163,15 +163,15 @@ AMS bulletins violate this. ")
 ;;; Function: CITE-EXPAND                                    Author: raman
 ;;; Created: Sat Feb  1 12:00:28 1992
 
-(defun cite-expand ( citation) 
+(defun cite-expand ( citation)
   "process citation"
-  (when *citation-must-have-a-block-argument* 
+  (when *citation-must-have-a-block-argument*
   (assert
    (is-a 'block citation) nil
    "Assert: cite-expand: argument to citation ~a, is not a block"
    citation))
-  ; do not assert that argument is a block. 
-  (make-citation 
+  ; do not assert that argument is a block.
+  (make-citation
    :label (process-argument
            citation))
   )
@@ -181,13 +181,13 @@ AMS bulletins violate this. ")
 ;;; Function: FOOTNOTE-EXPAND                                Author: raman
 ;;; Created: Sat Feb  1 12:08:40 1992
 
-(defun footnote-expand ( footnote) 
+(defun footnote-expand ( footnote)
   "process footnote"
   (assert
    (is-a 'block footnote) nil
    "Assert: footnote-expand: argument to footnote ~a, is not a block"
    footnote)
-  (make-footnote :text 
+  (make-footnote :text
                  (process-argument
                   footnote))
   )
@@ -196,7 +196,7 @@ AMS bulletins violate this. ")
 ;;; Function: INDEX-EXPAND                                   Author: raman
 ;;; Created: Mon Oct  5 11:50:20 1992
 
-(defun index-expand (index) 
+(defun index-expand (index)
   "Process index term. "
   (assert
    (or (is-a 'block index)
@@ -204,9 +204,9 @@ AMS bulletins violate this. ")
        "Assert: index-expand: argument to index ~a, is not a block"
        index)
   (make-instance 'index-term
-                 :contents 
+                 :contents
                  (process-argument
-                  index))  
+                  index))
   )
 
 ;;; Function: LABEL-EXPAND                                   Author: raman
@@ -220,7 +220,7 @@ AMS bulletins violate this. ")
 ;;; new text object for the present.
 
 
-(defun label-expand ( label) 
+(defun label-expand ( label)
   "process label"
   (assert
    (or  (is-a 'block label)
@@ -246,7 +246,7 @@ AMS bulletins violate this. ")
 
   ;;; Parameter: *REF-MUST-HAVE-A-BLOCK-ARGUMENT*              Author: raman
   ;;; Created: Sun Oct 17 16:14:04 1993
-;;; external variable: 
+;;; external variable:
 (defparameter *ref-must-have-a-block-argument* t
   "If T, then \ref must be called with its argument in braces. AMS
 bulletins violate this. ")
@@ -254,11 +254,11 @@ bulletins violate this. ")
   ;;; Function: REF-EXPAND                                     Author: raman
   ;;; Created: Mon Dec 28 15:08:00 1992
 
-(defun ref-expand (ref) 
+(defun ref-expand (ref)
   "Expand \ref"
-  (when *ref-must-have-a-block-argument* 
+  (when *ref-must-have-a-block-argument*
     (assert
-     (or  (is-a 'block ref) 
+     (or  (is-a 'block ref)
           (is-a 'subformula ref))nil
      "Assert: ref-expand: argument to label ~a, is not a block"
      ref))
@@ -270,7 +270,7 @@ bulletins violate this. ")
                                    ((is-a 'text-number unit) (second unit))
                                    ((is-a 'math-number unit) (second unit))
                                    )) contents ))
-    (make-instance 'cross-ref 
+    (make-instance 'cross-ref
                    :children (list
                               (apply #'concatenate 'string  contents ) ))
     )
@@ -281,21 +281,21 @@ bulletins violate this. ")
 ;;; Function: CENTERLINE-EXPAND                              Author: raman
 ;;; Created: Mon May  4 15:26:08 1992
 
-(defun centerline-expand (centerline) 
+(defun centerline-expand (centerline)
   "expand centerline macro"
   (assert
    (is-a 'block centerline) nil
    "Assert: centerline-expand: argument to centerline ~a, is not a block"
    centerline)
-  (make-centered-text :contents 
-                      (process-argument 
+  (make-centered-text :contents
+                      (process-argument
                        centerline))
   )
 
 ;;; Function: TITLE-EXPAND                                   Author: raman
 ;;; Created: Sun Apr 26 18:28:07 1992
 
-(defun title-expand (title) 
+(defun title-expand (title)
   "expand title macro."
   (declare (special *new-article* ))
   (assert
@@ -304,7 +304,7 @@ bulletins violate this. ")
    title)
 					; using special variable *new-article*
 					;   declared in create-article.
-  (setf (article-title *new-article*) 
+  (setf (article-title *new-article*)
 	(process-argument
 	 title)
 	)
@@ -316,7 +316,7 @@ bulletins violate this. ")
 ;;; Function: AUTHOR-EXPAND                                  Author: raman
 ;;; Created: Sun Apr 26 18:35:12 1992
 
-(defun author-expand (author) 
+(defun author-expand (author)
   "process author macro"
   (declare (special *new-article* ))
   (assert
@@ -325,7 +325,7 @@ bulletins violate this. ")
    author)
 					; using special variable *new-article*
 					; declared in create-article.
-  (setf (article-author *new-article*) 
+  (setf (article-author *new-article*)
 	(process-argument
 	 author)
 	)
@@ -336,7 +336,7 @@ bulletins violate this. ")
 ;;; Function: DATE-EXPAND                                    Author: raman
 ;;; Created: Sun Apr 26 18:36:44 1992
 
-(defun date-expand (date) 
+(defun date-expand (date)
   "process date macro"
   (declare (special *new-article* ))
   (assert
@@ -345,7 +345,7 @@ bulletins violate this. ")
    date)
 					; using special variable *new-article*
 					; declared in create-article.
-  (setf (article-date *new-article*) 
+  (setf (article-date *new-article*)
 	(process-argument
 	 date)
 	)
@@ -356,7 +356,7 @@ bulletins violate this. ")
 ;;; Function: ADDRESS-EXPAND                                 Author: raman
 ;;; Created: Sun Apr 26 18:38:03 1992
 
-(defun address-expand (address) 
+(defun address-expand (address)
   "process address macro."
   (assert
    (is-a 'block address) nil
@@ -364,7 +364,7 @@ bulletins violate this. ")
    address)
 					; using special variable *new-article*
 					; declared in create-article.
-  (setf (article-address *new-article*) 
+  (setf (article-address *new-article*)
 	(process-argument
 	 address)
 	)
@@ -378,14 +378,14 @@ bulletins violate this. ")
 
 ;;; Modified: Wed Oct 14 16:41:15 EDT 1992
 ;;; renamed to process-argument from process-argument-as-text since
-;;; for the present process-argument-as-math is not being used. 
+;;; for the present process-argument-as-math is not being used.
 ;;; Function: PROCESS-ARGUMENT                       Author: raman
 ;;; Created: Sun Oct  4 13:35:33 1992
 (proclaim '(inline process-argument))
-(defun process-argument (argument) 
+(defun process-argument (argument)
   "Process argument as text. "
-  (process-text 
-   (make-buffer :contents (list argument )))  
+  (process-text
+   (make-buffer :contents (list argument )))
   )
 ;;; Modified: Wed Oct 14 16:36:25 EDT 1992
 ;;; For the present not calling this function.
@@ -400,14 +400,14 @@ bulletins violate this. ")
 ;;; Function: PROCESS-ARGUMENT-AS-MATH                       Author: raman
 ;;; Created: Sun Oct  4 13:36:04 1992
 (proclaim '(inline process-argument-as-math))
-(defun process-argument-as-math (argument) 
+(defun process-argument-as-math (argument)
   "Process argument as math. "
   (process-math
    (make-buffer :contents (list argument )))
   )
 
 ;;; Modified: Fri Oct  9 13:57:35 EDT 1992
-;;; build up a fraction object: 
+;;; build up a fraction object:
 ;;; Function: FRAC-EXPAND                                    Author: raman
 ;;; Created: Wed Sep 16 17:23:04 1992
 
@@ -419,7 +419,7 @@ bulletins violate this. ")
 ;;; Function: ROOT-EXPAND                                    Author: raman
 ;;; Created: Thu Sep 17 11:15:13 1992
 
-(defun root-expand (nth-root of m) 
+(defun root-expand (nth-root of m)
   "Process Plain TeX root macro"
   (assert
    (and (is-a 'math-cs  of)
@@ -434,7 +434,7 @@ bulletins violate this. ")
     (setf self (make-instance 'generalized-root
                               :contents "root"
                               :type  'root
-                              :children root-children 
+                              :children root-children
                               ))
     self)
   )
@@ -444,7 +444,7 @@ bulletins violate this. ")
 ;;; Function: MATHREL-EXPAND                                 Author: raman
 ;;; Created: Sun Oct  4 09:29:52 1992
 
-(defun mathrel-expand (relational-operator) 
+(defun mathrel-expand (relational-operator)
   "Handle tex mathrel macro"
   (let
       ((operator (process-argument relational-operator )))
@@ -465,7 +465,7 @@ bulletins violate this. ")
 ;;; Function: DX-EXPAND                                      Author: raman
 ;;; Created: Tue Nov  3 12:31:07 1992
 
-(defun dx-expand (math-buffer) 
+(defun dx-expand (math-buffer)
   "Expand dx"
   (declare (ignore math-buffer))
   (make-instance 'integral-d
@@ -476,7 +476,7 @@ bulletins violate this. ")
 ;;; Function: DY-EXPAND                                      Author: raman
 ;;; Created: Tue Nov  3 12:31:07 1992
 
-(defun dy-expand (math-buffer) 
+(defun dy-expand (math-buffer)
   "Expand dx"
   (declare (ignore math-buffer))
   (make-instance 'integral-d
@@ -487,7 +487,7 @@ bulletins violate this. ")
 ;;; Function: DZ-EXPAND                                      Author: raman
 ;;; Created: Tue Nov  3 12:31:07 1992
 
-(defun dz-expand (math-buffer) 
+(defun dz-expand (math-buffer)
   "Expand dx"
   (declare (ignore math-buffer))
   (make-instance 'integral-d
@@ -495,7 +495,7 @@ bulletins violate this. ")
                  :children (list  "z" ))
   )
 
-(defun dt-expand (math-buffer) 
+(defun dt-expand (math-buffer)
   "Expand dt"
   (declare (ignore math-buffer))
   (make-instance 'integral-d
@@ -516,7 +516,7 @@ bulletins violate this. ")
   ;;; Function: TEX-MATRIX-EXPAND                              Author: raman
   ;;; Created: Wed Sep 22 14:06:38 1993
 
-(defun tex-matrix-expand (matrix-contents &optional(do-not-test nil)) 
+(defun tex-matrix-expand (matrix-contents &optional(do-not-test nil))
   "Process a TeX matrix "
   (or do-not-test
       (assert  (is-a 'subformula matrix-contents) nil
@@ -539,9 +539,9 @@ bulletins violate this. ")
              (setf current-element nil
                    current-row nil))
             (t (push element current-element))))
-    (when current-element 
+    (when current-element
       (push (nreverse current-element) current-row))
-    (when current-row 
+    (when current-row
       (push (nreverse current-row) row-list))
     (setf output-matrix (nreverse row-list))
     (process-array (make-buffer

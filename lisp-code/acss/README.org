@@ -9,11 +9,11 @@ us a version of AsTeR that module ~emacspeak-maths~ can use.
 Fri Oct 21 15:35:27 PDT 2016
 ** AFL Exported Symbols:
 
-** All Exported Symbols 
+** All Exported Symbols
 
 #+BEGIN_SRC lisp
-(loop 
- for s being the external-symbols of (find-package "AFL") 
+(loop
+ for s being the external-symbols of (find-package "AFL")
  collect s)
 #+END_SRC
 
@@ -60,11 +60,11 @@ Fri Oct 21 15:35:27 PDT 2016
    afl:initialize-speech-space afl:list-of-speech-dimensions afl:assertiveness)
 #+END_SRC
 
-** Exported Functions 
+** Exported Functions
 
 #+BEGIN_SRC  lisp
-(loop 
- for s being the external-symbols of (find-package "AFL") 
+(loop
+ for s being the external-symbols of (find-package "AFL")
  when (fboundp s)collect s)
 #+END_SRC
 
@@ -89,10 +89,10 @@ Fri Oct 21 15:35:27 PDT 2016
  afl:list-of-speech-dimensions)
 #+END_SRC
 
-**  Exported Variables 
+**  Exported Variables
 #+BEGIN_SRC  lisp
-(loop 
- for s being the external-symbols of (find-package "AFL") 
+(loop
+ for s being the external-symbols of (find-package "AFL")
  unless (fboundp s)collect s)
 
 #+END_SRC

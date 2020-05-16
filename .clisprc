@@ -28,7 +28,7 @@
   (load (merge-pathnames "lisp-utilities/query"  aster))
   (loop
      for d in
-       (append 
+       (append
         '("latex-parser/" "tts/" "clos-helper/"
           "acss/" "afl/" "afl/pronounce/" "afl/total-space/" "read-aloud/" "browse/")
         (mapcar #'(lambda (d) (concatenate 'string d "/"))*books*))
@@ -70,7 +70,7 @@
     (aster-setup)))
 (defun read-aloud-file (filename)
   "Read aloud this file by first parsing it. "
-  (declare (special *document*)) 
+  (declare (special *document*))
   (setf *document* (parse-article filename))
   (read-aloud *document* ))
 

@@ -12,7 +12,7 @@
 ;;; force-speech (smart-talker.lisp)
 ;;; send-text (smart-talker.lisp)
 ;;; speak-number-string (smart-talker.lisp)
-;;; speak-string (serial.lisp)  
+;;; speak-string (serial.lisp)
 ;;; *dribbling-to-file*
 ;;;
 ;;; read from a *stream*:
@@ -32,7 +32,7 @@
      (setf previous-index (+ 1 (mod  previous-index max-index-number)))))
 
 (defconstant *max-wait-period* 500
-  "number of times to look for the index from the dectalk before giving up approximately in units of *sleep-period* ") 
+  "number of times to look for the index from the dectalk before giving up approximately in units of *sleep-period* ")
 (defconstant  *millisecond* (/ 1.0 1000.0))
 (defconstant *sleep-period* *millisecond*
   "seconds to sleep while waiting for dectalk to send out another character")
@@ -53,21 +53,21 @@
 	  )
     (send-text index-string)
     (force-output *stream* )))
-    
+
 (defun await-silence ()
   "Simple version of await silence "
   (cond
    (*dribbling-to-file* (format *stream* "~%" ))
    (t
-    ;; first slurp up anything pending on the line 
-    (loop with c =(read-char-no-hang *stream*) 
+    ;; first slurp up anything pending on the line
+    (loop with c =(read-char-no-hang *stream*)
           while c do (setq c (read-char-no-hang *stream* )))
-    ;; send the index 
+    ;; send the index
     (send-index-to-dectalk)
-    ;; wait for it to return, then slurp up everything 
-    (loop with c =(read-char *stream*) 
+    ;; wait for it to return, then slurp up everything
+    (loop with c =(read-char *stream*)
           while c do (setq c (read-char-no-hang *stream* ))))))
-  
+
 
 
 ;(defun await-silence ()
@@ -89,7 +89,7 @@
 ;       (setf c (read-char-no-hang *stream* nil nil))
 ;                                        ;(incf time-out)
 ;       ;(sleep *sleep-period*)
-;       ;;; bill, so what happens if seen is nil? 
+;       ;;; bill, so what happens if seen is nil?
 ;       (if c
 ;           (cond
 ;            ((equalp c (char *return-index-string* index-string-mark ))

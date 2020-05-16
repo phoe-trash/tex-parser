@@ -44,7 +44,7 @@
 (setf make:*central-registry*
       (concatenate 'string *lisp-code-directory*
                    "/" "system-definitions"))
-(defun announce (msg) (format t "~&~a~%" msg )) 
+(defun announce (msg) (format t "~&~a~%" msg ))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun featurep (feature) (find feature *features* ))
 (setf *aster-directory* *lisp-code-directory*)
@@ -59,7 +59,7 @@
 
 
 (defun delete-feature (feature)
-(setf *features* 
+(setf *features*
 (delete feature *features*))
 )
 

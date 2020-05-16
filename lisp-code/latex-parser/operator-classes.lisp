@@ -2,7 +2,7 @@
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 
@@ -43,10 +43,10 @@
 ;;; Function: SETUP-OPERATORS-CLASS-TABLE                    Author: raman
 ;;; Created: Wed Dec  9 11:46:55 1992
 
-(defun setup-operators-class-table (operator-type file-name) 
+(defun setup-operators-class-table (operator-type file-name)
   "Setup mapping between operators and their class names, prompting user
 for the class name"
-  (with-open-file  (stream file-name :direction :output) 
+  (with-open-file  (stream file-name :direction :output)
     (loop for key  being the hash-keys of *math-classification-table*
           using (value   symbol-type)
           when (equal symbol-type operator-type)
@@ -63,14 +63,14 @@ for the class name"
 ;;; Function: CREATE-OPERATOR-CLASSES                        Author: raman
 ;;; Created: Wed Dec  9 11:40:51 1992
 
-(defun create-operator-classes (super-type) 
+(defun create-operator-classes (super-type)
   "Create operator class definitions "
   (loop for    operator being the hash-keys of
         *math-classification-table*
-        using (value op-type) 
-        when (equal super-type op-type) 
-        do 
-        (format t "~s ~%" 
+        using (value op-type)
+        when (equal super-type op-type)
+        do
+        (format t "~s ~%"
                 `(defclass ,(get-operator-class-name operator)  (,super-type) () )
                 )
         )

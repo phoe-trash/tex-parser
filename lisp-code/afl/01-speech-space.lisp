@@ -2,7 +2,7 @@
 ;;;   -*- Syntax: Common-Lisp; Package: USER; Base: 10; Mode: LISP -*-    ;;;
 ;;;                                                                       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman 
+;;; Copyright (C) 1990, 1991, 1992, 1993, 1994by T. V. Raman
 ;;; All Rights Reserved
 ;;;
 (in-package :afl)
@@ -10,7 +10,7 @@
 
 (export '(
           *default-voice*
-          *reader-period-pause* *reader-comma-pause* 
+          *reader-period-pause* *reader-comma-pause*
           initialize-speech-space
           re-initialize-speech-space
           current-value
@@ -30,20 +30,20 @@
 ;;; the structure dimension captures those bits of information that
 ;;; are liable to change, eg: value, step-size. Synthesizer code will
 ;;; not change for a dimension during the program, so this is kept
-;;; separately in a hash table. 
+;;; separately in a hash table.
 ;;;
 ;;; The point in speech space will contain fields each of which will
 ;;; be assigned an object of type dimension encapsulating the current
 ;;; settings along that dimension.
 ;;; The structure for points in speech space is automatically
-;;; generated from the list of dimensions specified by the user. 
+;;; generated from the list of dimensions specified by the user.
 ;;; Global values are stored in a special structure that implements
-;;; reference variables.  
+;;; reference variables.
 
 ;;; The dimensions in the speech space are first captured in a list
 ;;; called *list-of-speech-dimensions* and this is used by all the functions.
 ;;; The structure definition for point-in-speech-space is
-;;; generated from this list by a macro. 
+;;; generated from this list by a macro.
 ;;;
 
 ;;; }
@@ -56,21 +56,21 @@
 ;;; another, they together determine the voice.
 ;;; Structure:  dimension Author: raman
 ;;; Created: Fri Aug  7 10:25:35 1992
-;;; A dimension in speech space. 
+;;; A dimension in speech space.
 (defstruct dimension
   (name nil)
   (value nil)
-  (step-size nil) 
+  (step-size nil)
   )
 
-;;; 
+;;;
 
 ;;; function create-dimension takes a name and creates a structure of
 ;;; type dimension with the values set to their initial defaults. It
 ;;; does this by doing a table look up for the various fields.
 ;;; Modified: Tue Aug 18 14:41:37 EDT 1992
 ;;; Dereference global values if used as defaults when creating a new
-;;; dimension. 
+;;; dimension.
 ;;; Function: CREATE-DIMENSION                               Author: raman
 ;;; Created: Fri Aug  7 18:10:21 1992
 
@@ -80,8 +80,8 @@
   "return a dimension appropriate for dimension name"
   (make-dimension
    :name name
-   :value value  
-   :step-size step-size 
+   :value value
+   :step-size step-size
    )
   )
 
@@ -95,10 +95,10 @@
 
 (defvar *dimension-accessor-table*
   `(
-    (value ,#'dimension-value 
+    (value ,#'dimension-value
      ,#'(lambda (dimension  new-value)
           (setf (dimension-value  dimension) new-value)))
-    (step-size ,#'dimension-step-size 
+    (step-size ,#'dimension-step-size
      ,#'(lambda (dimension  new-step-size)
           (setf (dimension-step-size  dimension) new-step-size )))
     )
@@ -108,7 +108,7 @@
 ;;; Function: DIMENSION-ACCESSOR                             Author: raman
 ;;; Created: Wed Aug 19 09:09:20 1992
 
-(defun dimension-accessor (slot dimension) 
+(defun dimension-accessor (slot dimension)
   "access slot slot of dimension dimension"
   (funcall (second (assoc slot  *dimension-accessor-table*)) dimension)
   )
@@ -123,11 +123,11 @@
   )
 
 ;;; }
-;;; { point-in-speech-space 
+;;; { point-in-speech-space
 
-;;; point-in-speech-space a structure: 
+;;; point-in-speech-space a structure:
 ;;; this is  generated automatically from the list of
-;;; dimensions. 
+;;; dimensions.
 ;;; point in speech space
 
 (defmacro define-point-in-speech-space ()
@@ -135,17 +135,17 @@
   `(defstruct (point-in-speech-space
                (:named)
                (:type list))
-    ,@ *list-of-speech-dimensions* 
+    ,@ *list-of-speech-dimensions*
     )
   )
 
 ;;; The following function relies on the list representation of the
 ;;; structure point-in-speech-space and will have to be changed if the
-;;; structure representation for points in speech space is modified. 
+;;; structure representation for points in speech space is modified.
 ;;; Function: UPDATE-POINT-IN-SPEECH-SPACE Author: raman
 ;;; Created: Sun Aug  9 18:04:02 1992
 
-(defun update-point-in-speech-space (point dim-name dimension) 
+(defun update-point-in-speech-space (point dim-name dimension)
   "set dimension for dim-name to dimension."
   (let
       ((index  (position dim-name *list-of-speech-dimensions* )))
@@ -158,7 +158,7 @@
 ;;; Function: POINT-ACCESSOR                                 Author: raman
 ;;; Created: Sat Aug 15 09:10:28 1992
 
-(defun point-accessor (dimension point) 
+(defun point-accessor (dimension point)
   "Return value of slot dimension from point"
   (let
       ((index (1+  (position dimension  *list-of-speech-dimensions* ))))
@@ -173,11 +173,11 @@
 ;;; Could be sued as an alternative to update-point-in-speech-space
 ;;; Also relies on the list representation of point-in-speech-space
 ;;; Usage:
-;;; (setf (point-accessor dimension point) value) 
+;;; (setf (point-accessor dimension point) value)
 
 (defsetf  point-accessor (dimension point) (value)
-  `(setf 
-    (elt ,point 
+  `(setf
+    (elt ,point
      (1+ (position ,dimension *list-of-speech-dimensions* )))
     ,value))
 
@@ -189,7 +189,7 @@
 ;;; Function: CREATE-initial-POINT-IN-SPEECH-SPACE                   Author: raman
 ;;; Created: Fri Aug  7 18:18:07 1992
 
-(defun create-initial-point-in-speech-space () 
+(defun create-initial-point-in-speech-space ()
   "create a point in speech space with default settings that have
 global scope"
   (let ((point (make-point-in-speech-space )))
@@ -210,7 +210,7 @@ global scope"
 ;;; Function: EMBED-POINT-IN-SPEECH-SPACE                Author: raman
 ;;; Created: Wed Aug 12 10:24:38 1992
 
-(defun embed-point-in-speech-space (point) 
+(defun embed-point-in-speech-space (point)
   "Takes a point in speech space and returns a copy with the default
 values assigned for those dimensions that are undefined in point"
   (let
@@ -237,10 +237,10 @@ point is *current-speech-state* "
 ;;; Function: CURRENT-STEP-SIZE                                  Author: raman
 ;;; Created: Wed Aug 26 15:36:30 1992
 
-(defun current-step-size (dimension &optional (point *current-speech-state*)) 
+(defun current-step-size (dimension &optional (point *current-speech-state*))
   "Return step size assigned to this dimension "
   (reference-value (dimension-step-size  (point-accessor   dimension point )))
-  
+
   )
 
 ;;; Function: RE-INITIALIZE-SPEECH-SPACE                     Author: raman
@@ -270,7 +270,7 @@ space."
 
 
 ;;; }
-;;; { initialize-speech-space 
+;;; { initialize-speech-space
 
 ;;; comments on initializing speech space:
 ;;; initializing speech space will include the following steps:
@@ -289,7 +289,7 @@ space."
 
 ;;; Constant: *DEFAULT-VOICE*                                Author: raman
 ;;; Created: Sun Aug 30 19:11:20 1992
-;;; external variable: 
+;;; external variable:
 (defvar *default-voice* 'paul  "default voice")
 
 ;;; Variable: *READER-PERIOD-PAUSE*                          Author: raman
@@ -309,7 +309,7 @@ space."
   "Initialize speech space by setting up current state and global state
 based on the default settings specified for the various dimensions.
 Default settings are overridden by settings specified by  the optional
-argument to this function,  the name of a point in speech space" 
+argument to this function,  the name of a point in speech space"
   (assert  (gethash voice *standard-voices*) nil
            "error: Standard voice ~a not yet defined"
            voice)
@@ -326,14 +326,14 @@ argument to this function,  the name of a point in speech space"
 ;;; Function: SETUP-GLOBALS                                  Author: raman
 ;;; Created: Sat Aug  8 10:15:54 1992
 
-(defun setup-globals (voice) 
+(defun setup-globals (voice)
   "setup global parameters appropriate to voice named voice."
   (let ((standard-voice (get-point-in-speech-space voice )))
     (dolist
         (dim *list-of-speech-dimensions*)
       (let
           ((dimension  (point-accessor dim standard-voice )))
-        (when dimension 
+        (when dimension
           (define-globals dimension )
           )
         )
@@ -344,7 +344,7 @@ argument to this function,  the name of a point in speech space"
 ;;; Function: DEFINE-GLOBALS                                 Author: raman
 ;;; Created: Sat Aug  8 11:10:29 1992
 
-(defun define-globals (dimension) 
+(defun define-globals (dimension)
   "defines global values along dimension dimension as specified by the
 argument which is an object of type dimension. "
   (assert  (dimension-p dimension) nil

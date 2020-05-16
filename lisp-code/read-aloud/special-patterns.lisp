@@ -25,7 +25,7 @@
 ;;; Instead introduce a generic method special-pattern which gets
 ;;; called before the object is read, in the around method for
 ;;; read-aloud. If special-pattern returns a special pattern, then
-;;; read-aloud will invoke the reading rule of that name. 
+;;; read-aloud will invoke the reading rule of that name.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -36,7 +36,7 @@
 ;;; define the around method for that super class.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Do nothing in the case of ordinary objects, just return nil. 
+;;; Do nothing in the case of ordinary objects, just return nil.
 ;;; around method not defined  in this case
 ;;; Moved to math-classes.lisp to avoid warning.
 
@@ -82,7 +82,7 @@ active")
   ;;; Function: ACTIVE-SPECIAL-PATTERN-P                       Author: raman
   ;;; Created: Sun Feb  7 18:32:05 1993
 
-(defun active-special-pattern-p (object) 
+(defun active-special-pattern-p (object)
   "Check if special patterns active for this object"
   (let ((class-name (class-name (class-of object ))))
     (gethash class-name *active-special-pattern* )
@@ -102,7 +102,7 @@ active")
                                  #'special-pattern
                                  (list math-object ))
                             (call-next-method )) ; compute it
-                          ) 
+                          )
                    )
                ))
            )
@@ -119,7 +119,7 @@ active")
                                  #'special-pattern
                                  (list attribute ))
                             (call-next-method )) ; compute it
-                          ) 
+                          )
                    )
                ))
            )
@@ -134,7 +134,7 @@ active")
   (let ((numerator (numerator-of fraction ))
         (denominator (denominator-of fraction )))
     (cond
-      ((and 
+      ((and
         (number-1-p  numerator )
         (number-2-p  denominator))
        'half)
@@ -399,7 +399,7 @@ active")
       ((and (expression-p parent)
             (exponent-p contents)) 'exponent )
       )                                 ; end cond
-    
+
     )
   )
 (turn-on-special-pattern 'superscript )
@@ -463,7 +463,7 @@ active")
 
 (def-reading-rule (juxtaposition product)
     "read a juxtaposition that is a product"
-  (let* 
+  (let*
       ((children (children juxtaposition ))
        (count (length children  )))
     (cond

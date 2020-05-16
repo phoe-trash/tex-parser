@@ -10,7 +10,7 @@
 ;;; Contains objects from Zippel's book.
 ;;; One file will have object definitions, and the rest reading rules.
 
-;;; First load complete read-aloud system then this system 
+;;; First load complete read-aloud system then this system
 
 (defsystem cs611-notes
     :source-pathname(concatenate 'string
@@ -18,9 +18,9 @@
     :initially-do (unless (featurep :read-aloud)
                     (load-system 'read-aloud))
     :finally-do (announce "Prepared to read cs611 notes")
-    :components( 
+    :components(
 (:file "cs611-object-definitions")
-(:file "cs611-macros") 
+(:file "cs611-macros")
 (:file "cs611-reading-rules"
        :depends-on ( "cs611-object-definitions"
                      "cs611-macros"))

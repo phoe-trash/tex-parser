@@ -11,7 +11,7 @@
 
 ;;; testing blocks of cross products
 
-(afl:new-block 
+(afl:new-block
  (user::read-aloud "No sound is currently playing. ")
  (local-set-state (toggle-switch *current-audio-state* ))
  (user::read-aloud "Now a local set state has toggled the audio switch. ")

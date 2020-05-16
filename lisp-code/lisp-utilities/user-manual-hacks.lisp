@@ -11,8 +11,8 @@
 				    (output-stream *standard-output*)
                                     (package 'user))
   "Automatically creates a user manual for the functions in a file
-that are external to package by 
-   collecting the documentation strings and argument lists of the 
+that are external to package by
+   collecting the documentation strings and argument lists of the
    functions and formatting the output nicely. Returns a list of the
    definition types of the forms it couldn't handle. Output-format may
    be either 'TEXT or 'SCRIBE."
@@ -34,17 +34,17 @@ that are external to package by
 				(stream *standard-output*)
                                 (package  *package*))
   "This function takes a form as input and outputs its documentation
-if the second element of form is external to package 
+if the second element of form is external to package
    segment to the output stream."
   (when (external-symbol? (second form)  package)
   (let* ((key (first form))
 	 (handler-entry (find-doc-handler key)))
-    (cond (handler-entry 
+    (cond (handler-entry
 	   (let ((handler (first handler-entry))
 		 (type (second handler-entry))
 		 name args documentation qualifiers name-length
 		 (type-pos (- 80 1)))	; 1 for right margin
-	     (multiple-value-setq (name args documentation qualifiers) 
+	     (multiple-value-setq (name args documentation qualifiers)
 		 (funcall handler form))
 	     (setq name (format nil "~:@(~A~)~@[~{ ~S~}~]" name qualifiers)
 		   name-length (length name)
@@ -59,7 +59,7 @@ if the second element of form is external to package
 	     (decf type-pos (+ (length type) 2))
 	     (let ((width (- type-pos (+ 1 4 1 ) name-length)))
 	       (unless (eq output-format 'text)
-		 ;; Add in the width of ";;; " since we use it 
+		 ;; Add in the width of ";;; " since we use it
 		 ;; only in text mode.
 		 (incf width 4))
 	       (setq args
@@ -102,7 +102,7 @@ if the second element of form is external to package
 ;;; Created: Thu Sep 10 15:17:33 1992
 
 
-(defun setup-external-symbols-list (package) 
+(defun setup-external-symbols-list (package)
   "set up list of external symbols in package"
   (let ((package-symbols nil)
         )
@@ -119,7 +119,7 @@ if the second element of form is external to package
 ;;; Created: Fri Sep 11 14:36:19 1992
 
 
-(defun external-symbol? (symbol &optional(package *package*)) 
+(defun external-symbol? (symbol &optional(package *package*))
   "Check if symbol is external to package"
   (multiple-value-bind  (existing-symbol  type)
       (find-symbol

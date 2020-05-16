@@ -7,8 +7,8 @@
 ;;; configure AsTeR for a particular site.
 ;;; All of the definitions here are commented out.
 ;;; If you need to set one of these, just modify it and uncomment that
-;;; particular setting. 
-;;; { Comments: 
+;;; particular setting.
+;;; { Comments:
 
 ;;;
 ;;; Fri Jan  7 08:38:04 EST 1994
@@ -22,7 +22,7 @@
 ;;; file.
 ;;; That is why everything here is a defparameter.
 ;;; Load this file after everything else is loaded, as loading this
-;;; file is only for customizing the system for a specific site. 
+;;; file is only for customizing the system for a specific site.
 ;;; Definitions of these variables and parameters in the source will
 ;;; be marked by the comment ;;; external Parameter:
 ;;; This will help locate the related sources and documentation.
@@ -79,7 +79,7 @@
 ;;  (concatenate 'string  *lisp-code-directory* "/" "compatibility" )
 ;;  "pathname where compatibility sources are kept.")
 ;;
-;;          
+;;
 ;;(defparameter *books*
 ;;  '( rz-book vanloan-book vavasis-book cs611-notes
 ;;     gries-book norvig-book dennis-math-books)
@@ -93,7 +93,7 @@
 ;;; { Recognizer
 
 ;
-;;; {Lexical analysis 
+;;; {Lexical analysis
 
 ;;; Lexical analyser:
 ;
@@ -106,18 +106,18 @@
 ;;;; Parameter: *LEX-PROGRAM*                                  Author: raman
 ;;;; Created: Fri Feb 21 09:15:19 1992
 ;
-;(defparameter *lex-program* "lispify" 
+;(defparameter *lex-program* "lispify"
 ;  "The program which does the lexical analysis")
 
 ;;; }
-;;;; parsing: 
+;;;; parsing:
 ;;;; Parameter: *VALID-SECTIONAL-UNIT-NAMES*                   Author: raman
 ;;;; Created: Thu Apr  9 15:50:50 1992
 ;
-;(defparameter *valid-sectional-unit-names* 
+;(defparameter *valid-sectional-unit-names*
 ;  (list
 ;   'part
-;   'chapter 
+;   'chapter
 ;   'section
 ;   'subsection
 ;   'subsubsection)
@@ -134,7 +134,7 @@
 ;;;; Parameter: *SIGNAL-ERROR-ON-UNKNOWN-TEX-MACRO*            Author: raman
 ;;;; Created: Thu Jan 30 11:54:06 1992
 ;
-;(defparameter *do-not-signal-error-on-unknown-tex-macro*   t 
+;(defparameter *do-not-signal-error-on-unknown-tex-macro*   t
 ;  "tell parser to signal error or continue when undefined tex macro
 ;  seen.")
 ;
@@ -159,7 +159,7 @@
 ;;; {Multivoice
 ;
 ;;;; The next two variables are defined and exported by the dectalk package
-;(defparameter dectalk:*serial-unit-number* 
+;(defparameter dectalk:*serial-unit-number*
 ;  #+symbolics 2  #+lucid :B
 ;  "Unit number for Serial Port to dectalk.")
 ;
@@ -167,7 +167,7 @@
 ;
 ;;*mung-serial-pathname* is defined in package serial.
 ;;;; It gives the pathname to the object file that is used to open the
-;;;; serial line . 
+;;;; serial line .
 ;;; For some weird reason, load-foreign-files only gives correct result
 ;;; if passed a string arg.  a pathname does not work.
 ;(defvar *mung-serial-pathname*
@@ -185,7 +185,7 @@
 ;;;; configure afl are listed here.
 ;;;; All of these variables are defined in the AFL package.
 ;;;; Unless mentioned otherwise, they are exported by package AFL
-;;;; AFL program variables etc. are therefore not listed. 
+;;;; AFL program variables etc. are therefore not listed.
 ;
 ;;;; Constant: *DEFAULT-VOICE*                                Author: raman
 ;;;; Created: Sun Aug 30 19:11:20 1992
@@ -254,7 +254,7 @@
   ;;; Variable: *AWAIT-SILENCE-WHEN-USING-STEREO*              Author: raman
   ;;; Created: Sun Jan  9 12:20:50 1994
 
-;(defvar *await-silence-when-using-stereo* nil 
+;(defvar *await-silence-when-using-stereo* nil
 ;  "If T, then await silence before changing parameters that affect
 ;directional speech. ")
 
@@ -363,7 +363,7 @@
 ;  "Cue cross reference. ")
 
 ;;; }
-;;; {Reading rules 
+;;; {Reading rules
 
 ;
 ;;;; Parameter: *PLAY-SIGNATURE-TUNE*                          Author: raman
@@ -456,7 +456,7 @@
 ;;;; Parameter: *MATH-SURROUND*                               Author: raman
 ;;;; Created: Thu Nov 26 12:30:20 1992
 ;
-;(defparameter *math-surround* 50 
+;(defparameter *math-surround* 50
 ;  "Amount of pause around inline math in milliseconds. ")
 ;
 ;
@@ -495,7 +495,7 @@
 ;  "Complexity threshold ratio. ")
 
 ;;; }
-;;; {Browser 
+;;; {Browser
 
 ;
 ;(defparameter *follow-cross-ref-wait* 1
